@@ -25,27 +25,27 @@ svnsync sync "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
 hooks 目录下新建 `pre-revprop-change.bat`
 
 2. 错误提示2： `svnsync: E000022: Couldn't get lock on destination repos after 10 attempts`
+    
+    ```shell
+    PS C:\Windows\system32> svnsync sync "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
+    \`svnsync: E000022: Couldn\'t get lock on destination repos after 10 attempts \`
+    ```
 
-```shell
-PS C:\Windows\system32> svnsync sync "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
-\`svnsync: E000022: Couldn\'t get lock on destination repos after 10 attempts \`
-```
+    这个时候可能属性被锁了，删掉属性：
 
-这个时候可能属性被锁了，删掉属性：
-
-```shell
-svn propdel svn:sync-lock --revprop -r0 "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
-```
+    ```shell
+    svn propdel svn:sync-lock --revprop -r0 "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
+    ```
 
 ## SVN 库的备份与迁移
     ```shell
