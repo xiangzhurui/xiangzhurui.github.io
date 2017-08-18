@@ -1,8 +1,12 @@
 ---
-title: Elasticsearch 准备
-date: 2017.08.12 12:00:30
-tags: [elasticsearch, 工具,文档]
+title: Elasticsearch 安装
+tags:
+  - elasticsearch
+  - 工具
+  - 文档
+date: 2017-08-12 12:00:30
 ---
+
 
 > Elasticsearch 是一个分布式、可扩展、实时的搜索与数据分析引擎。 它能从项目一开始就赋予你的数据以搜索、分析和探索的能力，这是通常没有预料到的。 它存在还因为原始数据如果只是躺在磁盘里面根本就毫无用处。
 
@@ -27,3 +31,5 @@ tags: [elasticsearch, 工具,文档]
 ### kibana
 以下地址可访问，elasticsearch 需要 jdk 1.8
 http://localhost:5601
+
+> 现在已经可以使用了，其他安装配置事项待续。。。
