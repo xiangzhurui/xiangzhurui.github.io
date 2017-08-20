@@ -1,9 +1,14 @@
 ---
 layout: drafts
-title: Elasticsearch Java REST Client 概览
+title: 'Elasticsearch Java REST Client 文档[翻译]'
+tags:
+  - Elasticsearch
+  - 翻译
+  - API 文档
+  - REST
 date: 2017-08-18 13:30:14
-tags: [Elasticsearch,翻译,API 文档, REST]
 ---
+
 
 > 本文内容来源于 Java REST Client https://www.elastic.co/guide/en/elasticsearch/client/java-rest/5.5/index.html
 
@@ -128,15 +133,40 @@ void performRequestAsync(String method, String endpoint,
 
 - method
 http方法或动作
-endpoint
-请求路径，Elasticsearch API 定义的路径（例如/_cluster/health ）
-params
-the optional parameters to be sent as querystring parameters
-entity
-the optional request body enclosed in an org.apache.http.HttpEntity object
-responseConsumerFactory
-the optional factory that is used to create an org.apache.http.nio.protocol.HttpAsyncResponseConsumer callback instance per request attempt. Controls how the response body gets streamed from a non-blocking HTTP connection on the client side. When not provided, the default implementation is used which buffers the whole response body in heap memory, up to 100 MB
-responseListener
-the listener to be notified upon asynchronous request success or failure
-headers
-optional request headers
+- endpoint
+请求路径，Elasticsearch API 定义的路径（例如`/_cluster/health` ）
+- params
+可选参数作为querystring参数发送
+- entity
+包含在org.apache.http.HttpEntity对象中的可选请求主体
+- responseConsumerFactory
+用于org.apache.http.nio.protocol.HttpAsyncResponseConsumer 每次请求尝试创建回调实例的可选工厂 。控制响应主体如何从客户端上的非阻塞HTTP连接流式传输。当没有提供时，使用默认实现来缓冲堆内存中的整个响应体，最多100 MB
+- responseListener
+侦听器在异步请求成功或失败时被通知
+- headers
+可选请求标头
+
+### 读取响应
+
+Response对象，要么由同步的performRequest的方法返回，要么作为 ResponseListener#onSuccess(Response)的参数，通过这个被包装的HTTP客户端返回的响应对象和公开以下信息：
+
+- getRequestLine
+有关执行的请求的信息
+- getHost
+返回响应的主机
+- getStatusLine
+响应状态行
+- getHeaders
+响应标题，也可以通过名称检索 getHeader(String)
+- getEntity
+响应体包围在一个 org.apache.http.HttpEntity 对象中
+执行请求时，会抛出异常（或ResponseListener#onFailure(Exception)在以下情况下作为参数接收：
+
+- IOException
+通信问题（例如SocketTimeoutException等）
+- ResponseException
+已返回响应，但其状态代码指示错误（不是2xx）。A ResponseException源自有效的http响应，因此它暴露了其对应的Response对象，该对象允许访问返回的响应。
+
+**NOTE**: 一个 ResponseException 是`不`抛出`HEAD`返回一个请求的404状态代码，因为它是一个预期的HEAD，仅仅表示该资源未找到响应。所有其他的HTTP方法（例如GET）抛出ResponseException了404回应，除非该ignore参数包含404。ignore是一个特殊的客户端参数，不会发送到Elasticsearch，并包含一个逗号分隔的错误状态代码列表。它允许控制是否将某个错误状态代码视为预期响应而不是异常。这对于get API可以返回是有用的404 当文档丢失时，在这种情况下，响应主体不会包含错误，而是通常的get api响应，只是没有找到文档。
+
+> 一下内容待续：https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_example_requests.html
