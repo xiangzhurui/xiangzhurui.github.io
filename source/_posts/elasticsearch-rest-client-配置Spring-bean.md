@@ -1,10 +1,11 @@
 ---
-title: elasticsearch Java rest client 配置Springbean
+title: elasticsearch Java rest client 配置Spring bean
 date: 2017-08-21 20:00:00 00:00:00
 tags: [Elasticsearch,Spring, 配置]
 ---
 
 > 一般而言类似数据源的对象我们会配置一个全局可用的bean，本文简述elasticsearch 5.5 java restClient在 Spring 里的配置(单点es)
+
 ## RestClient 的Maven 依赖(Spring 相关依赖略)
 ```xml
 <dependency>
