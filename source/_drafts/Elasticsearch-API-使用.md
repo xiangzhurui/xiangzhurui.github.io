@@ -14,3 +14,11 @@ Field == column
 Mapping == Schema
 
 文档是Elasticsearch的数据单位
+
+### API 格式
+```
+# Http api 格式
+curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
+# 上述的<PATH> 的格式
+<index>/<type>/[<id>]
+```
