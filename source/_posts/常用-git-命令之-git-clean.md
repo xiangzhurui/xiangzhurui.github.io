@@ -2,6 +2,8 @@
 title: 常用 git 命令之 git clean
 date: 2017-08-30 16:31:46
 tags: [git]
+categories: git
+
 ---
 
 ## git clean
