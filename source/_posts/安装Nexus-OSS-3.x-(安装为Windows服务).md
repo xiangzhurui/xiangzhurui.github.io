@@ -1,6 +1,7 @@
 ---
 title: 安装Nexus OSS 3.x（安装为Windows服务）
 date: 2017-08-26 20:02:00
+update: 2017-08-26 20:02:00
 tags: [Nexus,Maven,工具,Windows]
 ---
 ## 下载安装包

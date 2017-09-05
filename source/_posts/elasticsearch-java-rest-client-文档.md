@@ -1,20 +1,24 @@
 ---
 layout: drafts
-title: 'Elasticsearch Java REST Client 文档[翻译]'
+title: 'Elasticsearch Java REST Client 文档[译文]'
 tags:
   - Elasticsearch
   - 翻译
   - API 文档
   - REST
 date: 2017-08-18 13:30:14
+update: 2017-09-05 12:40:00
+categories: [Elasticsearch, 译文]
 ---
 
 
-> 本文内容来源于 Java REST Client https://www.elastic.co/guide/en/elasticsearch/client/java-rest/5.5/index.html
+> 本文文档适用于 Elasticsearch 5.5。
+> 原文链接：[Java REST Client](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/5.5/index.html)
+> 译文链接：[Elasticsearch Java REST Client 文档](./)
 
 ## 概述
 
-`Elasticsearch Java REST Client` 是个官方的低层级的Elasticsearch客户端。 允许通过http与Elasticsearch集群进行通信。 兼容所有版本的Elasticsearch。
+`Elasticsearch Java REST Client` 是个官方的低层级的 Elasticsearch 客户端。允许通过 http 与Elasticsearch集群进行通信。 并且兼容所有版本的 Elasticsearch。
 Java REST 客户端内部使用Apache Http Async客户端发送http请求。
 
 ## 功能
@@ -28,12 +32,12 @@ Java REST 客户端内部使用Apache Http Async客户端发送http请求。
 - 跟踪记录请求和响应
 - 可配置自动发现集群节点
 
-## 开始使用
+## 入门
 
 ### Maven 仓库
 低级 Java REST 客户端存在于 Maven 中央仓库里。它最低的Java版本要求是 JDK1.8。该客户端的发布周期与 Elasticsearch 的核心程序一致（存在具有相同版本号的 elasticsearch）。但该客户端事实上是与elasticsearch版本无强关联（当客户端与服务端版本可以不一致时也可使用）。
 
-### Maven 配置
+#### Maven 配置
 将以下内容添加到 `pom.xml` 文件里
 ```xml
 <dependency>
@@ -43,15 +47,28 @@ Java REST 客户端内部使用Apache Http Async客户端发送http请求。
 </dependency>
 ```
 
-### Gradle 配置
+#### Gradle 配置
 
-将以下内容添加到 `build.gradle` 文件：
+使用 `gradle` 作依赖管理时,你可以向这样配置 `sniffer` 依赖，将下列内容添加到你的 `build.gradle` 文件里：
 
 ```groove
 dependencies {
     compile 'org.elasticsearch.client:rest:5.5.2'
 }
 ```
+
+### 依赖项
+
+低级 Java REST 客户端 内部使用 Apache Http Async Client 发送 http 请求. 他依赖以下部件,
+亦即异步 http 客户端和它自己的传递依赖项
+
+* org.apache.httpcomponents:httpasyncclient
+* org.apache.httpcomponents:httpcore-nio
+* org.apache.httpcomponents:httpclient
+* org.apache.httpcomponents:httpcore
+* commons-codec:commons-codec
+* commons-logging:commons-logging
+
 ### 初始化
 
 可以通过`RestClient#builder(HttpHost...)`静态方法创建的 `RestClientBuilder` 类来构建 `RestClient` 实例。 唯一必需的参数是客户端将与之通信的一个或多个主机，作为 [HttpHost](https://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/org/apache/http/HttpHost.html) 的实例提供，如下所示：
@@ -128,7 +145,7 @@ void performRequestAsync(String method, String endpoint,
                          Header... headers);
 ```
 
-### 请求参数
+#### 请求参数
 以下是不同方法接受的参数：
 
 - method
@@ -169,4 +186,106 @@ Response对象，要么由同步的performRequest的方法返回，要么作为 
 
 **NOTE**: 一个 ResponseException 是`不`抛出`HEAD`返回一个请求的404状态代码，因为它是一个预期的HEAD，仅仅表示该资源未找到响应。所有其他的HTTP方法（例如GET）抛出ResponseException了404回应，除非该ignore参数包含404。ignore是一个特殊的客户端参数，不会发送到Elasticsearch，并包含一个逗号分隔的错误状态代码列表。它允许控制是否将某个错误状态代码视为预期响应而不是异常。这对于get API可以返回是有用的404 当文档丢失时，在这种情况下，响应主体不会包含错误，而是通常的get api响应，只是没有找到文档。
 
-> 一下内容待续：https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_example_requests.html
+### 请求样例
+> 以下内容待续，原文见如下链接：
+https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_example_requests.html
+
+### 日志
+> 以下内容待续，原文见如下链接：
+https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_logging.html
+
+## 通用配置
+> 通用配置章节内容待续，原文见如下链接：
+> https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_common_configuration.html
+
+### 超时
+### 线程数
+### 基本身份验证
+### 加密通信
+### 其他
+
+## 嗅探器（*Sniffer*）
+
+这是一个小型的包，他允许从一个正在运行中的Elasticsearch集群里自动发现节点，并将其设置更新一个现有的RestClient实例上。默认情况下他使用使用Nodes Info api检索属于集群的节点，并使用jackson解析获取的json响应。
+
+该库与Elasticsearch 2.x及以上兼容。
+
+### Maven 仓库
+低级REST客户端与 Elasticsearch 的发行周期相同。 可以使用你希望使用的嗅探器（Sniffer）版本替换版本，这里使用 `5.5.2` 版本。嗅探器版本和与 Elasticsearch 通信的 REST 客户端的版本之间没有关系。嗅探器支持从elasticsearch 2.x及以上获取节点列表。
+
+### Maven 配置
+
+使用 `Maven` 作依赖管理时,你可以向这样配置 `sniffer` 依赖，将下列内容添加到你的 `pom.xml` 文件里：
+
+```xml
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>sniffer</artifactId>
+    <version>5.5.2</version>
+</dependency>
+```
+### Gradle 配置
+使用 `gradle` 作依赖管理时,你可以向这样配置 `sniffer` 依赖，将下列内容添加到你的 `build.gradle` 文件里：
+
+```groov
+dependencies {
+    compile 'org.elasticsearch.client:sniffer:5.5.2'
+}
+```
+
+### 使用
+只要一个 `RestClient` 实例被创建了，某个 `Sniffer` 对象就可以关联到它上面。`Sniffer` 将使用他所关联的 `RestClient` 实例去定期（默认情况下位每5分钟）从集群中获取节点列表，然后调用 `RestClient#setHosts` 将节点列表更新这个 `RestClient` 实例上去。
+```java
+Sniffer sniffer = Sniffer.builder(restClient).build();
+```
+关闭 `Sniffer` 是必要的，这可以使其后台线程正确的关闭，并且释放他持有的所有资源。该 `Sniffer` 对象应该与 `RestClient` 独享具有相同的生命周期，并在 `RestClient` 客户端关闭之前关闭：
+```java
+sniffer.close();
+restClient.close();
+```
+
+`Elasticsearch Nodes Info api` 不会返回连接节点时使用的协议类型，除非 `host:port` 里被体现了加密协议(*译注：即是https*)，所以默认情况下使用 `http` 。如果需要使用 `https` 替换他，那么 `ElasticsearchHostsSniffer` 对象需要按照以下方式手动创建：
+
+```java
+HostsSniffer hostsSniffer = new ElasticsearchHostsSniffer(restClient,
+        ElasticsearchHostsSniffer.DEFAULT_SNIFF_REQUEST_TIMEOUT,
+        ElasticsearchHostsSniffer.Scheme.HTTPS);
+Sniffer sniffer = Sniffer.builder(restClient)
+        .setHostsSniffer(hostsSniffer).build();
+```
+同样的我们也可以自定义 `sniffRequestTimeout` 参数，该参数默认值为1秒。当调用 `Nodes Info` api 时，这个 `timeout` 参数被用作querystring参数使用，因此当服务端超时时，仍然会有一个有效响应返回，尽管他可能只包含集群的一部分，所有节点的一个子集，余下的那些将在随后响应。另外，一个自定义的 `HostsSniffer` 实现可以提供一些高级用法，比如从外部来源获取主机。
+
+默认情况下 `Sniffer` 每五分钟更新一次。这个间隔时间（单位为毫秒）可以以如下方式设置自定义值：
+
+```java
+Sniffer sniffer = Sniffer.builder(restClient)
+        .setSniffIntervalMillis(60000).build();
+```
+也可以启用故障嗅探，这意味着在每次故障之后节点列表将被直接更新，而不是在普通的嗅探轮询里更新。在这种情况下，需要首先创建一个 `SniffOnFailureListener` 并且提供给 `RestClient` 实例化时使用。当然一旦 `Sniffer` 在这之后被创建时，他需要关联到上文的同一个 `SniffOnFailureListener` 实例上，这个每一个故障都将通知到这个 `SniffOnFailureListener`，并且使用 `Sniffer` 执行上文上所述的嗅探更新操作。
+
+```java
+SniffOnFailureListener sniffOnFailureListener = new SniffOnFailureListener();
+RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
+        .setFailureListener(sniffOnFailureListener).build();
+Sniffer sniffer = Sniffer.builder(restClient).build();
+sniffOnFailureListener.setSniffer(sniffer);
+```
+当使用故障嗅探器时，在故障发生后不只是会更新节点，还会执行额外添加的比正常掌控下更早嗅探计划，默认情况下嗅探更新在故障发生1分钟后执行，假如节点将会恢复正常，那么我们希望尽快获知到。如下所述，轮训间隔可以在 `Sniffer` 创建时自定义设置：
+
+```java
+Sniffer sniffer = Sniffer.builder(restClient)
+        .setSniffAfterFailureDelayMillis(30000).build();
+```
+**注意** 如果没有启用失败监听器(*`setFailureListener`*)，则此最后一个配置参数(*`SniffAfterFailureDelayMillis`*)将不会生效
+
+
+### 许可
+Copyright 2013-2016 Elasticsearch
+
+根据 `Apache License, Version 2.0`（“License”）许可; 您不得使用此文件，除非符合许可证。您可以获得许可证的副本
+
+```
+http://www.apache.org/licenses/LICENSE-2.0
+```
+
+除非由书面的法律要求或许可，根据许可证分发的软件以**“按现状”基础分发，不附带任何明示或暗示的担保或条件**。有关许可证下的权限和限制的特定语言，请参阅许可证。

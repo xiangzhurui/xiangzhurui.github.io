@@ -1,6 +1,7 @@
 ---
 title: 使用 svnsync 备份SVN版本库
 date: 2017-08-07 17:41:34
+update: 2017-08-07 17:41:34
 tags: [svnsync, SVN, Subversion, 版本控制]
 ---
 
@@ -25,7 +26,7 @@ svnsync sync "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
 hooks 目录下新建 `pre-revprop-change.bat`
 
 2. 错误提示2： `svnsync: E000022: Couldn't get lock on destination repos after 10 attempts`
-    
+
     ```shell
     PS C:\Windows\system32> svnsync sync "file:///D:/WorkDir/Subversion/Repositories/repo-sample"
     Failed to get lock on destination repos, currently held by 'DESKTOP-xxxxxxx:f24349b9-b65b-464e-8339-1e4a25d3906a'
