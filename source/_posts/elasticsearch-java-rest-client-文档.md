@@ -35,7 +35,7 @@ Java REST 客户端内部使用Apache Http Async客户端发送http请求。
 ## 入门
 
 ### Maven 仓库
-低级 Java REST 客户端存在于 Maven 中央仓库里。它最低的Java版本要求是 JDK1.8。该客户端的发布周期与 Elasticsearch 的核心程序一致（存在具有相同版本号的 elasticsearch）。但该客户端事实上是与elasticsearch版本无强关联（当客户端与服务端版本可以不一致时也可使用）。
+低级 Java REST 客户端存在于 Maven 中央仓库里。它最低的Java版本要求是 JDK1.8。该客户端的发布周期与 Elasticsearch 的核心程序一致（存在具有相同版本号的 Elasticsearch ）。但该客户端事实上是与 Elasticsearch 版本无强关联（当客户端与服务端版本可以不一致时也可使用）。
 
 #### Maven 配置
 将以下内容添加到 `pom.xml` 文件里
@@ -97,6 +97,9 @@ restClient.close();
 回调允许修改http客户端配置（例如通过ssl进行的加密通信，或任何[org.apache.http.impl.nio.client.HttpAsyncClientBuilder](http://hc.apache.org/httpcomponents-asyncclient-dev/httpasyncclient/apidocs/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.html)允许设置的任何内容）
 
 ### 执行请求
+
+#### 执行请求
+
 一旦一个 `RestClient` 已经北创建，请求就可以通过一个名为 `performRequest` 和 `performRequestAsync` 的方法创建。`performRequest` 方法是同步的，他直接返回 `Response`, 这意味着客户端将会阻塞等待响应的返回。`performRequestAsync` 方法返回 `void` 然后接受一个额外的 `ResponseListener` 作为参数，然后方法价格会异步执行，ResponseListener将会通知完成或失败的执行结果。
 ```java
 // Synchronous variants
@@ -146,72 +149,218 @@ void performRequestAsync(String method, String endpoint,
 ```
 
 #### 请求参数
+
 以下是不同方法接受的参数：
 
-- method
+- `method`
 http方法或动作
-- endpoint
+- `endpoint`
 请求路径，Elasticsearch API 定义的路径（例如`/_cluster/health` ）
-- params
+- `params`
 可选参数作为querystring参数发送
-- entity
+- `entity`
 包含在org.apache.http.HttpEntity对象中的可选请求主体
-- responseConsumerFactory
-用于org.apache.http.nio.protocol.HttpAsyncResponseConsumer 每次请求尝试创建回调实例的可选工厂 。控制响应主体如何从客户端上的非阻塞HTTP连接流式传输。当没有提供时，使用默认实现来缓冲堆内存中的整个响应体，最多100 MB
-- responseListener
+- `responseConsumerFactory`
+用于 `org.apache.http.nio.protocol.HttpAsyncResponseConsumer` 每次请求尝试创建回调实例的可选工厂 。控制响应主体如何从客户端上的非阻塞HTTP连接流式传输。当没有提供时，使用默认实现来缓冲堆内存中的整个响应体，最多100 MB
+- `responseListener`
 侦听器在异步请求成功或失败时被通知
-- headers
+- `headers`
 可选请求标头
 
 ### 读取响应
 
-Response对象，要么由同步的performRequest的方法返回，要么作为 ResponseListener#onSuccess(Response)的参数，通过这个被包装的HTTP客户端返回的响应对象和公开以下信息：
+Response 对象，要么由同步的performRequest的方法返回，要么作为 ResponseListener#onSuccess(Response)的参数，通过这个被包装的HTTP客户端返回的响应对象和公开以下信息：
 
-- getRequestLine
+- `getRequestLine`
 有关执行的请求的信息
-- getHost
+- `getHost`
 返回响应的主机
-- getStatusLine
+- `getStatusLine`
 响应状态行
-- getHeaders
+- `getHeaders`
 响应标题，也可以通过名称检索 getHeader(String)
-- getEntity
+- `getEntity`
 响应体包围在一个 org.apache.http.HttpEntity 对象中
 执行请求时，会抛出异常（或ResponseListener#onFailure(Exception)在以下情况下作为参数接收：
-
-- IOException
+- `IOException`
 通信问题（例如SocketTimeoutException等）
-- ResponseException
+- `ResponseException`
 已返回响应，但其状态代码指示错误（不是2xx）。A ResponseException源自有效的http响应，因此它暴露了其对应的Response对象，该对象允许访问返回的响应。
 
-**NOTE**: 一个 ResponseException 是`不`抛出`HEAD`返回一个请求的404状态代码，因为它是一个预期的HEAD，仅仅表示该资源未找到响应。所有其他的HTTP方法（例如GET）抛出ResponseException了404回应，除非该ignore参数包含404。ignore是一个特殊的客户端参数，不会发送到Elasticsearch，并包含一个逗号分隔的错误状态代码列表。它允许控制是否将某个错误状态代码视为预期响应而不是异常。这对于get API可以返回是有用的404 当文档丢失时，在这种情况下，响应主体不会包含错误，而是通常的get api响应，只是没有找到文档。
+**NOTE**: 一个 `ResponseException` 是 **不** 抛出`HEAD`返回一个请求的 `404` 状态代码，因为它是一个预期的 `HEAD` ，仅仅表示该资源未找到响应。所有其他的HTTP方法（例如GET）抛出ResponseException了404回应，除非该ignore参数包含404。ignore是一个特殊的客户端参数，不会发送到Elasticsearch，并包含一个逗号分隔的错误状态代码列表。它允许控制是否将某个错误状态代码视为预期响应而不是异常。这对于get API可以返回是有用的404 当文档丢失时，在这种情况下，响应主体不会包含错误，而是通常的get api响应，只是没有找到文档。
 
 ### 请求样例
-> 以下内容待续，原文见如下链接：
-https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_example_requests.html
+
+这里有一对样例：
+
+```java
+Response response = restClient.performRequest("GET", "/",
+        Collections.singletonMap("pretty", "true"));
+System.out.println(EntityUtils.toString(response.getEntity()));
+
+//index a document
+HttpEntity entity = new NStringEntity(
+        "{\n" +
+        "    \"user\" : \"kimchy\",\n" +
+        "    \"post_date\" : \"2009-11-15T14:12:12\",\n" +
+        "    \"message\" : \"trying out Elasticsearch\"\n" +
+        "}", ContentType.APPLICATION_JSON);
+
+Response indexResponse = restClient.performRequest(
+        "PUT",
+        "/twitter/tweet/1",
+        Collections.<String, String>emptyMap(),
+        entity);
+```
+
+> 为 HttpEntity 指定的 ContentType 很重要，因为它将用于设置 Content-Type 头，然后 Elasticsearch 才可以方便的正确解析内容。未来版本的 Elasticsearch 将强制要求将其设置的正确性。
+
+注意此低级客户端并没有制定额外的帮助编码和解码 json 的工具。用户可以自由的使用他们自己喜欢的类库。
+
+底层 Apache Async Http Client 提供允许不同请求题格式（stream, byte array, string 等）的 [org.apache.http.HttpEntity](https://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/org/apache/http/HttpEntity.html) 实现。对于读取响应体，`HttpEntity＃getContent`方法很方便，它从先前的响应体缓冲里读取并返回一个 `InputStream` 对象。作为替代方案，可以提供一个自定义 [org.apache.http.nio.protocol.HttpAsyncResponseConsumer](http://hc.apache.org/httpcomponents-core-ga/httpcore-nio/apidocs/org/apache/http/nio/protocol/HttpAsyncResponseConsumer.html  )来控制如何读取和缓冲字节。
+
+一下是如何发送异步请求的一个简单示例：
+
+```java
+int numRequests = 10;
+final CountDownLatch latch = new CountDownLatch(numRequests);
+
+for (int i = 0; i < numRequests; i++) {
+    restClient.performRequestAsync(
+        "PUT",
+        "/twitter/tweet/" + i,
+        Collections.<String, String>emptyMap(),
+        //假设文档被存储在实体数组中
+        entities[i],
+        new ResponseListener() {
+            @Override
+            public void onSuccess(Response response) {
+                System.out.println(response);
+                latch.countDown();
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                latch.countDown();
+            }
+        }
+    );
+}
+
+//等待所有请求完成。
+latch.await();
+```
 
 ### 日志
-> 以下内容待续，原文见如下链接：
-https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_logging.html
+
+Java REST 客户端使用与 Apache Async Http Client 相同的日志记录库：[Apache Commons Logging](https://commons.apache.org/proper/commons-logging/)，它支持许多流行的日志记录实现。启用日志记录的java包是客户机本身的 `org.elasticsearch.client` 和嗅探器的 `org.elasticsearch.client.sniffer`。
+
+还可以在 crul 范式里启用请求跟踪记录来记录每个请求和相应的响应。这在调试时很方便，例如在需要手动执行请求以检查它是否仍然产生与之相同的响应的情况下。 启用跟踪程序包的跟踪记录以打印出这样的日志行。 需要注意的是，这种类型的日志记录的性能开销是昂贵的，他不应该在生产环境中始终启用，而是仅在需要时暂时使用。
 
 ## 通用配置
-> 通用配置章节内容待续，原文见如下链接：
-> https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/_common_configuration.html
+
+`RestClientBuilder` 提供了一个 `RequestConfigCallback` 和一个 `HttpClientConfigCallback`来对 `Apache Async Http Client` 对外的公共方法进行任何定制。这些回调对象使得在不用覆盖 “RestClient” 初始化的其他所有默认配置的情况下修改一些客户端的特殊行为成为可能。本节介绍一些需要对低级`Java REST Client`的额外配置的常见场景。
 
 ### 超时
+请求超时参数的配置可以通过在 `RestClient` 的建造者(译注：实际为即 *RestClientBuilder* )在建造实例的过程张提供一个 `RequestConfigCallback 实例完成。该接口有一个接收 [org.apache.http.client.config.RequestConfig.Builder](https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/client/config/RequestConfig.Builder.html) 实例作为参数并具有相同返回值类型的方法。请求建造者(译注: *RestClientBuilder* )可以被修改并返回修改后的对象。在下面的样例中，我们增加链接超时时间（默认值为1秒）和套接字超时时间（默认值为30秒）。同样的我们也相应的调整醉倒重试超时时间（默认值也是30秒）。
+
+```java
+RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
+        .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
+            @Override
+            public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder requestConfigBuilder) {
+                return requestConfigBuilder.setConnectTimeout(5000)
+                        .setSocketTimeout(60000);
+            }
+        })
+        .setMaxRetryTimeoutMillis(60000)
+        .build();
+```
+
 ### 线程数
+`Apache Http Async Client` 默认情况下启动一个调度线程，和一定数量的由连接管理器使用的工作线程，工作线程数量与本机检测到的处理器的数量值一致(该值取决于方法 `Runtime.getRuntime().availableProcessors()` 的返回结果)。线程数量的修改可以以以下方式进行:
+```java
+RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
+        .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+            @Override
+            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
+                return httpClientBuilder.setDefaultIOReactorConfig(
+                        IOReactorConfig.custom().setIoThreadCount(1).build());
+            }
+        })
+        .build();
+```
+
 ### 基本身份验证
+
+配置基本认证可以通过在 `RestClient` 的建造者建造时提供一个 `HttpClientConfigCallback` 来实现。这个接口有一个接收
+ [org.apache.http.impl.nio.client.HttpAsyncClientBuilder](https://hc.apache.org/httpcomponents-asyncclient-dev/httpasyncclient/apidocs/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.html) 实例作为参数并具有相同返回值类型的方法。 这个 http 客户端建造者可以被修改并返回修改后的建造者。 在下面的样例中我们设置一个需要基本身份验证的默认凭据。
+
+```java
+final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+credentialsProvider.setCredentials(AuthScope.ANY,
+        new UsernamePasswordCredentials("user", "password"));
+
+RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
+        .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+            @Override
+            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
+                return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+            }
+        })
+        .build();
+```
+
+您可以禁用 Preemptive Authentication，这意味着每个请求都将发送没有授权头来查看是否被接受，当收到HTTP 401响应后，它将使用基本身份验证头重新发送完全相同的请求。如果你想这样做，那么你可以通过 `HttpAsyncClientBuilder` 禁用它：
+
+```java
+final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+credentialsProvider.setCredentials(AuthScope.ANY,
+        new UsernamePasswordCredentials("user", "password"));
+
+RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
+        .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+            @Override
+            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
+                // disable preemptive authentication
+                httpClientBuilder.disableAuthCaching();
+                return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+            }
+        })
+        .build();
+```
+
 ### 加密通信
+
+加密通讯可以也可以通过一个 `HttpClientConfigCallback` 进行配置。接口 [org.apache.http.impl.nio.client.HttpAsyncClientBuilder](https://hc.apache.org/httpcomponents-asyncclient-dev/httpasyncclient/apidocs/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.html) 接受一个参数的公开的多个方法来配置加密通信：`setSSLContext`, `setSSLSessionStrategy` 和 `setConnectionManager`, 以上方法按照最不重要的顺序排序. 下面是一个样例：
+
+```java
+KeyStore keystore = KeyStore.getInstance("jks");
+try (InputStream is = Files.newInputStream(keyStorePath)) {
+    keystore.load(is, keyStorePass.toCharArray());
+}
+RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
+        .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+            @Override
+            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
+                return httpClientBuilder.setSSLContext(sslcontext);
+            }
+        })
+        .build();
+```
+
 ### 其他
+
+对于其他任何需要配置项, 可以查阅 `Apache HttpAsyncClient` 文档： [https://hc.apache.org/httpcomponents-asyncclient-4.1.x/](https://hc.apache.org/httpcomponents-asyncclient-4.1.x/)
 
 ## 嗅探器（*Sniffer*）
 
-这是一个小型的包，他允许从一个正在运行中的Elasticsearch集群里自动发现节点，并将其设置更新一个现有的RestClient实例上。默认情况下他使用使用Nodes Info api检索属于集群的节点，并使用jackson解析获取的json响应。
+这是一个小型的包，他允许从一个正在运行中的 Elasticsearch 集群里自动发现节点，并将其设置更新一个现有的RestClient实例上。默认情况下他使用使用`Nodes Info` api检索属于集群的节点，并使用`jackson`解析获取的`json`响应。
 
 该库与Elasticsearch 2.x及以上兼容。
 
 ### Maven 仓库
-低级REST客户端与 Elasticsearch 的发行周期相同。 可以使用你希望使用的嗅探器（Sniffer）版本替换版本，这里使用 `5.5.2` 版本。嗅探器版本和与 Elasticsearch 通信的 REST 客户端的版本之间没有关系。嗅探器支持从elasticsearch 2.x及以上获取节点列表。
+低级REST客户端与 Elasticsearch 的发行周期相同。 可以使用你希望使用的嗅探器（Sniffer）版本替换版本，这里使用 `5.5.2` 版本。嗅探器版本和与 Elasticsearch 通信的 REST 客户端的版本之间没有关系。嗅探器支持从 Elasticsearch 2.x及以上获取节点列表。
 
 ### Maven 配置
 
@@ -280,6 +429,7 @@ Sniffer sniffer = Sniffer.builder(restClient)
 
 
 ### 许可
+
 Copyright 2013-2016 Elasticsearch
 
 根据 `Apache License, Version 2.0`（“License”）许可; 您不得使用此文件，除非符合许可证。您可以获得许可证的副本
