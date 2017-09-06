@@ -339,6 +339,7 @@ KeyStore keystore = KeyStore.getInstance("jks");
 try (InputStream is = Files.newInputStream(keyStorePath)) {
     keystore.load(is, keyStorePass.toCharArray());
 }
+
 RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
         .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
             @Override
@@ -347,6 +348,7 @@ RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
             }
         })
         .build();
+
 ```
 
 ### 其他
@@ -376,7 +378,7 @@ RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200))
 ### Gradle 配置
 使用 `gradle` 作依赖管理时,你可以向这样配置 `sniffer` 依赖，将下列内容添加到你的 `build.gradle` 文件里：
 
-```groov
+```
 dependencies {
     compile 'org.elasticsearch.client:sniffer:5.5.2'
 }
