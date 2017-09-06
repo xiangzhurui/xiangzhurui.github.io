@@ -98,11 +98,10 @@ restClient.close();
 
 ### 执行请求
 
-#### 执行请求
+一旦一个 `RestClient` 实例被创建。就可以通过调用一个可用 `performRequest` 和 `performRequestAsync` 方法预期重载方法来发送请求。`performRequest` 方法是同步的，他直接返回 `Response`, 这意味着客户端将会阻塞等待响应的返回。`performRequestAsync` 方法返回 `void` 并接受一个额外的 `ResponseListener` 作为参数，他是异步执行的方法。在方法执行完成或失败时将会通知传入的监听器（译注：ResponseListener）。
 
-一旦一个 `RestClient` 已经北创建，请求就可以通过一个名为 `performRequest` 和 `performRequestAsync` 的方法创建。`performRequest` 方法是同步的，他直接返回 `Response`, 这意味着客户端将会阻塞等待响应的返回。`performRequestAsync` 方法返回 `void` 然后接受一个额外的 `ResponseListener` 作为参数，然后方法价格会异步执行，ResponseListener将会通知完成或失败的执行结果。
 ```java
-// Synchronous variants
+// 同步请求方法
 Response performRequest(String method, String endpoint,
                         Header... headers)
     throws IOException;
@@ -124,7 +123,7 @@ Response performRequest(String method, String endpoint,
                         Header... headers)
     throws IOException;
 
-// Asynchronous variants
+// 异步请求方法
 void performRequestAsync(String method, String endpoint,
                          ResponseListener responseListener,
                          Header... headers);
@@ -148,46 +147,49 @@ void performRequestAsync(String method, String endpoint,
                          Header... headers);
 ```
 
-#### 请求参数
+**请求参数**
 
-以下是不同方法接受的参数：
+以下是对不同方法的参数说明：
 
 - `method`
-http方法或动作
+  http方法或动作
 - `endpoint`
-请求路径，Elasticsearch API 定义的路径（例如`/_cluster/health` ）
+  请求路径，Elasticsearch API 定义的路径（例如`/_cluster/health` ）
 - `params`
-可选参数作为querystring参数发送
+  可选参数。作为querystring参数发送。
 - `entity`
-包含在org.apache.http.HttpEntity对象中的可选请求主体
+  可选参数。封装在`org.apache.http.HttpEntity`对象中的请求主体
 - `responseConsumerFactory`
-用于 `org.apache.http.nio.protocol.HttpAsyncResponseConsumer` 每次请求尝试创建回调实例的可选工厂 。控制响应主体如何从客户端上的非阻塞HTTP连接流式传输。当没有提供时，使用默认实现来缓冲堆内存中的整个响应体，最多100 MB
+  可选参数。用于每次请求接受的创建 [org.apache.http.nio.protocol.HttpAsyncResponseConsumer](http://hc.apache.org/httpcomponents-core-ga/httpcore-nio/apidocs/org/apache/http/nio/protocol/HttpAsyncResponseConsumer.html) 回调实例的工厂类 。在客户端控制如何从一个非阻塞HTTP连接上获取响应主体的数据流。当没有使用该参数时，默认实现将整个响应体缓冲到堆内存中，上限为 100 MB
 - `responseListener`
-侦听器在异步请求成功或失败时被通知
+  异步请求成功或失败时收到通知的监听器。
 - `headers`
-可选请求标头
+  可选参数。http 请求头。
 
 ### 读取响应
 
-Response 对象，要么由同步的performRequest的方法返回，要么作为 ResponseListener#onSuccess(Response)的参数，通过这个被包装的HTTP客户端返回的响应对象和公开以下信息：
+`Response` 对象，要么由同步的 `performRequest` 的方法返回，要么作为 `ResponseListener#onSuccess(Response)` 的参数持有，响应对象包装了由HTTP客户端返回并提供的公开信息：
 
 - `getRequestLine`
-有关执行的请求的信息
+  有关执行的请求的信息
 - `getHost`
-返回响应的主机
+  返回响应的主机
 - `getStatusLine`
-响应状态行
+  响应状态行
 - `getHeaders`
-响应标题，也可以通过名称检索 getHeader(String)
+  响应标题，也可以使用 `getHeader(String)`方法按名称获取
 - `getEntity`
-响应体包围在一个 org.apache.http.HttpEntity 对象中
-执行请求时，会抛出异常（或ResponseListener#onFailure(Exception)在以下情况下作为参数接收：
-- `IOException`
-通信问题（例如SocketTimeoutException等）
-- `ResponseException`
-已返回响应，但其状态代码指示错误（不是2xx）。A ResponseException源自有效的http响应，因此它暴露了其对应的Response对象，该对象允许访问返回的响应。
+  响应体包含在 `org.apache.http.HttpEntity` 对象中。
 
-**NOTE**: 一个 `ResponseException` 是 **不** 抛出`HEAD`返回一个请求的 `404` 状态代码，因为它是一个预期的 `HEAD` ，仅仅表示该资源未找到响应。所有其他的HTTP方法（例如GET）抛出ResponseException了404回应，除非该ignore参数包含404。ignore是一个特殊的客户端参数，不会发送到Elasticsearch，并包含一个逗号分隔的错误状态代码列表。它允许控制是否将某个错误状态代码视为预期响应而不是异常。这对于get API可以返回是有用的404 当文档丢失时，在这种情况下，响应主体不会包含错误，而是通常的get api响应，只是没有找到文档。
+在执行请求时，以下情况下将抛出异常（或者作为参数传入到  `ResponseListener#onFailure(Exception)` 里）：
+
+- `IOException`
+  通信问题（例如：SocketTimeoutException 等）
+- `ResponseException`
+  有响应返回，但其状态代码表明错误（不是`2xx`）。一个 `ResponseException` 来自一个有效的 http 响应，因此它也暴露了其对应的一个允许被访问的 `Response` 对象。
+
+**注意**: 对于返回 `404` 状态码的 `HEAD` 请求 **不会** 抛出 `ResponseException` 异常，因为这是一个预期内的结果，这一响应仅表示该资源未被找到。M所有其他的 HTTP 方法，当响应 `404`时，（例如：`GET`）将抛出 `ResponseException` 异常，除非 `ignore` 参数包含 `404`。`ignore` 是一个特殊的客户端参数，它包含逗号分隔的错误状态码列表，并且不会被发送到 Elasticsearch。这一参数允许控制是否将某些错误状态代码视为预期响应而不是异常。这是有用的，例如，当只是因为文档没有被找到时 get api 可以返回 404，响应主体不会包含错误，而是返回正常的 get 响应。
+
 
 ### 请求样例
 
