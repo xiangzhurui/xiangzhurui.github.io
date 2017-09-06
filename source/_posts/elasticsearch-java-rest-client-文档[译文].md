@@ -8,7 +8,7 @@ tags:
   - REST
 date: 2017-08-18 13:30:14
 update: 2017-09-05 12:40:00
-categories: [Elasticsearch, 译文]
+categories: [翻译,Elasticsearch]
 ---
 
 

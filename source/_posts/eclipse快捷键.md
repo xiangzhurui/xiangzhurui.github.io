@@ -2,7 +2,9 @@
 title: eclipse快捷键
 date: 2010-11-10 17:11:12
 update: 2010-11-10 17:11:12
-tags: [eclipse, 快捷键, 工具]
+tags: [Eclipse, 快捷键, 工具]
+categories: [开发工具, Eclipse]
+
 ---
 
 ## eclipse 快捷键1(`CTRL`)

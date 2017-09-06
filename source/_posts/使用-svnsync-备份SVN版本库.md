@@ -3,6 +3,7 @@ title: 使用 svnsync 备份SVN版本库
 date: 2017-08-07 17:41:34
 update: 2017-08-07 17:41:34
 tags: [svnsync, SVN, Subversion, 版本控制]
+categories: [版本控制,Subversion]
 ---
 
 > 本文操作环境为 Windows 10 与 PowerShell

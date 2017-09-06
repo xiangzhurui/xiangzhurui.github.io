@@ -3,6 +3,7 @@ title: 使用 Sonatype Nexus 搭建 Maven 私有仓库
 date: 2016-11-09 14:56
 update: 2016-11-09 14:56
 tags: [Maven,Nexus]
+categories: [开发工具]
 ---
 
 ## Sonatype Nexus 服务启动失败问题解决

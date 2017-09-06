@@ -3,6 +3,7 @@ title: Spring 里配置 Elasticsearch Java REST Client
 tags: [Elasticsearch,Spring, 配置]
 date: 2017-08-21 20:00:00
 update: 2017-08-21 20:00:00
+categories: [Spring]
 ---
 
 > 一般而言类似数据源的对象我们会配置一个全局可用的bean, 本文简述elasticsearch 5.5 java restClient在 Spring 里的配置(单点es)
