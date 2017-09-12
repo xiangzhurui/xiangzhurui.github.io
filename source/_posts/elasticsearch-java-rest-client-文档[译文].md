@@ -3,6 +3,7 @@ layout: drafts
 title: 'Elasticsearch Java REST Client 文档[译文]'
 tags:
   - Elasticsearch
+  - Elasticsearch 5.5
   - 翻译
   - API 文档
   - REST

@@ -1,6 +1,6 @@
 ---
-title: Spring 里配置 Elasticsearch Java REST Client
-tags: [Elasticsearch,Spring, 配置]
+title: Spring 里配置 Elasticsearch (5.5) Java REST Client
+tags: [Elasticsearch,Spring, 配置, Elasticsearch 5.5]
 date: 2017-08-21 20:00:00
 update: 2017-08-21 20:00:00
 categories: [Spring]
