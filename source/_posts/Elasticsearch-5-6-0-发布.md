@@ -1,14 +1,18 @@
 ---
 title: Elasticsearch 5.6.0 发布
+categories:
+  - 翻译
+  - Elasticsearch
+tags:
+  - Elasticsearch
+  - Elasticsearch 5.6
 date: 2017-09-12 23:15:00
 update: 2017-09-12 23:15:00
-tags: [Elasticsearch,Elasticsearch 5.6]
-categories: [翻译,Elasticsearch]
 ---
-> [原文来源](https://www.elastic.co/blog/elasticsearch-5-6-0-released)
-> [译文来源](./)
 
-今天我们很高兴地宣布推出基于 Lucene 6.6.0的 Elasticsearch 5.6.0版本。这是最新的稳定版本，已经可以在 我们的 [Elasticsearch](https://www.elastic.co/cloud) 服务平台 [Elastic Cloud](https://www.elastic.co/cloud) 上部署。
+> [原文来源](https://www.elastic.co/blog/elasticsearch-5-6-0-released)
+
+今天（2017/09/11）我们很高兴地宣布推出基于 Lucene 6.6.0的 Elasticsearch 5.6.0版本。这是最新的稳定版本，已经可以在 我们的 [Elasticsearch](https://www.elastic.co/cloud) 服务平台 [Elastic Cloud](https://www.elastic.co/cloud) 上部署。
 
 5.x 最新版本如下：
 
@@ -43,12 +47,11 @@ Elasticsearch 5.6.0是一个升级版本。 如果您想要从5.x滚动升级到
 
 ## 搜索可扩展性
 
-针对诸如 `logstash-*`之类的索引模式的搜索可以引用大量的分片。 通常， 这样的查询包括日期范围过滤器，这意味着大多数分片不会包含任何匹配的文档。 在优化工作完成之前，这一版本中我们已经包含了一个优化以及早终止在这些分片上的请求，但这还不够。Imagine a multi-search request containing 10 search requests, each of which target 2,000 shards. That’s 20,000 shard-level search requests which are added to the search threadpool queue. This could easily result in rejections, even though the majority of these requests are very quick.
+针对诸如 `logstash-*`之类的索引模式的搜索可以引用大量的分片。 通常， 这样的查询包括日期范围过滤器，这意味着大多数分片不会包含任何匹配的文档。 在优化工作完成之前，这一版本中我们已经包含了一个优化以及早终止在这些分片上的请求，但这还不够。想象一下，包含10个搜索请求的多搜索请求，每个搜索请求都有2,000个碎片。这就是20,000个分片级的搜索请求，它们都被添加到搜索线程池队列中。这很容易导致搜索拒绝，即使大部分请求非常快。
 
-Previously, Kibana used the` _field_stats` API with a date range filter to figure out which indices might contain matching documents, and then ran the search request against only those indices. We wanted to remove this API because it was much heavier than users expected and open to abuse. Instead, a search request now has a light shard prefiltering phase which is triggered if a search request targets at least 128 shards (by default). These prefilter requests are not added to the search queue and so cannot be rejected because the queue is full. The prefilter request rewrites the query at the shard level and determines whether the query has any chance of matching any documents at all. The full search request is then sent only to those shards which have a chance of matching.
+以前，Kibana使用使用带有日期范围过滤器的 `_field_stats` API来确定那些索引可能包含匹配的文档，然后针对这些索引运行搜索请求。我们想删除这个API，因为它比用户的预期要重得多，可能被滥用。相反，搜索请求现在具有轻薄分片预过滤阶段，如果搜索请求至少指定128个分片（默认情况下），就会被触发。这些前置过滤器请求不会添加到搜索队列中，所以搜索不会因为队列已满而被拒绝。预过滤器请求在分片级别重写查询，并确定查询是否有可能匹配任何文档。完整的搜索请求仅发送到有机会匹配的分片。
+但是，如果用户实际上想要搜索所有2,000个分片，或是错误地搜索所有的索引呢？ 这些广泛的请求不应该压倒集群，也不应妨碍其他用户的搜索请求。 为了解决这个问题，我们引入了 `max_concurrent_shard_requests` 参数，其默认值取决于集群中的节点数量，但是固定的上限为256.这可能会使单个搜索请求针对较多的分片，但是它使 由许多用户进行更公平的并发搜索。
 
-But what if the user actually does want to search all 2,000 shards, or searches all indices by mistake? These wide-ranging requests should not overwhelm the cluster nor get in the way of search requests from other users. In order to solve this, we introduced the ``max_concurrent_shard_requests`` parameter whose default value depends on the number of nodes in the cluster, but which has a fixed upper limit of 256. This may make a single search request that targets many shards slower, but it makes for fairer concurrent searches by many users.
-
-## 结论
+## 最后
 
 请[下载Elasticsearch 5.6.0](https://www.elastic.co/downloads/elasticsearch)，尝试一下，让我们知道你在Twitter（[@elastic](https://twitter.com/elastic)）或我们[论坛](https://discuss.elastic.co/c/elasticsearch)上的想法。 您可以在[GitHub问题页面](https://github.com/elastic/elasticsearch/issues)上报告任何问题。
