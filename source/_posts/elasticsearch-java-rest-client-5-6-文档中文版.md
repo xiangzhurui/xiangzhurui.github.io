@@ -209,7 +209,8 @@ builder.setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallba
 #### 其他
 
 ### 嗅探器
-这是个小型库，可以允许从一个正在运行的 Elasticsearch 集群上自动发现节点并将节点列表更新到已经存在的 `RestClient` 实例上。
+
+这是个小型库，可以允许从一个正在运行的 Elasticsearch 集群上自动发现节点并将节点列表更新到已经存在的 `RestClient` 实例上。
 它默认使用 Nodes Info api 检索属于集群的节点，并使用jackson解析获取的json响应。
 
 与Elasticsearch 2.x及以上兼容。
@@ -250,6 +251,7 @@ RestClient restClient = RestClient.builder(
         .build();
 Sniffer sniffer = Sniffer.builder(restClient).build();
 ```
+
 关闭 `Sniffer` 非常重要，如此嗅探器后台线程才能正取关闭并释放他持有的资源。 `Sniffer` 对象应该与 `RestClient` 具有相同的生命周期，并在客户端之前关闭：
 
 ```java
@@ -280,7 +282,7 @@ sniffOnFailureListener.setSniffer(sniffer); // 将 嗅探器关联到嗅探故�
 
 `Elasticsearch` Nodes Info api 不会返回连接节点使用的协议，而只有他们的 `host:port` 键值对，因此默认使用 http。如果需要使用 `https` ，必须手动创建和提供 `ElasticsearchHostsSniffer` 实例，如下所示：
 
-```java
+```
 RestClient restClient = RestClient.builder(
         new HttpHost("localhost", 9200, "http"))
         .build();
@@ -350,9 +352,9 @@ Java高级REST客户端需要Java 1.8，并依赖于Elasticsearch核心项目。
 
 高级客户端保证能够与运行在相同主版本和大于或等于次要版本的任何Elasticsearch节点进行通信。它不需要与它进行通信的弹性搜索节点相同的次要版本，因为它是向前兼容的，意味着它支持与之前开发的弹性搜索的更新版本进行通信。
 
-5.6客户端可以与任何5.6.x弹性搜索节点进行通信。以前的5.x小版本，如5.5.x，5.4.x等（完全）不支持。
+5.6 客户端可以与任何 5.6.x Elasticsearch 节点进行通信。以前的 5.x 小版本，如 5.5.x，5.4.x 等不（完全）支持。
 
-6.0客户端能够与任何6.x Elasticsearch节点进行通信，而6.1客户端确实能够与6.1,6.2和以后的6.x版本进行通信，但与以前的Elasticsearch节点版本通信时可能会出现不兼容问题例如6.1到6.0之间，例如6.1客户端支持而6.0节点不知道的某些API的新请求主体字段。
+6.0 客户端能够与任何 6.x Elasticsearch 节点进行通信，而 6.1 客户端确实能够与 6.1,6.2 和以后的 6.x 版本进行通信，但与以前的 Elasticsearch 节点版本通信时可能会出现不兼容问题例如 6.1 到 6.0 之间，例如 6.1 客户端支持而 6.0 节点不知道的某些API的新请求主体字段。
 
 建议在将Elasticsearch集群升级到新的主要版本时升级高级客户端，因为REST API突破性更改可能会导致意外的结果，具体取决于请求所击中的节点，新添加的API只能由较新版本的客户端。一旦群集中的所有节点都升级到新的主版本，则客户端应当更新。
 
@@ -420,7 +422,7 @@ Java 高级 REST 客户端支持下列 API ：
 
 * [Search API](#Search-API)
 * [Search Scroll API](#Search-API)
-* [Clear Scroll API](#Search-API)
+* [Clear Scroll API](#Clear-Search-API)
 
 杂项 API
 * [Info API](#Info-API)
@@ -1569,13 +1571,87 @@ Scroll API可用于从搜索请求中检索大数量的结果。
 为了使用滚动，需要按照给定的顺序执行以下步骤。
 
 ##### 初始化搜索滚动上下文
+包含一个 `scroll` 参数的初始化搜索请求必须通过执行 [Search API](#Search-API) 初始化滚动回话。 在处理此SearchRequest时，Elasticsearch将检测滚动参数的存在，并使搜索上下文保持相应的时间间隔。
+```java
+SearchRequest searchRequest = new SearchRequest("posts");
+SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+searchSourceBuilder.query(matchQuery("title", "Elasticsearch"));
+searchSourceBuilder.size(size); //Create the SearchRequest and its corresponding SearchSourceBuilder. Also optionally set the size to control how many results to retrieve at a time.
+searchRequest.source(searchSourceBuilder);
+searchRequest.scroll(TimeValue.timeValueMinutes(1L)); // Set the scroll interval
+SearchResponse searchResponse = client.search(searchRequest);
+String scrollId = searchResponse.getScrollId(); // Read the returned scroll id, which points to the search context that’s being kept alive and will be needed in the following search scroll call
+SearchHits hits = searchResponse.getHits();  // Retrieve the first batch of search hits
+```
 ##### 检索所有相关文档
+其次， 接收到的滚动标识符必须被设置到下一个新的滚动间隔的 `SearchScrollRequest`， 并通过 `searchScroll` 方法发送。Elasticsearch会使用新的滚动标识符返回另一批结果。 然后可以在随后的SearchScrollRequest中使用此新的滚动标识符来检索下一批结果，等等。应该循环重复此过程，直到不再返回结果，这意味着滚动已经用尽，并且已经检索到所有匹配的文档。
+```java
+SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);  //Create the SearchScrollRequest by setting the required scroll id and the scroll interval
+scrollRequest.scroll(TimeValue.timeValueSeconds(30));
+SearchResponse searchScrollResponse = client.searchScroll(scrollRequest);
+scrollId = searchScrollResponse.getScrollId();   //	Read the new scroll id, which points to the search context that’s being kept alive and will be needed in the following search scroll call
+hits = searchScrollResponse.getHits(); //Retrieve another batch of search hits <4>
+assertEquals(3, hits.getTotalHits());
+assertEquals(1, hits.getHits().length);
+assertNotNull(scrollId);
+```
 ##### 清除滚动上下文
+最后，可以使用[Clear Scroll API](#Clear-Scroll-API)删除最后一个滚动标识符，以释放搜索上下文。 当滚动到期时，会自动发生，但最佳实践是当滚动会话结束后尽快释放资源。
 ##### 可选参数
+构建 `SearchScrollRequest` 是可以选择使用以下参数：
+```java
+scrollRequest.scroll(TimeValue.timeValueSeconds(60L));  // 	Scroll interval as a TimeValue
+scrollRequest.scroll("60s"); // Scroll interval as a String
+```
 ##### 同步执行
+```java
+SearchResponse searchResponse = client.searchScroll(scrollRequest);
+```
 ##### 异步执行
+```
+client.searchScrollAsync(scrollRequest, new ActionListener<SearchResponse>() {
+    @Override
+    public void onResponse(SearchResponse searchResponse) {
+        // 当执行成功的时候调用，响应对象以参数的形式传入
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        // 失败时调用，异常以参数形式传入
+    }
+});
+```
 ##### 响应
+与 Search API 一样，滚动搜索 API 也返回一个 `SearchResponse` 对象
 ##### 完整示例
+下面是一个滚动搜索的完整示例：
+```java
+final Scroll scroll = new Scroll(TimeValue.timeValueMinutes(1L));
+SearchRequest searchRequest = new SearchRequest("posts");
+searchRequest.scroll(scroll);
+SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+searchSourceBuilder.query(matchQuery("title", "Elasticsearch"));
+searchRequest.source(searchSourceBuilder);
+
+SearchResponse searchResponse = client.search(searchRequest); // 通过发送初始化 SearchRequest 来初始化搜索上下文
+String scrollId = searchResponse.getScrollId();
+SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+while (searchHits != null && searchHits.length > 0) { //在一个循环中通过调用 Search Scroll api 检索所有搜索命中结果，知道没有文档返回为止。
+    //创建一个新的SearchScrollRequest，持有最近一次返回的滚动标识符和滚动间隔
+    SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
+    scrollRequest.scroll(scroll);
+    searchResponse = client.searchScroll(scrollRequest);
+    scrollId = searchResponse.getScrollId();
+    searchHits = searchResponse.getHits().getHits();
+//处理返回的搜索结果
+}
+
+ClearScrollRequest clearScrollRequest = new ClearScrollRequest(); //一旦滚动完成，清除滚动上下文
+clearScrollRequest.addScrollId(scrollId);
+ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest);
+boolean succeeded = clearScrollResponse.isSucceeded();
+```
 
 
 #### Clear Scroll API
@@ -1593,12 +1669,15 @@ request.addScrollId(scrollId); // 添加一个滚动id到要清除的滚动标�
 https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high-clear-scroll.html
 
 #### Info API
+
 ##### 执行
+
 集群信息可以通过 `info()` 方法被获取到：
 ```java
 MainResponse response = client.info();
 ```
 ##### 响应
+
 返回的 `MainResponse` 提供了有关集群的各种信息：
 ```java
 ClusterName clusterName = response.getClusterName(); // 获取包含集群名称信息的 ClusterName 对象
@@ -1609,12 +1688,16 @@ Build build = response.getBuild(); // 获取已执行请求的节点的构建信
 ```
 
 ### 使用 Java 建造者
+
 Java高级REST客户端依赖于 Elasticsearch 核心项目提供的不同类型的 Java Builders 对象，包括：
 
 **Query Builders**
     The query builders are used to create the query to execute within a search request. There is a query builder for every type of query supported by the Query DSL. Each query builder implements the QueryBuilder interface and allows to set the specific options for a given type of query. Once created, the QueryBuilder object can be set as the query parameter of SearchSourceBuilder. The Search Request page shows an example of how to build a full search request using SearchSourceBuilder and QueryBuilder objects. The Building Search Queries page gives a list of all available search queries with their corresponding QueryBuilder objects and QueryBuilders helper methods.
+
 **Aggregation Builders**
-    Similarly to query builders, the aggregation builders are used to create the aggregations to compute during a search request execution. There is an aggregation builder for every type of aggregation (or pipeline aggregation) supported by Elasticsearch. All builders extend the AggregationBuilder class (or `PipelineAggregationBuilder`class). Once created, `AggregationBuilder objects can be set as the aggregation parameter of SearchSourceBuilder. There is a example of how AggregationBuilder objects are used with SearchSourceBuilder objects to define the aggregations to compute with a search query in Search Request page. The Building Aggregations page gives a list of all available aggregations with their corresponding AggregationBuilder objects and AggregationBuilders helper methods.
+    Similarly to query builders, the aggregation builders are used to create the aggregations to compute during a search request execution. There is an aggregation builder for every type of aggregation (or pipeline aggregation) supported by Elasticsearch. All builders extend the AggregationBuilder class (or `PipelineAggregationBuilder`class). Once created, `AggregationBuilder` objects can be set as the aggregation parameter of SearchSourceBuilder. There is a example of how AggregationBuilder objects are used with SearchSourceBuilder objects to define the aggregations to compute with a search query in Search Request page. The Building Aggregations page gives a list of all available aggregations with their corresponding AggregationBuilder objects and AggregationBuilders helper methods.
+
+
 
 #### 构建查询
 此页面列出了在 `QueryBuilders` 实用程序类中所有可用的搜索查询及其对应的QueryBuilder类名和帮助方法名称。
