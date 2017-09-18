@@ -1,11 +1,11 @@
 ---
 title: Elasticsearch 安装
 tags:
-  - elasticsearch
+  - Elasticsearch
   - 工具
   - 文档
 date: 2017-08-12 12:00:30
-update: 2017-08-12 12:00:30
+update: 2017-09-18 12:30:30
 categories: [开发环境]
 ---
 
@@ -18,20 +18,33 @@ categories: [开发环境]
 * [Elasticsearch: 权威指南](https://elasticsearch.cn/book/elasticsearch_definitive_guide_2.x/index.html)
 * [Elasticsearch Clients - Java REST Client [5.5]](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html)
 
-## 安装
-> 本文使用 Windows 10 下操作，elasticsearch 需要 jdk 1.8
+## 简述
+> Elasticsearch 需要 jdk 1.8
 
-一下链接有详细安装步骤，简单而言就是下载程序包，解压后运行脚本,`Elasticsearch` 运行 `.\bin\elasticsearch.bat`, `Kibana` 是运行`.\bin\kibana.bat`
+以下链接有详细安装步骤，简单而言就是下载程序包，解压后运行脚本,`Elasticsearch` 运行 `.\bin\elasticsearch.bat`, `Kibana` 是运行`.\bin\kibana.bat`
 * [安装 Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html#install-elasticsearch)
 * [安装 Kibana](https://www.elastic.co/guide/en/kibana/current/install.html)
 * [NSSM}(https://nssm.cc/download)
 
-### 快速启动开发环境
-    * 如果你想把 Elasticsearch 作为一个守护进程在后台运行，那么可以在后面添加参数 -d 。
-    * 执行 `./elasticsearch` 启动 `elasticsearch` 服务。
-    * 执行 `./kibana`  启动 `kibana` 服务。
-### kibana
-以下地址可访问，elasticsearch 需要 jdk 1.8
-http://localhost:5601
+## Elasticsearch 安装步骤
 
-> 现在已经可以使用了，其他安装配置事项待续。。。
+1. 下载并解压 Elasticsearch
+    >注意 :Elasticsearch也可以使用apt或yum从我们的软件包仓库安装，或者使用MSI安装程序包安装在Windows上。请参阅指南中的存储库。
+2. 运行 `bin/elasticsearch`（或在Windows上运行 `bin\elasticsearch.bat`）
+3. 运行 `curl http://localhost:9200/` 或使用 PowerShell 运行 `Invoke-RestMethod http://localhost:9200`
+4. 查阅[入门指南](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html)
+
+## Kibana 安装步骤
+1. 下载并解压缩Kibana
+    > 还可以使用apt或yum从我们的软件包仓库安装Kibana。请参阅[存储库指南](https://www.elastic.co/guide/en/kibana/current/install.html)。
+2. 在文本编辑器中打开 `config/kibana.yml` ,设置 `elasticsearch.url` 只想你的 Elasticsearch 实例
+3. 运行 `bin/kibana`（或在Windows上运行 `bin\kibana.bat` ）
+4. 使用浏览器访问 http://localhost:5601
+5. 查阅[入门指南](https://www.elastic.co/guide/en/kibana/current/getting-started.html) 。
+
+
+### 快速启动开发环境
+1. 如果你想把 Elasticsearch 作为一个守护进程在后台运行，那么可以在后面添加参数 -d 。
+2. 执行 `./elasticsearch` 启动 `elasticsearch` 服务。
+3. 执行 `./kibana`  启动 `kibana` 服务。
+4. 访问 kibana ： http://localhost:5601
