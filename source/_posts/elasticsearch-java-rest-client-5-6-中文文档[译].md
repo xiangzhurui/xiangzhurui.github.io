@@ -1,5 +1,5 @@
 ---
-title: Elasticsearch Java REST Client 5.6 文档中文版
+title: Elasticsearch Java REST Client 5.6 中文文档 [译]
 categories:
   - 翻译
   - Elasticsearch
