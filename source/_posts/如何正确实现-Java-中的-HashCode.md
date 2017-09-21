@@ -6,7 +6,7 @@ tags: [Java, HashCode, 翻译, 转载]
 ---
 > 本文为转载。
 > 英文原文：[How to Implement Java’s hashCode Correctly](https://www.sitepoint.com/how-to-implement-javas-hashcode-correctly/)
-> 译文来源：https://www.oschina.net/translate/how-to-implement-javas-hashcode-correctly
+> 译文来源：[如何正确实现 Java 中的 HashCode](https://www.oschina.net/translate/how-to-implement-javas-hashcode-correctly)
 
 ## 相等 和 Hash Code
 
