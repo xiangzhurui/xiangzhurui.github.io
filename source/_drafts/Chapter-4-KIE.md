@@ -1,5 +1,5 @@
 ---
-title: Drools 7.3 第四章 KIE
+title: Drools 7.3.0.Final 文档 - 第4章 KIE
 tags: [Drools,Drools 7.3.0.Final,规则引擎,KIE]
 ---
 # 4. KIE
@@ -59,7 +59,66 @@ KieServices kieServices = KieServices.Factory.get();
 KieContainer kContainer = kieServices.getKieClasspathContainer();
 ```
 “KieServices”是可以访问所有Kie建筑和运行时设施的接口：
+#### 4.2.2.2. `kmodule.xml` 文件
+#### 4.2.2.4. 以编程方式定义 KieModule
+
+也可以以编程方式定义属于 `KieModule` 的 `KieBase` 们和 `KieSession` 们，而不是在 `kmodule.xml` 文件中声明定义。相同的编程API还允许明确添加包含Kie工件的文件，而不是从项目的资源文件夹自动读取它们。要做到这一点，有必要创建一种 `KieFileSystem` 虚拟文件系统，并将项目中包含的所有资源添加到它。
+
+![Figure 89. KieFileSystem](./Chapter-4-KIE/BuildDeployUtilizeAndRun/KieFileSystem.png)
+*Figure 89. KieFileSystem*
+像所有其他的纪伊核心部件，你可以从 `KieServices` 得到的一个 `KieFileSystem` 实例。`kmodule.xml` 配置文件必须被添加到文件系统中。这是个强制性步骤。Kie 还提供了一个由 `KieModuleModel` 程序实现的方便流式风格的 API，，以便以编程方式创建此文件。
+![Figure 90. KieModuleModel](./Chapter-4-KIE/BuildDeployUtilizeAndRun/KieModuleModel.png)
+*Figure 90. KieModuleModel*
+在实际中使用它需要从 `KieServices` 穿件一个 `KieModuleModel` ， 并配置所需的 `KieBases` 和 `KieSessions` ， 并将其转换成 XML 并添加到 `KieFileSystem` 里。 这个下面这个示例程序展示了这一点：
+* 示例28.以编程方式创建kmodule.xml并将其添加到KieFileSystem
+```java
+KieServices kieServices = KieServices.Factory.get();
+KieModuleModel kieModuleModel = kieServices.newKieModuleModel();
+
+KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel( "KBase1 ")
+        .setDefault( true )
+        .setEqualsBehavior( EqualityBehaviorOption.EQUALITY )
+        .setEventProcessingMode( EventProcessingOption.STREAM );
+
+KieSessionModel ksessionModel1 = kieBaseModel1.newKieSessionModel( "KSession1" )
+        .setDefault( true )
+        .setType( KieSessionModel.KieSessionType.STATEFUL )
+        .setClockType( ClockTypeOption.get("realtime") );
+
+KieFileSystem kfs = kieServices.newKieFileSystem();
+kfs.writeKModuleXML(kieModuleModel.toXML());
+```
+在这一点上，还需要KieFileSystem通过流畅的API 增加构成项目的所有其他Kie工件。这些工件必须添加在相应的通常的Maven项目的相同位置。
+* 示例29.将Kie工件添加到KieFileSystem
+```java
+KieFileSystem kfs = ...
+kfs.write( "src/main/resources/KBase1/ruleSet1.drl", stringContainingAValidDRL )
+        .write( "src/main/resources/dtable.xls",
+                kieServices.getResources().newInputStreamResource( dtableFileStream ) );
+```
+* 图 92. KieBuilder
+当 `KieFileSystem` 的内容成功构建时，结果 `KieModule` 将自动被添加到 `KieRepository` 。 `KieRepository` 是一个单例，作为所有可用 `KieModule` 的仓库。
+
+* 示例31.构建KieFileSystem的内容并创建KieContainer
+```java
+KieServices kieServices = KieServices.Factory.get();
+KieFileSystem kfs = ...
+kieServices.newKieBuilder(kfs).buildAll();
+KieContainer kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
+```
+* 示例32.检查编译没有产生任何错误
+```java
+KieBuilder kieBuilder = kieServices.newKieBuilder( kfs ).buildAll();
+assertEquals( 0, kieBuilder.getResults().getMessages( Message.Level.ERROR ).size() );
+```
+
+
 ### 4.2.3. 部署
+#### 4.2.3.1. KieBase
+
+`KieBase` 是所有应用知识定义的一个仓库。它包含规则，进程，函数和类型模型。
+
+
 ### 4.2.4. 运行
 ### 4.2.5. 安装和部署电子表格
 ### 4.2.6. 构建，部署和使用示例
