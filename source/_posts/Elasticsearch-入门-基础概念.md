@@ -1,8 +1,14 @@
 ---
 title: Elasticsearch 入门，基础概念
-tags: [Elasticsearch,翻译]
-categories: [翻译, Elasticsearch]
+categories:
+  - 翻译
+  - Elasticsearch
+tags:
+  - Elasticsearch
+  - 翻译
+date: 2018-03-07 15:38:48
 ---
+
 
 ### 基础概念
 
@@ -49,30 +55,28 @@ Elasticsearch 是一个准实时搜索平台。这意味着你从索引一个文
 
 
 #### 分片和复制 (Shards & Replicas)
-An index can potentially store a large amount of data that can exceed the hardware limits of a single node. For example, a single index of a billion documents taking up 1TB of disk space may not fit on the disk of a single node or may be too slow to serve search requests from a single node alone.
+索引可能潜在地存储大量数据，这些数据可能会超出单个节点的硬件限制。 例如，占用 1TB 磁盘空间的十亿份文档的单个索引可能不适合单个节点的磁盘，或者可能太慢而无法单独向单个节点提供搜索请求。
 
-To solve this problem, Elasticsearch provides the ability to subdivide your index into multiple pieces called shards. When you create an index, you can simply define the number of shards that you want. Each shard is in itself a fully-functional and independent "index" that can be hosted on any node in the cluster.
+为了解决这个问题，Elasticsearch提供了将索引细分为多个碎片的功能。 当您创建索引时，您可以简单地定义所需的碎片数量。 每个分片本身都是一个功能齐全且独立的“索引”，可以在集群中的任何节点上进行托管。
 
-Sharding is important for two primary reasons:
+分片的重要性主要有两个原因：
+* 它允许您水平分割/缩放您的内容量
+* 它允许您跨越分片（可能在多个节点上）分发和并行操作，从而提高性能/吞吐量
 
-* It allows you to horizontally split/scale your content volume
-* It allows you to distribute and parallelize operations across shards (potentially on multiple nodes) thus increasing performance/throughput
+分片如何分布的机制以及其文档如何聚合回搜索请求完全由Elasticsearch管理，并且作为用户对您透明。
 
-The mechanics of how a shard is distributed and also how its documents are aggregated back into search requests are completely managed by Elasticsearch and is transparent to you as the user.
+在任何时候都可能出现故障的网络/云环境中，非常有用并且强烈建议有一个故障切换机制，以防碎片/节点以某种方式脱机或因任何原因而消失。 为此，Elasticsearch允许您将索引碎片的一个或多个副本制作为简称为副本碎片或副本。
 
-In a network/cloud environment where failures can be expected anytime, it is very useful and highly recommended to have a failover mechanism in case a shard/node somehow goes offline or disappears for whatever reason. To this end, Elasticsearch allows you to make one or more copies of your index’s shards into what are called replica shards, or replicas for short.
+复制很重要主要有两个原因：
 
-Replication is important for two primary reasons:
+* 它在碎片/节点失败的情况下提供高可用性。 由于这个原因，需要注意的是，副本分片永远不会分配到与从中复制的原始/主分片相同的节点上。
+* 它允许您扩展搜索量/吞吐量，因为搜索可以在所有副本上并行执行。
 
-* It provides high availability in case a shard/node fails. For this reason, it is important to note that a replica shard is never allocated on the same node as the original/primary shard that it was copied from.
-* It allows you to scale out your search volume/throughput since searches can be executed on all replicas in parallel.
+总而言之，每个索引可以分成多个分片。 索引也可以被复制为零（意味着没有副本）或更多次。 一旦复制，每个索引将具有主分片（从中复制的原始分片）和副本分片（主分片的副本）。 在创建索引时，可以为每个索引定义分片和副本的数量。 在创建索引之后，您可以随时更改动态副本的数量，但您无法在事后更改碎片的数量。
 
-To summarize, each index can be split into multiple shards. An index can also be replicated zero (meaning no replicas) or more times. Once replicated, each index will have primary shards (the original shards that were replicated from) and replica shards (the copies of the primary shards). The number of shards and replicas can be defined per index at the time the index is created. After the index is created, you may change the number of replicas dynamically anytime but you cannot change the number of shards after-the-fact.
-
-By default, each index in Elasticsearch is allocated 5 primary shards and 1 replica which means that if you have at least two nodes in your cluster, your index will have 5 primary shards and another 5 replica shards (1 complete replica) for a total of 10 shards per index.
+默认情况下，Elasticsearch中的每个索引都分配了5个主分片和1个副本，这意味着如果您的集群中至少有两个节点，则索引将包含5个主分片和另外5个副本分片（1个完整副本），总共 每个索引10个碎片。
 
 #### 注意
-Elasticsearch 的每一个分片都是一个 Lucene 索引。 你在单个 Lucene 索引里所拥有的文档有最大数量值限制。在 [LUCENE-5843](https://issues.apache.org/jira/browse/LUCENE-5843) 里，这个极限值是 `2,147,483,519` (= `Integer.MAX_VALUE - 128`)。你可以使用 [_cat/shards](https://www.elastic.co/guide/en/elasticsearch/reference/5.5/cat-shards.html) API 来监控分片容量。
-
+Elasticsearch 的每一个分片都是一个 Lucene 索引。 你在单个 Lucene 索引里所拥有的文档有最大数量值限制。在 [LUCENE-5843](https://issues.apache.org/jira/browse/LUCENE-5843) 里，这个极限值是 `2,147,483,519` (= `Integer.MAX_VALUE - 128`)。你可以使用 [_cat/shards](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/cat-shards.html) API 来监控分片容量。
 
 在了解这些基础概念后，我们可以进入有趣的部分了。。
