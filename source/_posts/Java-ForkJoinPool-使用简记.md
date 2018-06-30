@@ -23,9 +23,7 @@ public class CalculatorComponent {
 
   List dataList = Lists.newArrayList(....); // 输入参数
   List<Object> subLits = forkJoinPool.invoke(new CalculateTask( dataList));
-  /**
-  * 千条服务费数据核算任务
-  */
+
  class CalculateTask extends RecursiveTask<List<Object>> {
 
      private Deque<Object> dataList = null;
