@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Elasticsearch,翻译,Elasticsearch 5.5,API 文档,REST," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="本文文档适用于 Elasticsearch 5.5。原文链接：Java REST Client译文链接：Elasticsearch Java REST Client 文档  概述Elasticsearch Java REST Client 是个官方的低层级的 Elasticsearch 客户端。允许通过 http 与Elasticsearch集群进行通信。 并且兼容所有版本的 Elasticse">
+<meta name="keywords" content="Elasticsearch,翻译,Elasticsearch 5.5,API 文档,REST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch Java REST Client 5.5 中文文档[译]">
+<meta property="og:url" content="https://xiangzhurui.com/2017/08/18/elasticsearch-java-rest-client-5-5-中文文档[译]/index.html">
+<meta property="og:site_name" content="xiangzhurui&#39;s blog.">
+<meta property="og:description" content="本文文档适用于 Elasticsearch 5.5。原文链接：Java REST Client译文链接：Elasticsearch Java REST Client 文档  概述Elasticsearch Java REST Client 是个官方的低层级的 Elasticsearch 客户端。允许通过 http 与Elasticsearch集群进行通信。 并且兼容所有版本的 Elasticse">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-29T13:25:24.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch Java REST Client 5.5 中文文档[译]">
+<meta name="twitter:description" content="本文文档适用于 Elasticsearch 5.5。原文链接：Java REST Client译文链接：Elasticsearch Java REST Client 文档  概述Elasticsearch Java REST Client 是个官方的低层级的 Elasticsearch 客户端。允许通过 http 与Elasticsearch集群进行通信。 并且兼容所有版本的 Elasticse">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiangzhurui.com/2017/08/18/elasticsearch-java-rest-client-5-5-中文文档[译]/"/>
+
+
+
+
+
+  <title>Elasticsearch Java REST Client 5.5 中文文档[译] | xiangzhurui's blog.</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiangzhurui's blog.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2017/08/18/elasticsearch-java-rest-client-5-5-中文文档[译]/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiangzhurui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiangzhurui's blog.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Elasticsearch Java REST Client 5.5 中文文档[译]</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-18T13:30:14+08:00">
+                2017-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/Elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">Elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文文档适用于 Elasticsearch 5.5。<br>原文链接：<a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/5.5/index.html" target="_blank" rel="external">Java REST Client</a><br>译文链接：<a href="./">Elasticsearch Java REST Client 文档</a></p>
+</blockquote>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><code>Elasticsearch Java REST Client</code> 是个官方的低层级的 Elasticsearch 客户端。允许通过 http 与Elasticsearch集群进行通信。 并且兼容所有版本的 Elasticsearch。<br>Java REST 客户端内部使用Apache Http Async客户端发送http请求。</p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>低级客户端的功能包括：</p>
+<ul>
+<li>最小化依赖</li>
+<li>跨所有可用节点的负载均衡</li>
+<li>节点故障时的自动进行故障切换和响应特定代码</li>
+<li>失败连接处理（一个节点是否是坏节点取决于连续失败的次数;失败的次数越多，客户端再次使用同一个节点之前的等待时间越长）</li>
+<li>持久连接</li>
+<li>跟踪记录请求和响应</li>
+<li>可配置自动发现集群节点</li>
+</ul>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="Maven-仓库"><a href="#Maven-仓库" class="headerlink" title="Maven 仓库"></a>Maven 仓库</h3><p>低级 Java REST 客户端存在于 Maven 中央仓库里。它最低的Java版本要求是 JDK1.8。该客户端的发布周期与 Elasticsearch 的核心程序一致（存在具有相同版本号的 Elasticsearch ）。但该客户端事实上是与 Elasticsearch 版本无强关联（当客户端与服务端版本可以不一致时也可使用）。</p>
+<h4 id="Maven-配置"><a href="#Maven-配置" class="headerlink" title="Maven 配置"></a>Maven 配置</h4><p>将以下内容添加到 <code>pom.xml</code> 文件里<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>rest<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="Gradle-配置"><a href="#Gradle-配置" class="headerlink" title="Gradle 配置"></a>Gradle 配置</h4><p>使用 <code>gradle</code> 作依赖管理时,你可以向这样配置 <code>sniffer</code> 依赖，将下列内容添加到你的 <code>build.gradle</code> 文件里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile &apos;org.elasticsearch.client:rest:5.5.2&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="依赖项"><a href="#依赖项" class="headerlink" title="依赖项"></a>依赖项</h3><p>低级 Java REST 客户端 内部使用 Apache Http Async Client 发送 http 请求. 他依赖以下部件,<br>亦即异步 http 客户端和它自己的传递依赖项</p>
+<ul>
+<li>org.apache.httpcomponents:httpasyncclient</li>
+<li>org.apache.httpcomponents:httpcore-nio</li>
+<li>org.apache.httpcomponents:httpclient</li>
+<li>org.apache.httpcomponents:httpcore</li>
+<li>commons-codec:commons-codec</li>
+<li>commons-logging:commons-logging</li>
+</ul>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>可以通过<code>RestClient#builder(HttpHost...)</code>静态方法创建的 <code>RestClientBuilder</code> 类来构建 <code>RestClient</code> 实例。 唯一必需的参数是客户端将与之通信的一个或多个主机，作为 <a href="https://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/org/apache/http/HttpHost.html" target="_blank" rel="external">HttpHost</a> 的实例提供，如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RestClient restClient = RestClient.builder(</div><div class="line">                <span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>, <span class="string">"http"</span>),</div><div class="line">                <span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9201</span>, <span class="string">"http"</span>)).build();</div></pre></td></tr></table></figure></p>
+<p><code>RestClient</code> 类是线程安全的，理想状态与使用它的应用程序具有相同的生命周期。 重要的是，当不再需要它时，它将被关闭，以便它所使用的所有资源得到正确释放，以及底层的http客户端实例及其线程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">restClient.close();</div></pre></td></tr></table></figure>
+<p><code>RestClientBuilder</code>还允许在构建<code>RestClient</code>实例时设置以下可选的配置参数：</p>
+<ul>
+<li><code>setDefaultHeaders</code><br>默认标头需要与每个请求一起发送，以防止每个请求都必须指定它们</li>
+<li><code>setMaxRetryTimeoutMillis</code><br>在为同一请求进行多次尝试时应该遵守的超时。 默认值为30秒，与默认套接字超时相同。 如果套接字超时被定制，则应该相应地调整最大重试超时</li>
+<li><code>setFailureListener</code><br>每当节点发生故障时收到通知的侦听器，以防需要采取措施。 启用嗅探故障时内部使用</li>
+<li><code>setRequestConfigCallback</code><br>回调允许修改默认请求配置（例如，请求超时，身份验证或任何<a href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/client/config/RequestConfig.Builder.html" target="_blank" rel="external">org.apache.http.client.config.RequestConfig.Builder</a>允许设置的内容）</li>
+<li><code>setHttpClientConfigCallback</code><br>回调允许修改http客户端配置（例如通过ssl进行的加密通信，或任何<a href="http://hc.apache.org/httpcomponents-asyncclient-dev/httpasyncclient/apidocs/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.html" target="_blank" rel="external">org.apache.http.impl.nio.client.HttpAsyncClientBuilder</a>允许设置的任何内容）</li>
+</ul>
+<h3 id="执行请求"><a href="#执行请求" class="headerlink" title="执行请求"></a>执行请求</h3><p>一旦一个 <code>RestClient</code> 实例被创建。就可以通过调用一个可用 <code>performRequest</code> 和 <code>performRequestAsync</code> 方法预期重载方法来发送请求。<code>performRequest</code> 方法是同步的，他直接返回 <code>Response</code>, 这意味着客户端将会阻塞等待响应的返回。<code>performRequestAsync</code> 方法返回 <code>void</code> 并接受一个额外的 <code>ResponseListener</code> 作为参数，他是异步执行的方法。在方法执行完成或失败时将会通知传入的监听器（译注：ResponseListener）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 同步请求方法</span></div><div class="line"><span class="function">Response <span class="title">performRequest</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                        Header... headers)</span></span></div><div class="line"><span class="function">    <span class="keyword">throws</span> IOException</span>;</div><div class="line"></div><div class="line"><span class="function">Response <span class="title">performRequest</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                        Map&lt;String, String&gt; params, Header... headers)</span></span></div><div class="line"><span class="function">    <span class="keyword">throws</span> IOException</span>;</div><div class="line"></div><div class="line"><span class="function">Response <span class="title">performRequest</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                        Map&lt;String, String&gt; params,</span></span></div><div class="line"><span class="function"><span class="params">                        HttpEntity entity,</span></span></div><div class="line"><span class="function"><span class="params">                        Header... headers)</span></span></div><div class="line"><span class="function">    <span class="keyword">throws</span> IOException</span>;</div><div class="line"></div><div class="line"><span class="function">Response <span class="title">performRequest</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                        Map&lt;String, String&gt; params,</span></span></div><div class="line"><span class="function"><span class="params">                        HttpEntity entity,</span></span></div><div class="line"><span class="function"><span class="params">                        HttpAsyncResponseConsumerFactory responseConsumerFactory,</span></span></div><div class="line"><span class="function"><span class="params">                        Header... headers)</span></span></div><div class="line"><span class="function">    <span class="keyword">throws</span> IOException</span>;</div><div class="line"></div><div class="line"><span class="comment">// 异步请求方法</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">performRequestAsync</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                         ResponseListener responseListener,</span></span></div><div class="line"><span class="function"><span class="params">                         Header... headers)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">performRequestAsync</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                         Map&lt;String, String&gt; params,</span></span></div><div class="line"><span class="function"><span class="params">                         ResponseListener responseListener,</span></span></div><div class="line"><span class="function"><span class="params">                         Header... headers)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">performRequestAsync</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                         Map&lt;String, String&gt; params,</span></span></div><div class="line"><span class="function"><span class="params">                         HttpEntity entity,</span></span></div><div class="line"><span class="function"><span class="params">                         ResponseListener responseListener,</span></span></div><div class="line"><span class="function"><span class="params">                         Header... headers)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">performRequestAsync</span><span class="params">(String method, String endpoint,</span></span></div><div class="line"><span class="function"><span class="params">                         Map&lt;String, String&gt; params,</span></span></div><div class="line"><span class="function"><span class="params">                         HttpEntity entity,</span></span></div><div class="line"><span class="function"><span class="params">                         HttpAsyncResponseConsumerFactory responseConsumerFactory,</span></span></div><div class="line"><span class="function"><span class="params">                         ResponseListener responseListener,</span></span></div><div class="line"><span class="function"><span class="params">                         Header... headers)</span></span>;</div></pre></td></tr></table></figure>
+<p><strong>请求参数</strong></p>
+<p>以下是对不同方法的参数说明：</p>
+<ul>
+<li><code>method</code><br>http方法或动作</li>
+<li><code>endpoint</code><br>请求路径，Elasticsearch API 定义的路径（例如<code>/_cluster/health</code> ）</li>
+<li><code>params</code><br>可选参数。作为querystring参数发送。</li>
+<li><code>entity</code><br>可选参数。封装在<code>org.apache.http.HttpEntity</code>对象中的请求主体</li>
+<li><code>responseConsumerFactory</code><br>可选参数。用于每次请求接受的创建 <a href="http://hc.apache.org/httpcomponents-core-ga/httpcore-nio/apidocs/org/apache/http/nio/protocol/HttpAsyncResponseConsumer.html" target="_blank" rel="external">org.apache.http.nio.protocol.HttpAsyncResponseConsumer</a> 回调实例的工厂类 。在客户端控制如何从一个非阻塞HTTP连接上获取响应主体的数据流。当没有使用该参数时，默认实现将整个响应体缓冲到堆内存中，上限为 100 MB</li>
+<li><code>responseListener</code><br>异步请求成功或失败时收到通知的监听器。</li>
+<li><code>headers</code><br>可选参数。http 请求头。</li>
+</ul>
+<h3 id="读取响应"><a href="#读取响应" class="headerlink" title="读取响应"></a>读取响应</h3><p><code>Response</code> 对象，要么由同步的 <code>performRequest</code> 的方法返回，要么作为 <code>ResponseListener#onSuccess(Response)</code> 的参数持有，响应对象包装了由HTTP客户端返回并提供的公开信息：</p>
+<ul>
+<li><code>getRequestLine</code><br>有关执行的请求的信息</li>
+<li><code>getHost</code><br>返回响应的主机</li>
+<li><code>getStatusLine</code><br>响应状态行</li>
+<li><code>getHeaders</code><br>响应标题，也可以使用 <code>getHeader(String)</code>方法按名称获取</li>
+<li><code>getEntity</code><br>响应体包含在 <code>org.apache.http.HttpEntity</code> 对象中。</li>
+</ul>
+<p>在执行请求时，以下情况下将抛出异常（或者作为参数传入到  <code>ResponseListener#onFailure(Exception)</code> 里）：</p>
+<ul>
+<li><code>IOException</code><br>通信问题（例如：SocketTimeoutException 等）</li>
+<li><code>ResponseException</code><br>有响应返回，但其状态代码表明错误（不是<code>2xx</code>）。一个 <code>ResponseException</code> 来自一个有效的 http 响应，因此它也暴露了其对应的一个允许被访问的 <code>Response</code> 对象。</li>
+</ul>
+<p><strong>注意</strong>: 对于返回 <code>404</code> 状态码的 <code>HEAD</code> 请求 <strong>不会</strong> 抛出 <code>ResponseException</code> 异常，因为这是一个预期内的结果，这一响应仅表示该资源未被找到。M所有其他的 HTTP 方法，当响应 <code>404</code>时，（例如：<code>GET</code>）将抛出 <code>ResponseException</code> 异常，除非 <code>ignore</code> 参数包含 <code>404</code>。<code>ignore</code> 是一个特殊的客户端参数，它包含逗号分隔的错误状态码列表，并且不会被发送到 Elasticsearch。这一参数允许控制是否将某些错误状态代码视为预期响应而不是异常。这是有用的，例如，当只是因为文档没有被找到时 get api 可以返回 404，响应主体不会包含错误，而是返回正常的 get 响应。</p>
+<h3 id="请求样例"><a href="#请求样例" class="headerlink" title="请求样例"></a>请求样例</h3><p>这里有一对样例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Response response = restClient.performRequest(<span class="string">"GET"</span>, <span class="string">"/"</span>,</div><div class="line">        Collections.singletonMap(<span class="string">"pretty"</span>, <span class="string">"true"</span>));</div><div class="line">System.out.println(EntityUtils.toString(response.getEntity()));</div><div class="line"></div><div class="line"><span class="comment">//index a document</span></div><div class="line">HttpEntity entity = <span class="keyword">new</span> NStringEntity(</div><div class="line">        <span class="string">"&#123;\n"</span> +</div><div class="line">        <span class="string">"    \"user\" : \"kimchy\",\n"</span> +</div><div class="line">        <span class="string">"    \"post_date\" : \"2009-11-15T14:12:12\",\n"</span> +</div><div class="line">        <span class="string">"    \"message\" : \"trying out Elasticsearch\"\n"</span> +</div><div class="line">        <span class="string">"&#125;"</span>, ContentType.APPLICATION_JSON);</div><div class="line"></div><div class="line">Response indexResponse = restClient.performRequest(</div><div class="line">        <span class="string">"PUT"</span>,</div><div class="line">        <span class="string">"/twitter/tweet/1"</span>,</div><div class="line">        Collections.&lt;String, String&gt;emptyMap(),</div><div class="line">        entity);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>为 HttpEntity 指定的 ContentType 很重要，因为它将用于设置 Content-Type 头，然后 Elasticsearch 才可以方便的正确解析内容。未来版本的 Elasticsearch 将强制要求将其设置的正确性。</p>
+</blockquote>
+<p>注意此低级客户端并没有制定额外的帮助编码和解码 json 的工具。用户可以自由的使用他们自己喜欢的类库。</p>
+<p>底层 Apache Async Http Client 提供允许不同请求题格式（stream, byte array, string 等）的 <a href="https://hc.apache.org/httpcomponents-core-ga/httpcore/apidocs/org/apache/http/HttpEntity.html" target="_blank" rel="external">org.apache.http.HttpEntity</a> 实现。对于读取响应体，<code>HttpEntity＃getContent</code>方法很方便，它从先前的响应体缓冲里读取并返回一个 <code>InputStream</code> 对象。作为替代方案，可以提供一个自定义 <a href="http://hc.apache.org/httpcomponents-core-ga/httpcore-nio/apidocs/org/apache/http/nio/protocol/HttpAsyncResponseConsumer.html" target="_blank" rel="external">org.apache.http.nio.protocol.HttpAsyncResponseConsumer</a>来控制如何读取和缓冲字节。</p>
+<p>一下是如何发送异步请求的一个简单示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> numRequests = <span class="number">10</span>;</div><div class="line"><span class="keyword">final</span> CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(numRequests);</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numRequests; i++) &#123;</div><div class="line">    restClient.performRequestAsync(</div><div class="line">        <span class="string">"PUT"</span>,</div><div class="line">        <span class="string">"/twitter/tweet/"</span> + i,</div><div class="line">        Collections.&lt;String, String&gt;emptyMap(),</div><div class="line">        <span class="comment">//假设文档被存储在实体数组中</span></div><div class="line">        entities[i],</div><div class="line">        <span class="keyword">new</span> ResponseListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response response)</span> </span>&#123;</div><div class="line">                System.out.println(response);</div><div class="line">                latch.countDown();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Exception exception)</span> </span>&#123;</div><div class="line">                latch.countDown();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    );</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//等待所有请求完成。</span></div><div class="line">latch.await();</div></pre></td></tr></table></figure>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p>Java REST 客户端使用与 Apache Async Http Client 相同的日志记录库：<a href="https://commons.apache.org/proper/commons-logging/" target="_blank" rel="external">Apache Commons Logging</a>，它支持许多流行的日志记录实现。启用日志记录的java包是客户机本身的 <code>org.elasticsearch.client</code> 和嗅探器的 <code>org.elasticsearch.client.sniffer</code>。</p>
+<p>还可以在 crul 范式里启用请求跟踪记录来记录每个请求和相应的响应。这在调试时很方便，例如在需要手动执行请求以检查它是否仍然产生与之相同的响应的情况下。 启用跟踪程序包的跟踪记录以打印出这样的日志行。 需要注意的是，这种类型的日志记录的性能开销是昂贵的，他不应该在生产环境中始终启用，而是仅在需要时暂时使用。</p>
+<h2 id="通用配置"><a href="#通用配置" class="headerlink" title="通用配置"></a>通用配置</h2><p><code>RestClientBuilder</code> 提供了一个 <code>RequestConfigCallback</code> 和一个 <code>HttpClientConfigCallback</code>来对 <code>Apache Async Http Client</code> 对外的公共方法进行任何定制。这些回调对象使得在不用覆盖 “RestClient” 初始化的其他所有默认配置的情况下修改一些客户端的特殊行为成为可能。本节介绍一些需要对低级<code>Java REST Client</code>的额外配置的常见场景。</p>
+<h3 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h3><p>请求超时参数的配置可以通过在 <code>RestClient</code> 的建造者(译注：实际为即 <em>RestClientBuilder</em> )在建造实例的过程张提供一个 `RequestConfigCallback 实例完成。该接口有一个接收 <a href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/client/config/RequestConfig.Builder.html" target="_blank" rel="external">org.apache.http.client.config.RequestConfig.Builder</a> 实例作为参数并具有相同返回值类型的方法。请求建造者(译注: <em>RestClientBuilder</em> )可以被修改并返回修改后的对象。在下面的样例中，我们增加链接超时时间（默认值为1秒）和套接字超时时间（默认值为30秒）。同样的我们也相应的调整醉倒重试超时时间（默认值也是30秒）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">RestClient restClient = RestClient.builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>))</div><div class="line">        .setRequestConfigCallback(<span class="keyword">new</span> RestClientBuilder.RequestConfigCallback() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="keyword">public</span> RequestConfig.<span class="function">Builder <span class="title">customizeRequestConfig</span><span class="params">(RequestConfig.Builder requestConfigBuilder)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> requestConfigBuilder.setConnectTimeout(<span class="number">5000</span>)</div><div class="line">                        .setSocketTimeout(<span class="number">60000</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .setMaxRetryTimeoutMillis(<span class="number">60000</span>)</div><div class="line">        .build();</div></pre></td></tr></table></figure>
+<h3 id="线程数"><a href="#线程数" class="headerlink" title="线程数"></a>线程数</h3><p><code>Apache Http Async Client</code> 默认情况下启动一个调度线程，和一定数量的由连接管理器使用的工作线程，工作线程数量与本机检测到的处理器的数量值一致(该值取决于方法 <code>Runtime.getRuntime().availableProcessors()</code> 的返回结果)。线程数量的修改可以以以下方式进行:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">RestClient restClient = RestClient.builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>))</div><div class="line">        .setHttpClientConfigCallback(<span class="keyword">new</span> RestClientBuilder.HttpClientConfigCallback() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> HttpAsyncClientBuilder <span class="title">customizeHttpClient</span><span class="params">(HttpAsyncClientBuilder httpClientBuilder)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> httpClientBuilder.setDefaultIOReactorConfig(</div><div class="line">                        IOReactorConfig.custom().setIoThreadCount(<span class="number">1</span>).build());</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .build();</div></pre></td></tr></table></figure></p>
+<h3 id="基本身份验证"><a href="#基本身份验证" class="headerlink" title="基本身份验证"></a>基本身份验证</h3><p>配置基本认证可以通过在 <code>RestClient</code> 的建造者建造时提供一个 <code>HttpClientConfigCallback</code> 来实现。这个接口有一个接收<br> <a href="https://hc.apache.org/httpcomponents-asyncclient-dev/httpasyncclient/apidocs/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.html" target="_blank" rel="external">org.apache.http.impl.nio.client.HttpAsyncClientBuilder</a> 实例作为参数并具有相同返回值类型的方法。 这个 http 客户端建造者可以被修改并返回修改后的建造者。 在下面的样例中我们设置一个需要基本身份验证的默认凭据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> CredentialsProvider credentialsProvider = <span class="keyword">new</span> BasicCredentialsProvider();</div><div class="line">credentialsProvider.setCredentials(AuthScope.ANY,</div><div class="line">        <span class="keyword">new</span> UsernamePasswordCredentials(<span class="string">"user"</span>, <span class="string">"password"</span>));</div><div class="line"></div><div class="line">RestClient restClient = RestClient.builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>))</div><div class="line">        .setHttpClientConfigCallback(<span class="keyword">new</span> RestClientBuilder.HttpClientConfigCallback() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> HttpAsyncClientBuilder <span class="title">customizeHttpClient</span><span class="params">(HttpAsyncClientBuilder httpClientBuilder)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .build();</div></pre></td></tr></table></figure>
+<p>您可以禁用 Preemptive Authentication，这意味着每个请求都将发送没有授权头来查看是否被接受，当收到HTTP 401响应后，它将使用基本身份验证头重新发送完全相同的请求。如果你想这样做，那么你可以通过 <code>HttpAsyncClientBuilder</code> 禁用它：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> CredentialsProvider credentialsProvider = <span class="keyword">new</span> BasicCredentialsProvider();</div><div class="line">credentialsProvider.setCredentials(AuthScope.ANY,</div><div class="line">        <span class="keyword">new</span> UsernamePasswordCredentials(<span class="string">"user"</span>, <span class="string">"password"</span>));</div><div class="line"></div><div class="line">RestClient restClient = RestClient.builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>))</div><div class="line">        .setHttpClientConfigCallback(<span class="keyword">new</span> RestClientBuilder.HttpClientConfigCallback() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> HttpAsyncClientBuilder <span class="title">customizeHttpClient</span><span class="params">(HttpAsyncClientBuilder httpClientBuilder)</span> </span>&#123;</div><div class="line">                <span class="comment">// disable preemptive authentication</span></div><div class="line">                httpClientBuilder.disableAuthCaching();</div><div class="line">                <span class="keyword">return</span> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .build();</div></pre></td></tr></table></figure>
+<h3 id="加密通信"><a href="#加密通信" class="headerlink" title="加密通信"></a>加密通信</h3><p>加密通讯可以也可以通过一个 <code>HttpClientConfigCallback</code> 进行配置。接口 <a href="https://hc.apache.org/httpcomponents-asyncclient-dev/httpasyncclient/apidocs/org/apache/http/impl/nio/client/HttpAsyncClientBuilder.html" target="_blank" rel="external">org.apache.http.impl.nio.client.HttpAsyncClientBuilder</a> 接受一个参数的公开的多个方法来配置加密通信：<code>setSSLContext</code>, <code>setSSLSessionStrategy</code> 和 <code>setConnectionManager</code>, 以上方法按照最不重要的顺序排序. 下面是一个样例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">KeyStore keystore = KeyStore.getInstance(<span class="string">"jks"</span>);</div><div class="line"><span class="keyword">try</span> (InputStream is = Files.newInputStream(keyStorePath)) &#123;</div><div class="line">    keystore.load(is, keyStorePass.toCharArray());</div><div class="line">&#125;</div><div class="line"></div><div class="line">RestClient restClient = RestClient.builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>))</div><div class="line">        .setHttpClientConfigCallback(<span class="keyword">new</span> RestClientBuilder.HttpClientConfigCallback() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> HttpAsyncClientBuilder <span class="title">customizeHttpClient</span><span class="params">(HttpAsyncClientBuilder httpClientBuilder)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> httpClientBuilder.setSSLContext(sslcontext);</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .build();</div></pre></td></tr></table></figure>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>对于其他任何需要配置项, 可以查阅 <code>Apache HttpAsyncClient</code> 文档： <a href="https://hc.apache.org/httpcomponents-asyncclient-4.1.x/" target="_blank" rel="external">https://hc.apache.org/httpcomponents-asyncclient-4.1.x/</a></p>
+<h2 id="嗅探器（Sniffer）"><a href="#嗅探器（Sniffer）" class="headerlink" title="嗅探器（Sniffer）"></a>嗅探器（<em>Sniffer</em>）</h2><p>这是一个小型的包，他允许从一个正在运行中的 Elasticsearch 集群里自动发现节点，并将其设置更新一个现有的RestClient实例上。默认情况下他使用使用<code>Nodes Info</code> api检索属于集群的节点，并使用<code>jackson</code>解析获取的<code>json</code>响应。</p>
+<p>该库与Elasticsearch 2.x及以上兼容。</p>
+<h3 id="Maven-仓库-1"><a href="#Maven-仓库-1" class="headerlink" title="Maven 仓库"></a>Maven 仓库</h3><p>低级REST客户端与 Elasticsearch 的发行周期相同。 可以使用你希望使用的嗅探器（Sniffer）版本替换版本，这里使用 <code>5.5.2</code> 版本。嗅探器版本和与 Elasticsearch 通信的 REST 客户端的版本之间没有关系。嗅探器支持从 Elasticsearch 2.x及以上获取节点列表。</p>
+<h3 id="Maven-配置-1"><a href="#Maven-配置-1" class="headerlink" title="Maven 配置"></a>Maven 配置</h3><p>使用 <code>Maven</code> 作依赖管理时,你可以向这样配置 <code>sniffer</code> 依赖，将下列内容添加到你的 <code>pom.xml</code> 文件里：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>sniffer<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="Gradle-配置-1"><a href="#Gradle-配置-1" class="headerlink" title="Gradle 配置"></a>Gradle 配置</h3><p>使用 <code>gradle</code> 作依赖管理时,你可以向这样配置 <code>sniffer</code> 依赖，将下列内容添加到你的 <code>build.gradle</code> 文件里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile &apos;org.elasticsearch.client:sniffer:5.5.2&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>只要一个 <code>RestClient</code> 实例被创建了，某个 <code>Sniffer</code> 对象就可以关联到它上面。<code>Sniffer</code> 将使用他所关联的 <code>RestClient</code> 实例去定期（默认情况下位每5分钟）从集群中获取节点列表，然后调用 <code>RestClient#setHosts</code> 将节点列表更新这个 <code>RestClient</code> 实例上去。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sniffer sniffer = Sniffer.builder(restClient).build();</div></pre></td></tr></table></figure></p>
+<p>关闭 <code>Sniffer</code> 是必要的，这可以使其后台线程正确的关闭，并且释放他持有的所有资源。该 <code>Sniffer</code> 对象应该与 <code>RestClient</code> 独享具有相同的生命周期，并在 <code>RestClient</code> 客户端关闭之前关闭：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sniffer.close();</div><div class="line">restClient.close();</div></pre></td></tr></table></figure></p>
+<p><code>Elasticsearch Nodes Info api</code> 不会返回连接节点时使用的协议类型，除非 <code>host:port</code> 里被体现了加密协议(<em>译注：即是https</em>)，所以默认情况下使用 <code>http</code> 。如果需要使用 <code>https</code> 替换他，那么 <code>ElasticsearchHostsSniffer</code> 对象需要按照以下方式手动创建：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">HostsSniffer hostsSniffer = <span class="keyword">new</span> ElasticsearchHostsSniffer(restClient,</div><div class="line">        ElasticsearchHostsSniffer.DEFAULT_SNIFF_REQUEST_TIMEOUT,</div><div class="line">        ElasticsearchHostsSniffer.Scheme.HTTPS);</div><div class="line">Sniffer sniffer = Sniffer.builder(restClient)</div><div class="line">        .setHostsSniffer(hostsSniffer).build();</div></pre></td></tr></table></figure>
+<p>同样的我们也可以自定义 <code>sniffRequestTimeout</code> 参数，该参数默认值为1秒。当调用 <code>Nodes Info</code> api 时，这个 <code>timeout</code> 参数被用作querystring参数使用，因此当服务端超时时，仍然会有一个有效响应返回，尽管他可能只包含集群的一部分，所有节点的一个子集，余下的那些将在随后响应。另外，一个自定义的 <code>HostsSniffer</code> 实现可以提供一些高级用法，比如从外部来源获取主机。</p>
+<p>默认情况下 <code>Sniffer</code> 每五分钟更新一次。这个间隔时间（单位为毫秒）可以以如下方式设置自定义值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Sniffer sniffer = Sniffer.builder(restClient)</div><div class="line">        .setSniffIntervalMillis(<span class="number">60000</span>).build();</div></pre></td></tr></table></figure>
+<p>也可以启用故障嗅探，这意味着在每次故障之后节点列表将被直接更新，而不是在普通的嗅探轮询里更新。在这种情况下，需要首先创建一个 <code>SniffOnFailureListener</code> 并且提供给 <code>RestClient</code> 实例化时使用。当然一旦 <code>Sniffer</code> 在这之后被创建时，他需要关联到上文的同一个 <code>SniffOnFailureListener</code> 实例上，这个每一个故障都将通知到这个 <code>SniffOnFailureListener</code>，并且使用 <code>Sniffer</code> 执行上文上所述的嗅探更新操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SniffOnFailureListener sniffOnFailureListener = <span class="keyword">new</span> SniffOnFailureListener();</div><div class="line">RestClient restClient = RestClient.builder(<span class="keyword">new</span> HttpHost(<span class="string">"localhost"</span>, <span class="number">9200</span>))</div><div class="line">        .setFailureListener(sniffOnFailureListener).build();</div><div class="line">Sniffer sniffer = Sniffer.builder(restClient).build();</div><div class="line">sniffOnFailureListener.setSniffer(sniffer);</div></pre></td></tr></table></figure>
+<p>当使用故障嗅探器时，在故障发生后不只是会更新节点，还会执行额外添加的比正常掌控下更早嗅探计划，默认情况下嗅探更新在故障发生1分钟后执行，假如节点将会恢复正常，那么我们希望尽快获知到。如下所述，轮训间隔可以在 <code>Sniffer</code> 创建时自定义设置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Sniffer sniffer = Sniffer.builder(restClient)</div><div class="line">        .setSniffAfterFailureDelayMillis(<span class="number">30000</span>).build();</div></pre></td></tr></table></figure>
+<p><strong>注意</strong> 如果没有启用失败监听器(<em><code>setFailureListener</code></em>)，则此最后一个配置参数(<em><code>SniffAfterFailureDelayMillis</code></em>)将不会生效</p>
+<h3 id="许可"><a href="#许可" class="headerlink" title="许可"></a>许可</h3><p>Copyright 2013-2016 Elasticsearch</p>
+<p>根据 <code>Apache License, Version 2.0</code>（“License”）许可; 您不得使用此文件，除非符合许可证。您可以获得许可证的副本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.apache.org/licenses/LICENSE-2.0</div></pre></td></tr></table></figure>
+<p>除非由书面的法律要求或许可，根据许可证分发的软件以<strong>“按现状”基础分发，不附带任何明示或暗示的担保或条件</strong>。有关许可证下的权限和限制的特定语言，请参阅许可证。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/Elasticsearch-5-5/" rel="tag"># Elasticsearch 5.5</a>
+          
+            <a href="/tags/API-文档/" rel="tag"># API 文档</a>
+          
+            <a href="/tags/REST/" rel="tag"># REST</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/12/elasticsearch-安装/" rel="next" title="Elasticsearch 安装">
+                <i class="fa fa-chevron-left"></i> Elasticsearch 安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/21/spring-里配置-elasticsearch-java-rest-client/" rel="prev" title="Spring 里配置 Elasticsearch (5.5) Java REST Client">
+                Spring 里配置 Elasticsearch (5.5) Java REST Client <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xiangzhurui" />
+          
+            <p class="site-author-name" itemprop="name">xiangzhurui</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiangzhurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">2.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#入门"><span class="nav-number">3.</span> <span class="nav-text">入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-仓库"><span class="nav-number">3.1.</span> <span class="nav-text">Maven 仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maven-配置"><span class="nav-number">3.1.1.</span> <span class="nav-text">Maven 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gradle-配置"><span class="nav-number">3.1.2.</span> <span class="nav-text">Gradle 配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖项"><span class="nav-number">3.2.</span> <span class="nav-text">依赖项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">3.3.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行请求"><span class="nav-number">3.4.</span> <span class="nav-text">执行请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取响应"><span class="nav-number">3.5.</span> <span class="nav-text">读取响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求样例"><span class="nav-number">3.6.</span> <span class="nav-text">请求样例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志"><span class="nav-number">3.7.</span> <span class="nav-text">日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用配置"><span class="nav-number">4.</span> <span class="nav-text">通用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#超时"><span class="nav-number">4.1.</span> <span class="nav-text">超时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程数"><span class="nav-number">4.2.</span> <span class="nav-text">线程数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本身份验证"><span class="nav-number">4.3.</span> <span class="nav-text">基本身份验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密通信"><span class="nav-number">4.4.</span> <span class="nav-text">加密通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">4.5.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嗅探器（Sniffer）"><span class="nav-number">5.</span> <span class="nav-text">嗅探器（Sniffer）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-仓库-1"><span class="nav-number">5.1.</span> <span class="nav-text">Maven 仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-配置-1"><span class="nav-number">5.2.</span> <span class="nav-text">Maven 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradle-配置-1"><span class="nav-number">5.3.</span> <span class="nav-text">Gradle 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">5.4.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#许可"><span class="nav-number">5.5.</span> <span class="nav-text">许可</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiangzhurui</span>
+
+  
+</div>
+
+
+<!--
+<div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

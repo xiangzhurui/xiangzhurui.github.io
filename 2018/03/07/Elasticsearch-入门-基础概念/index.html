@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Elasticsearch,翻译," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="基础概念这里有几个概念是 Elasticsearch 的核心。 从一开始就理解这些概念在很大程度上有助于缓解学习过程难度。 准实时 (Near Realtime, NRT)Elasticsearch 是一个准实时搜索平台。这意味着你从索引一个文档到它可被搜索到只有轻微的时间延迟（通常为1秒）。 集群 (Cluster)集群是一个或多个节点（服务器）的集合，他们共同保存你的整个数据，并提供跨所有节点">
+<meta name="keywords" content="Elasticsearch,翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch 入门，基础概念">
+<meta property="og:url" content="https://xiangzhurui.com/2018/03/07/Elasticsearch-入门-基础概念/index.html">
+<meta property="og:site_name" content="xiangzhurui&#39;s blog.">
+<meta property="og:description" content="基础概念这里有几个概念是 Elasticsearch 的核心。 从一开始就理解这些概念在很大程度上有助于缓解学习过程难度。 准实时 (Near Realtime, NRT)Elasticsearch 是一个准实时搜索平台。这意味着你从索引一个文档到它可被搜索到只有轻微的时间延迟（通常为1秒）。 集群 (Cluster)集群是一个或多个节点（服务器）的集合，他们共同保存你的整个数据，并提供跨所有节点">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-29T13:25:24.210Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch 入门，基础概念">
+<meta name="twitter:description" content="基础概念这里有几个概念是 Elasticsearch 的核心。 从一开始就理解这些概念在很大程度上有助于缓解学习过程难度。 准实时 (Near Realtime, NRT)Elasticsearch 是一个准实时搜索平台。这意味着你从索引一个文档到它可被搜索到只有轻微的时间延迟（通常为1秒）。 集群 (Cluster)集群是一个或多个节点（服务器）的集合，他们共同保存你的整个数据，并提供跨所有节点">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiangzhurui.com/2018/03/07/Elasticsearch-入门-基础概念/"/>
+
+
+
+
+
+  <title>Elasticsearch 入门，基础概念 | xiangzhurui's blog.</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiangzhurui's blog.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2018/03/07/Elasticsearch-入门-基础概念/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiangzhurui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiangzhurui's blog.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Elasticsearch 入门，基础概念</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T15:38:48+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/Elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">Elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>这里有几个概念是 Elasticsearch 的核心。 从一开始就理解这些概念在很大程度上有助于缓解学习过程难度。</p>
+<h4 id="准实时-Near-Realtime-NRT"><a href="#准实时-Near-Realtime-NRT" class="headerlink" title="准实时 (Near Realtime, NRT)"></a>准实时 (Near Realtime, NRT)</h4><p>Elasticsearch 是一个准实时搜索平台。这意味着你从索引一个文档到它可被搜索到只有轻微的时间延迟（通常为1秒）。</p>
+<h4 id="集群-Cluster"><a href="#集群-Cluster" class="headerlink" title="集群 (Cluster)"></a>集群 (Cluster)</h4><p>集群是一个或多个节点（服务器）的集合，他们共同保存你的整个数据，并提供跨所有节点的联合索引和搜索功能。集群由唯一的名称标识，默认情况下是“elasticsearch”。这个名字很重要，因为如果一个节点如果被设置为加入集群，那么他只能通过其名称加入一个集群并成为集群的一部分，</p>
+<p>确保不要做不同的环境中使用相同的集群名称，否则可能会导致节点加入错误的集群。例如，您可以对开发，分段和生产集群分别使用<code>logging-dev</code>，<code>logging-stage</code>和<code>logging-prod</code> 作为集群名称。</p>
+<p>请注意，拥有只有一个节点的集群是可行和能正常运行的。此外，你也可以拥有多个独立的群集，每个群集都有自己独特的群集名称。</p>
+<h4 id="节点-Node"><a href="#节点-Node" class="headerlink" title="节点 (Node)"></a>节点 (Node)</h4><p>节点是作为集群一部分的单一服务器，存储数据，并参与集群的索引和搜索功能。就像一个集群一样，一个节点被一个名称标识，默认情况下是一个随机的通用唯一标识符（UUID），它在启动时分配给节点。如果您不想要默认值，您可以定义所需的任何节点名称。此名称对于管理目的很重要，您希望确定网络中哪些服务器对应于Elasticsearch集群中的哪些节点。</p>
+<p>可以将节点配置为按集群名称加入特定集群。默认情况下，每个节点都设置为加入名为的集群elasticsearch，这意味着如果您启动了网络上的多个节点，并且假设它们可以互相发现，则它们将自动形成并加入名为的单个集群elasticsearch。</p>
+<p>在单个集群中，您可以拥有所需的节点数。此外，如果您的网络上当前没有其他Elasticsearch节点运行，启动单个节点将默认形成一个名为的新的单节点集群elasticsearch。</p>
+<h4 id="索引-Index"><a href="#索引-Index" class="headerlink" title="索引 (Index)"></a>索引 (Index)</h4><p>索引就是具有某些相似特征的文档的一个集合。例如，你可以有一个客户数据索引，另外一个产品目录的索引，以及一个订单数据的索引。一个索引有名称（必须全部为小写字母）标志，这个名字用在对其中的文档进行索引，搜索，更新和删除操作是进行定位索引。</p>
+<p>在单个集群里，你可以根据需要定义任意多个索引。</p>
+<h4 id="类型-Type"><a href="#类型-Type" class="headerlink" title="类型 (Type)"></a>类型 (Type)</h4><p>在索引中，您可以定义一个或多个类型。类型是你的索引的逻辑分类/分区，其语义完全取决于你。 通常，为具有一组公共字段的文档定义了一种类型。 例如，假设您运行一个博客平台，并将所有数据存储在单个索引中。 在此索引中，您可以定义用户数据类型，博客数据类型以及注释数据类型。</p>
+<h4 id="文档-Document"><a href="#文档-Document" class="headerlink" title="文档 (Document)"></a>文档 (Document)</h4><p>文档是可以被索引的基本信息单元。例如，您可以拥有一个客户的文档，一个产品的文档，一个订单的文档。 这个文档以 JSON（JavaScript Object Notation）表示，这是一种应用广泛的互联网数据交换格式。</p>
+<p>在索引/类型中，您可以存储你想要存储的任意数量的文档。 请注意，虽然文档物理上位于索引中，但实际上文档实际上必须被索引/分配到索引中的某个类型。</p>
+<h4 id="分片和复制-Shards-amp-Replicas"><a href="#分片和复制-Shards-amp-Replicas" class="headerlink" title="分片和复制 (Shards &amp; Replicas)"></a>分片和复制 (Shards &amp; Replicas)</h4><p>索引可能潜在地存储大量数据，这些数据可能会超出单个节点的硬件限制。 例如，占用 1TB 磁盘空间的十亿份文档的单个索引可能不适合单个节点的磁盘，或者可能太慢而无法单独向单个节点提供搜索请求。</p>
+<p>为了解决这个问题，Elasticsearch提供了将索引细分为多个碎片的功能。 当您创建索引时，您可以简单地定义所需的碎片数量。 每个分片本身都是一个功能齐全且独立的“索引”，可以在集群中的任何节点上进行托管。</p>
+<p>分片的重要性主要有两个原因：</p>
+<ul>
+<li>它允许您水平分割/缩放您的内容量</li>
+<li>它允许您跨越分片（可能在多个节点上）分发和并行操作，从而提高性能/吞吐量</li>
+</ul>
+<p>分片如何分布的机制以及其文档如何聚合回搜索请求完全由Elasticsearch管理，并且作为用户对您透明。</p>
+<p>在任何时候都可能出现故障的网络/云环境中，非常有用并且强烈建议有一个故障切换机制，以防碎片/节点以某种方式脱机或因任何原因而消失。 为此，Elasticsearch允许您将索引碎片的一个或多个副本制作为简称为副本碎片或副本。</p>
+<p>复制很重要主要有两个原因：</p>
+<ul>
+<li>它在碎片/节点失败的情况下提供高可用性。 由于这个原因，需要注意的是，副本分片永远不会分配到与从中复制的原始/主分片相同的节点上。</li>
+<li>它允许您扩展搜索量/吞吐量，因为搜索可以在所有副本上并行执行。</li>
+</ul>
+<p>总而言之，每个索引可以分成多个分片。 索引也可以被复制为零（意味着没有副本）或更多次。 一旦复制，每个索引将具有主分片（从中复制的原始分片）和副本分片（主分片的副本）。 在创建索引时，可以为每个索引定义分片和副本的数量。 在创建索引之后，您可以随时更改动态副本的数量，但您无法在事后更改碎片的数量。</p>
+<p>默认情况下，Elasticsearch中的每个索引都分配了5个主分片和1个副本，这意味着如果您的集群中至少有两个节点，则索引将包含5个主分片和另外5个副本分片（1个完整副本），总共 每个索引10个碎片。</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>Elasticsearch 的每一个分片都是一个 Lucene 索引。 你在单个 Lucene 索引里所拥有的文档有最大数量值限制。在 <a href="https://issues.apache.org/jira/browse/LUCENE-5843" target="_blank" rel="external">LUCENE-5843</a> 里，这个极限值是 <code>2,147,483,519</code> (= <code>Integer.MAX_VALUE - 128</code>)。你可以使用 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.2/cat-shards.html" target="_blank" rel="external">_cat/shards</a> API 来监控分片容量。</p>
+<p>在了解这些基础概念后，我们可以进入有趣的部分了。。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/27/Spring-3-2-x-无法再-jdk-1-8-上运行的解决方法/" rel="next" title="Spring 3.2.x 无法再 jdk 1.8 上运行的解决方法">
+                <i class="fa fa-chevron-left"></i> Spring 3.2.x 无法再 jdk 1.8 上运行的解决方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/07/Drools-规则属性/" rel="prev" title="Drools 规则属性">
+                Drools 规则属性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xiangzhurui" />
+          
+            <p class="site-author-name" itemprop="name">xiangzhurui</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiangzhurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础概念"><span class="nav-number">1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准实时-Near-Realtime-NRT"><span class="nav-number">1.1.</span> <span class="nav-text">准实时 (Near Realtime, NRT)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群-Cluster"><span class="nav-number">1.2.</span> <span class="nav-text">集群 (Cluster)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#节点-Node"><span class="nav-number">1.3.</span> <span class="nav-text">节点 (Node)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引-Index"><span class="nav-number">1.4.</span> <span class="nav-text">索引 (Index)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型-Type"><span class="nav-number">1.5.</span> <span class="nav-text">类型 (Type)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文档-Document"><span class="nav-number">1.6.</span> <span class="nav-text">文档 (Document)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分片和复制-Shards-amp-Replicas"><span class="nav-number">1.7.</span> <span class="nav-text">分片和复制 (Shards & Replicas)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">1.8.</span> <span class="nav-text">注意</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiangzhurui</span>
+
+  
+</div>
+
+
+<!--
+<div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

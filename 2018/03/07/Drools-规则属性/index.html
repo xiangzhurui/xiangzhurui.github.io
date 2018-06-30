@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Drools,规则引擎," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="规则属性 (Rule Attributes) 规则属性可以配置规则是否启用、是否可循环、优先级等。其中有一些属性比较简单，如优先级：salience，但是有一些属性比较复杂，所以接下来就详细学习一下这些规则的属性，并结合代码片段看这些规则如何使用。 no-loop:作用：当fact对象被规则修改时，可能会导致规则再次激活，导致无限循环。当规则声明为no-loop时，即设置当前的规则，只执行一次，如">
+<meta name="keywords" content="Drools,规则引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Drools 规则属性">
+<meta property="og:url" content="https://xiangzhurui.com/2018/03/07/Drools-规则属性/index.html">
+<meta property="og:site_name" content="xiangzhurui&#39;s blog.">
+<meta property="og:description" content="规则属性 (Rule Attributes) 规则属性可以配置规则是否启用、是否可循环、优先级等。其中有一些属性比较简单，如优先级：salience，但是有一些属性比较复杂，所以接下来就详细学习一下这些规则的属性，并结合代码片段看这些规则如何使用。 no-loop:作用：当fact对象被规则修改时，可能会导致规则再次激活，导致无限循环。当规则声明为no-loop时，即设置当前的规则，只执行一次，如">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://xiangzhurui.com/2018/03/07/Drools-规则属性/drools-rule-attributes.png">
+<meta property="og:updated_time" content="2018-06-29T13:25:24.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Drools 规则属性">
+<meta name="twitter:description" content="规则属性 (Rule Attributes) 规则属性可以配置规则是否启用、是否可循环、优先级等。其中有一些属性比较简单，如优先级：salience，但是有一些属性比较复杂，所以接下来就详细学习一下这些规则的属性，并结合代码片段看这些规则如何使用。 no-loop:作用：当fact对象被规则修改时，可能会导致规则再次激活，导致无限循环。当规则声明为no-loop时，即设置当前的规则，只执行一次，如">
+<meta name="twitter:image" content="https://xiangzhurui.com/2018/03/07/Drools-规则属性/drools-rule-attributes.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiangzhurui.com/2018/03/07/Drools-规则属性/"/>
+
+
+
+
+
+  <title>Drools 规则属性 | xiangzhurui's blog.</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiangzhurui's blog.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2018/03/07/Drools-规则属性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiangzhurui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiangzhurui's blog.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Drools 规则属性</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T16:15:57+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/规则引擎/" itemprop="url" rel="index">
+                    <span itemprop="name">规则引擎</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/规则引擎/Drools/" itemprop="url" rel="index">
+                    <span itemprop="name">Drools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="规则属性-Rule-Attributes"><a href="#规则属性-Rule-Attributes" class="headerlink" title="规则属性 (Rule Attributes)"></a>规则属性 (Rule Attributes)</h1><p><img src="/2018/03/07/Drools-规则属性/drools-rule-attributes.png" alt=""></p>
+<p>规则属性可以配置规则是否启用、是否可循环、优先级等。其中有一些属性比较简单，如优先级：salience，但是有一些属性比较复杂，所以接下来就详细学习一下这些规则的属性，并结合代码片段看这些规则如何使用。</p>
+<h2 id="no-loop"><a href="#no-loop" class="headerlink" title="no-loop:"></a>no-loop:</h2><p>作用：当fact对象被规则修改时，可能会导致规则再次激活，导致无限循环。当规则声明为no-loop时，即设置当前的规则，只执行一次，如果本身的RHS部分有update等触发规则重新执行的操作，也不要再次执行当前规则。但是有可能被其他规则触发！<br>类型： Boolean<br>默认值： false</p>
+<h2 id="lock-on-active"><a href="#lock-on-active" class="headerlink" title="lock-on-active:"></a>lock-on-active:</h2><p>作用： 加强版no-loop，通过这个标签，可以控制当前的规则只会被执行一次。如果有一些修改Fact对象的规则并且不希望其他任何规则重新匹配和重新触发这个规则，可使用该属性。通常该属性会配合下面的 ruleflow-group或agenda-group使用。<br>类型： Boolean<br>默认值： false</p>
+<h2 id="salience"><a href="#salience" class="headerlink" title="salience:"></a>salience:</h2><p>作用： 规则的优先级，可以是正数也可以是负数。数字越大代表优先级越高。同时支持动态值，写法如下：<br>类型： integer<br>默认值： 0</p>
+<h2 id="dialect"><a href="#dialect" class="headerlink" title="dialect:"></a>dialect:</h2><p>作用： 规则方言，现支持java or mvel<br>类型： String<br>默认值： 默认为java</p>
+<h2 id="ruleflow-group"><a href="#ruleflow-group" class="headerlink" title="ruleflow-group:"></a>ruleflow-group:</h2><ul>
+<li>作用： Ruleflow 可以显示的控制规则组执行顺序，可结合jBPM工作流引擎使用。</li>
+<li>类型： String</li>
+<li>默认值： N/A</li>
+<li>类型： String</li>
+<li>默认值： MAIN</li>
+</ul>
+<h2 id="auto-focus"><a href="#auto-focus" class="headerlink" title="auto-focus:"></a>auto-focus:</h2><ul>
+<li>作用： 设置规则组自动获取焦点，结合agenda-group使用。</li>
+<li>类型： Boolean</li>
+<li>默认值： false</li>
+</ul>
+<h2 id="activation-group"><a href="#activation-group" class="headerlink" title="activation-group:"></a>activation-group:</h2><ul>
+<li>作用： 属于同一个activation-group的规则，如有一条规则被激活，则其他规则就不再执行。</li>
+<li>类型： String</li>
+<li>默认值： N/A</li>
+</ul>
+<h2 id="date-effective"><a href="#date-effective" class="headerlink" title="date-effective:"></a>date-effective:</h2><ul>
+<li>作用： 规则生效时间</li>
+<li>类型： String，包含日期和时间定义</li>
+<li>默认值： N/A</li>
+</ul>
+<h2 id="date-expires"><a href="#date-expires" class="headerlink" title="date-expires:"></a>date-expires:</h2><ul>
+<li>作用： 规则失效时间</li>
+<li>类型： String，包含日期和时间定义</li>
+<li>默认值： N/A</li>
+</ul>
+<h2 id="duration"><a href="#duration" class="headerlink" title="duration:"></a>duration:</h2><ul>
+<li>作用： 规则多次时间后执行，如duration 3000 3秒后执行规则</li>
+<li>类型： long</li>
+<li>默认值： N/A</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Drools/" rel="tag"># Drools</a>
+          
+            <a href="/tags/规则引擎/" rel="tag"># 规则引擎</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/Elasticsearch-入门-基础概念/" rel="next" title="Elasticsearch 入门，基础概念">
+                <i class="fa fa-chevron-left"></i> Elasticsearch 入门，基础概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/07/Linux-命令-chmod/" rel="prev" title="Linux 命令 chmod">
+                Linux 命令 chmod <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xiangzhurui" />
+          
+            <p class="site-author-name" itemprop="name">xiangzhurui</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiangzhurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#规则属性-Rule-Attributes"><span class="nav-number">1.</span> <span class="nav-text">规则属性 (Rule Attributes)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#no-loop"><span class="nav-number">1.1.</span> <span class="nav-text">no-loop:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lock-on-active"><span class="nav-number">1.2.</span> <span class="nav-text">lock-on-active:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#salience"><span class="nav-number">1.3.</span> <span class="nav-text">salience:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialect"><span class="nav-number">1.4.</span> <span class="nav-text">dialect:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ruleflow-group"><span class="nav-number">1.5.</span> <span class="nav-text">ruleflow-group:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-focus"><span class="nav-number">1.6.</span> <span class="nav-text">auto-focus:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#activation-group"><span class="nav-number">1.7.</span> <span class="nav-text">activation-group:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#date-effective"><span class="nav-number">1.8.</span> <span class="nav-text">date-effective:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#date-expires"><span class="nav-number">1.9.</span> <span class="nav-text">date-expires:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duration"><span class="nav-number">1.10.</span> <span class="nav-text">duration:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiangzhurui</span>
+
+  
+</div>
+
+
+<!--
+<div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

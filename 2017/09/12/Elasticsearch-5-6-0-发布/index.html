@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Elasticsearch,Elasticsearch 5.6," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="原文来源  今天（2017/09/11）我们很高兴地宣布推出基于 Lucene 6.6.0的 Elasticsearch 5.6.0版本。这是最新的稳定版本，已经可以在 我们的 Elasticsearch 服务平台 Elastic Cloud 上部署。 5.x 最新版本如下：  Download Elasticsearch 5.6.0 Elasticsearch 5.6.0 release no">
+<meta name="keywords" content="Elasticsearch,Elasticsearch 5.6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch 5.6.0 发布">
+<meta property="og:url" content="https://xiangzhurui.com/2017/09/12/Elasticsearch-5-6-0-发布/index.html">
+<meta property="og:site_name" content="xiangzhurui&#39;s blog.">
+<meta property="og:description" content="原文来源  今天（2017/09/11）我们很高兴地宣布推出基于 Lucene 6.6.0的 Elasticsearch 5.6.0版本。这是最新的稳定版本，已经可以在 我们的 Elasticsearch 服务平台 Elastic Cloud 上部署。 5.x 最新版本如下：  Download Elasticsearch 5.6.0 Elasticsearch 5.6.0 release no">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-29T13:25:24.210Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch 5.6.0 发布">
+<meta name="twitter:description" content="原文来源  今天（2017/09/11）我们很高兴地宣布推出基于 Lucene 6.6.0的 Elasticsearch 5.6.0版本。这是最新的稳定版本，已经可以在 我们的 Elasticsearch 服务平台 Elastic Cloud 上部署。 5.x 最新版本如下：  Download Elasticsearch 5.6.0 Elasticsearch 5.6.0 release no">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xiangzhurui.com/2017/09/12/Elasticsearch-5-6-0-发布/"/>
+
+
+
+
+
+  <title>Elasticsearch 5.6.0 发布 | xiangzhurui's blog.</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiangzhurui's blog.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2017/09/12/Elasticsearch-5-6-0-发布/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiangzhurui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiangzhurui's blog.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Elasticsearch 5.6.0 发布</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-12T23:15:00+08:00">
+                2017-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/Elasticsearch/" itemprop="url" rel="index">
+                    <span itemprop="name">Elasticsearch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><a href="https://www.elastic.co/blog/elasticsearch-5-6-0-released" target="_blank" rel="external">原文来源</a></p>
+</blockquote>
+<p>今天（2017/09/11）我们很高兴地宣布推出基于 Lucene 6.6.0的 Elasticsearch 5.6.0版本。这是最新的稳定版本，已经可以在 我们的 <a href="https://www.elastic.co/cloud" target="_blank" rel="external">Elasticsearch</a> 服务平台 <a href="https://www.elastic.co/cloud" target="_blank" rel="external">Elastic Cloud</a> 上部署。</p>
+<p>5.x 最新版本如下：</p>
+<ul>
+<li><a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="external">Download Elasticsearch 5.6.0</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/release-notes-5.6.0.html" target="_blank" rel="external">Elasticsearch 5.6.0 release notes</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/breaking-changes-5.6.html" target="_blank" rel="external">Elasticsearch 5.6 breaking changes</a></li>
+<li><a href="https://www.elastic.co/guide/en/x-pack/current/xpack-change-list.html" target="_blank" rel="external">X-Pack 5.6.0 release notes</a></li>
+</ul>
+<p>您可以在以上链接的发行说明中阅读到所有变更之处，但有一些变更值得注意：</p>
+<h2 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h2><p>Elasticsearch 5.6.0是一个升级版本。 如果您想要从5.x滚动升级到6.x的，你需要首先将集群升级到5.6.0或更高版本。 除了允许5.x版本滚动升级到6.x的之外，Elasticsearch 5.6.0附带了最新的弃用日志记录，以向您发出警告，指出您正在使用的已弃用的功能，您需要在迁移到6.0之前进行替换。 即使您计划进行完整的集群重启到6.x，我们强烈建议您首先进入5.6.0或更高版本，并查看弃用日志，以确保您的应用程序已准备好进行升级。</p>
+<p>除此之外，在<a href="https://www.elastic.co/blog/elasticsearch-the-server" target="_blank" rel="external">删除站点插件</a>之后，我们重新考察了我们如何提供额外的升级辅助工具，因为旧的“迁移助手”实际上是一个站点插件，使得该方法不再起作用。 我们希望将UI和任何新的API捆绑在一起，以便您尽可能轻松地体验迁移路径。 过去，我们也提出了一个CLI兼容版本的旧移民助理的请求。 我们虽然长期坚持这一点，但决定最好的道路是将旧的迁移助手功能（甚至更多！）放在<a href="https://www.elastic.co/downloads/x-pack" target="_blank" rel="external">X-Pack</a>中，因为这可以捆绑UI（Kibana）和Elasticsearch扩展。 但是，我们希望确保在X-Pack<a href="https://www.elastic.co/subscriptions" target="_blank" rel="external">完全免费的许可证</a>中提供此功能，以免您无需为此类型的基本升级帮助付费。</p>
+<p>有了新的 <strong>Upgrade Assistant features</strong> ！ Kibana X-Pack 现在包含一个“Cluster Checkup”工具，用于在升级之前向您发出有关需要在集群中进行更改的警告。 它还包括一个“Reindex Helper”，通过升级Security，Watcher和Kibana索引以及在2.x中创建的索引索引，为6.x兼容性准备索引。 这些Kibana UI由Elastisearch X-Pack中的<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/migration-api.html" target="_blank" rel="external">新的迁移API</a>支持。 如果您在纯粹的命令行环境中运行和/或由于某种原因无法安装Kibana，则可以直接使用这些API。</p>
+<p>再次说明，这些X-Pack迁移工具需要一个试用许可证（首次使用X-Pack时自动生成）或<a href="https://www.elastic.co/subscriptions" target="_blank" rel="external">免费的基本许可证</a>。</p>
+<p>注意：如果使用X-Pack安全性，6.0版中需要TLS / SSL加密。 如果您目前正在使用无TLS的X-Pack安全性，则无法进行滚动升级到6.0。 需要完整的集群重新启动才能启用TLS，无论是在5.x还是在过渡到6.x。</p>
+<h2 id="Java高级REST客户端"><a href="#Java高级REST客户端" class="headerlink" title="Java高级REST客户端"></a>Java高级REST客户端</h2><p>漫长的等待终于结束了！ 在Elasticsearch 5.0中，我们发布了低级别的Java REST客户端，它为其他语言提供与REST客户端相同的弹性连接，但对于Java程序员来说这有些难以使用，因为它只接受并返回JSON Blob，。 <a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/5.6/java-rest-high.html" target="_blank" rel="external">新的高级REST客户端</a>构建在低级客户端之上，但它接受请求对象并返回最重要的API的响应对象：info，get，index，delete，update，bulk，search，search-scroll ，和 clear-scroll。 这些构建器和辅助器使客户端更容易在IDE中使用。 其他请求仍然可以用低级客户端来处理。</p>
+<p>最终目标是使 Java 与其他语言处于同一级别。 高级HTTP客户端将成为Java应用程序与Elasticsearch通信的正式方式，替换Transport Client，Transport Client 将在Elasticsearch 7.0中被删除。</p>
+<h2 id="Typeless-Parent-Child"><a href="#Typeless-Parent-Child" class="headerlink" title="Typeless Parent/Child"></a>Typeless Parent/Child</h2><p>从即将到来的 6.0 版本开始的最大的改变是移除类型。此 5.6.0版本包含连接数据类型 —— 不需要指定父/子关系类型的新方式。虽然您现有的5.x索引将可以在6.x中继续工作，但我们希望使5.x中的存在连接数据类型以用于帮助您升级到6.0的应用程序。</p>
+<h2 id="搜索可扩展性"><a href="#搜索可扩展性" class="headerlink" title="搜索可扩展性"></a>搜索可扩展性</h2><p>针对诸如 <code>logstash-*</code>之类的索引模式的搜索可以引用大量的分片。 通常， 这样的查询包括日期范围过滤器，这意味着大多数分片不会包含任何匹配的文档。 在优化工作完成之前，这一版本中我们已经包含了一个优化以及早终止在这些分片上的请求，但这还不够。想象一下，包含10个搜索请求的多搜索请求，每个搜索请求都有2,000个碎片。这就是20,000个分片级的搜索请求，它们都被添加到搜索线程池队列中。这很容易导致搜索拒绝，即使大部分请求非常快。</p>
+<p>以前，Kibana使用使用带有日期范围过滤器的 <code>_field_stats</code> API来确定那些索引可能包含匹配的文档，然后针对这些索引运行搜索请求。我们想删除这个API，因为它比用户的预期要重得多，可能被滥用。相反，搜索请求现在具有轻薄分片预过滤阶段，如果搜索请求至少指定128个分片（默认情况下），就会被触发。这些前置过滤器请求不会添加到搜索队列中，所以搜索不会因为队列已满而被拒绝。预过滤器请求在分片级别重写查询，并确定查询是否有可能匹配任何文档。完整的搜索请求仅发送到有机会匹配的分片。<br>但是，如果用户实际上想要搜索所有2,000个分片，或是错误地搜索所有的索引呢？ 这些广泛的请求不应该压倒集群，也不应妨碍其他用户的搜索请求。 为了解决这个问题，我们引入了 <code>max_concurrent_shard_requests</code> 参数，其默认值取决于集群中的节点数量，但是固定的上限为256.这可能会使单个搜索请求针对较多的分片，但是它使 由许多用户进行更公平的并发搜索。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>请<a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="external">下载Elasticsearch 5.6.0</a>，尝试一下，让我们知道你在Twitter（<a href="https://twitter.com/elastic" target="_blank" rel="external">@elastic</a>）或我们<a href="https://discuss.elastic.co/c/elasticsearch" target="_blank" rel="external">论坛</a>上的想法。 您可以在<a href="https://github.com/elastic/elasticsearch/issues" target="_blank" rel="external">GitHub问题页面</a>上报告任何问题。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
+          
+            <a href="/tags/Elasticsearch-5-6/" rel="tag"># Elasticsearch 5.6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/30/常用-git-命令之-git-clean/" rel="next" title="常用 git 命令之 git clean">
+                <i class="fa fa-chevron-left"></i> 常用 git 命令之 git clean
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/13/elasticsearch-java-rest-client-5-6-中文文档[译]/" rel="prev" title="Elasticsearch Java REST Client 5.6 中文文档 [译]">
+                Elasticsearch Java REST Client 5.6 中文文档 [译] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="xiangzhurui" />
+          
+            <p class="site-author-name" itemprop="name">xiangzhurui</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiangzhurui" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#升级版本"><span class="nav-number">1.</span> <span class="nav-text">升级版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java高级REST客户端"><span class="nav-number">2.</span> <span class="nav-text">Java高级REST客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Typeless-Parent-Child"><span class="nav-number">3.</span> <span class="nav-text">Typeless Parent/Child</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索可扩展性"><span class="nav-number">4.</span> <span class="nav-text">搜索可扩展性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">5.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiangzhurui</span>
+
+  
+</div>
+
+
+<!--
+<div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
