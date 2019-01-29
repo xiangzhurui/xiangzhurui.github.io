@@ -265,6 +265,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2019/01/29/日常使用的-Git-命令-1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiangzhurui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiangzhurui's blog.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/29/日常使用的-Git-命令-1/" itemprop="url">日常使用的 Git 命令 1</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T13:53:24+08:00">
+                2019-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/版本控制-git/" itemprop="url" rel="index">
+                    <span itemprop="name">版本控制, git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>从 版本控制 中移除eclipse 文件</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached --force .project</span><br><span class="line">git rm --cached --force -r /.settings</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>git stash</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改远程仓库地址</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin git@192.168.1.200:mStar/OTT-dual/K3S/supernova</span><br><span class="line"></span><br><span class="line"><span class="comment">#方法二：</span></span><br><span class="line">git remote rm origin</span><br><span class="line">git remote add origin git@192.168.1.200:mStar/OTT-dual/K3S/supernova</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改分支名称</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push --delete origin devel</span><br><span class="line"><span class="comment"># 解除本地分支与远程分支关联</span></span><br><span class="line"><span class="comment"># 修改本地分支名</span></span><br><span class="line">git branch -m devel develop</span><br><span class="line"><span class="comment"># 推送本地分支到远端</span></span><br><span class="line">git push origin develop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重置工作副本</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard</span><br><span class="line">git clean -xdf</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2019/01/29/Apache-Kafka-起步/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -369,8 +527,8 @@
 <p>若设备上没有zookeeper单独安装的话，可以使用与kafka一起打包的脚本来启动，<br>本人设备上已有zookeeper， 不在单独启动。</p>
 </blockquote>
 <p>首先，命令行切换到kafka根目录，然后依次运行一下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># Windows下</span><br><span class="line">.\bin\windows\zookeeper-server-start ./config/zookeeper.properties</span><br><span class="line"><span class="meta">#</span># mac &amp; linux</span><br><span class="line">.\bin\kafka-server-start.sh .\config\zookeeper.properties</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># Windows 下</span><br><span class="line">.\bin\windows\kafka-server-start.bat .\config\server.properties</span><br><span class="line"><span class="meta">#</span># macOS &amp; Linux 下</span><br><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Windows下</span></span></span><br><span class="line">.\bin\windows\zookeeper-server-start ./config/zookeeper.properties</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># mac &amp; linux</span></span></span><br><span class="line">.\bin\kafka-server-start.sh .\config\zookeeper.properties</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Windows 下</span></span></span><br><span class="line">.\bin\windows\kafka-server-start.bat .\config\server.properties</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># macOS &amp; Linux 下</span></span></span><br><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
 <h2 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h2><ol>
 <li>防火墙放开zookeeper（默认2181） 和kafka端口号（默认9092）</li>
 <li>kafka 配置文件 <code>server.properties</code> 修改,在改配置文件中添加以下两项：</li>
@@ -1796,209 +1954,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2017/09/21/如何正确实现-Java-中的-HashCode/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiangzhurui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiangzhurui's blog.">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/21/如何正确实现-Java-中的-HashCode/" itemprop="url">如何正确实现 Java 中的 HashCode</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T10:03:19+08:00">
-                2017-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文为转载。<br>英文原文：<a href="https://www.sitepoint.com/how-to-implement-javas-hashcode-correctly/" target="_blank" rel="noopener">How to Implement Java’s hashCode Correctly</a><br>译文来源：<a href="https://www.oschina.net/translate/how-to-implement-javas-hashcode-correctly" target="_blank" rel="noopener">如何正确实现 Java 中的 HashCode</a></p>
-</blockquote>
-<h2 id="相等-和-Hash-Code"><a href="#相等-和-Hash-Code" class="headerlink" title="相等 和 Hash Code"></a>相等 和 Hash Code</h2><p>从一般角度来看，Equality 是不错的，但是 hash code 更则具技巧性。如果我们在 hash code上多下点功夫，我们就能了解到 hash code 就是用在细微处去提升性能的。</p>
-<p>大部分的数据结构使用 <code>equals</code> 去检查是否他们包含一个元素。例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>);</span><br><span class="line"><span class="keyword">boolean</span> contains = list.contains(<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure>
-<p>这个变量 <code>contains</code> 是 <code>true</code> 。因为他们是相等的，虽然 <code>b</code> 的实例化（instance）虽然不完全一样（再说一次，忽略<a href="http://javatechniques.com/blog/string-equality-and-interning/" target="_blank" rel="noopener">String interning</a>）。</p>
-<p>将传递给 <code>contains</code> 的实例与每个元素进行比较很浪费时间。还好，整个这类数据结构使用了一种更高效的方法。它不会将请求的实例与每个元素比较，而是使用捷径，找到可能与之相等的实例，然后只比较这几项。</p>
-<p>这个捷径就是哈希码——从对象计算出来的一个能代表该对象的整数值。与哈希码相同的实例不必相等，但相等的实例一定有相同的哈希码。（或者说应该有，我们稍后会对这个问题进行简单讨论）。这类的数据结构常常使用这种技术命名，在名称中加入 <code>Hash</code> 以便识别，其中最具代表性的就是 <code>HashMap</code>。</p>
-<p>一般情况下它们会这样进行：</p>
-<ul>
-<li><p>添加一个元素的时候，使用它的哈希码来计算存放在内部数组（称为桶）中的位置（序号）。</p>
-</li>
-<li><p>另一个不等同的元素如果具有相同的哈希码，它会被放在同一个桶中，与原来那个放在一起，比如把它们放在一个列表中。</p>
-</li>
-<li><p>如果传递一个实例给 <code>contains</code> 方法，会先计算它的哈希码来找到桶，只有同一个桶中的元素需要与这个实例进行比较。</p>
-</li>
-</ul>
-<p>使用这种方法实现 <code>contains</code> 的情况很少，在理想的状态下根本不需要 equals 比较。</p>
-<p>将 <code>equals</code>、<code>hashCode</code> 定义在 <code>Object</code> 中。</p>
-<h2 id="关于哈希的一些思考"><a href="#关于哈希的一些思考" class="headerlink" title="关于哈希的一些思考"></a>关于哈希的一些思考</h2><p>如果把 <code>hashCode</code> 作为一种快捷方式取决于其是否相等，那么只有一件事情我们需要关心：相等的对象应该有一致的哈希码。</p>
-<p>这也是为什么，如果我们覆写 equals 方法，就必须创建一个匹配的 <code>hashCode</code> 实现！此外，实现 equal 应该是依据我们的实现而实现的，这可能会导致没有相同的哈希码，因为他们使用的是 Object 的实现。</p>
-<h2 id="hashCode-约定"><a href="#hashCode-约定" class="headerlink" title="hashCode 约定"></a><code>hashCode</code> 约定</h2><p><a href="">从原文档</a>引用：</p>
-<blockquote>
-<p>对于 <code>hashCode</code> 的一般约定：</p>
-<ul>
-<li>在 Java 应用程序中，任何时候对同一对象多次调用 <code>hashCode</code> 方法，都必须一直返回同样的整数，对它提供的信息也用于对象的相等比较，且不会被修改。这个整数在两次对同一个应用程序的执行不中不需要保持一致。</li>
-<li>如果两个对象通过 <code>equals(Object)</code> 方法来比较相等，那么这两个对象的 <code>hashCode</code> 方法必须产生同样的整型结果。</li>
-<li>如果两个对象通过 <code>equals(Object)</code> 方法比较结果不等，这两个对象的 <code>hashCode</code> 不必产生同不整型结果。然而，开发者应该了解对不等的对象产生不同的整型结果有助于提高哈希表的性能。</li>
-</ul>
-</blockquote>
-<p>第一条反映了 <code>equals</code> 的一致性。第二条是我们在上面提到的要求。第三条陈述了我们下面要讨论的一个重要细节。</p>
-<h2 id="实现-hashCode"><a href="#实现-hashCode" class="headerlink" title="实现 hashCode"></a>实现 hashCode</h2><p><code>Person.hashCode</code> 有个很简单的实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Objects.hash(firstName, lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过计算相关字段的哈希码，再把这些哈希码组合起来得到 person 的哈希码。它们用 <code>Object</code> 的工具函数 <code>hash</code> 来参与计算。</p>
-<h3 id="选择字段"><a href="#选择字段" class="headerlink" title="选择字段"></a>选择字段</h3><p>然而什么字段才是相关的？这些要求有助于回答这个问题：如果相等的对象必须有相同的哈希码，那么在计算哈希码的时候就不应该使用那些不用于相等性检查的字段。（否则，如果两个对象只有那些字段不同的话，它们会相等但哈希码不同。）</p>
-<p>所以用于计算哈希码的那些字段应该是用于相等性比较的那些字段的子集。默认情况下，它们会使用相同的字段，但有几个细节需要考虑。</p>
-<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>第一是一致性要求。它应该经过非常严格的计算。如果有字段产生了变化，哈希码也应该允许变化（对于可变类来说，这往往是不可避免的），依赖哈希的数据结构并未准备应付这种情况。</p>
-<p>正如我们在上面看到的那样，哈希码用于确定一个元素的桶，但是如果哈希相关的字段发生变化，并不会立即重新计算哈希码，而且内部的数组也不会更新。</p>
-<p>这就意味着，再对一个相等的对象甚至同一个对象的查询会失败！这个数据结构会计算当前的哈希码，这个哈希码与实例存入时的哈希码并不相同，这直接导致找错了桶。</p>
-<p>小结：最好不要用可变的字段来计算哈希码！</p>
-<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>哈希码可能最终会在每次调用 <code>equals</code> 的时候计算，这可能正好发生在代码中性能极为关键的部分，所以考虑性能是很有意义的。相比之下 <code>equals</code> 的优化空间就非常小。</p>
-<p>除非是使用了复杂的算法，或者使用的字段非常非常多，组合他们哈希码的计算成本可以忽略不计，因为这不可避免。但是应该考虑是否所有字段都需要包含在计算中！尤其应该以审视的眼光来看待集合，例如计算列表和集合中所有元素的哈希码。需要根据不同的情况来考虑是否需要它们参与计算。</p>
-<p>如果性能是关键，使用 <code>Object.hash</code> 就可能不是最好的选择，因为它会为<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/varargs.html" target="_blank" rel="noopener">可变参数</a>创建数组。</p>
-<p>一般的优化原则是：谨慎处理！使用一个公共哈希算法的，可能需要放弃集合，并在分析可能的改进之后进行优化。</p>
-<h3 id="碰撞"><a href="#碰撞" class="headerlink" title="碰撞"></a>碰撞</h3><p>如果只关注性能，下面这个实例怎么样？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>毫无疑问，它很快。而且相等的对象会有相同的哈希码，这也让我们觉得不错。还有个亮点，它不涉及可变的字段！</p>
-<p>但是，想想我们提到的桶是什么？这种情况下所有实例会被装进同一个桶中！通常这会导致使用一个链表来容纳所有元素，这样的性能太糟糕了——比如，每次执行 <code>contains</code> 都会对列表进行线性扫描。</p>
-<p>因此，我们得让每个桶里的内容尽可能的少！一个即使对非常相似的对象计算的哈希码也大不相同的算法，会是一个不错的开始。</p>
-<p>如何取得，一定程度上取决于选择的字段。我们用于计算的细节，更多时候是为了生成不同的哈希码。注意，这与我们对性能的想法完全相反。结果很有趣，用太多或者太少字段都会导致性能不佳。</p>
-<p>防止碰撞的算法是哈希算法的另一部分。</p>
-<h3 id="计算哈希"><a href="#计算哈希" class="headerlink" title="计算哈希"></a>计算哈希</h3><p>计算字段的哈希码最简单的办法就是直接调用这个字段的 <code>hashCode</code>。可以手工来进行合并。一个公共算法是从任意的某个数开始，让它与另一个数（通常是一个小素数）相乘，再加上一个字段的哈希码，然后重复：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> prime = <span class="number">31</span>;</span><br><span class="line"><span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">result = prime * result + ((firstName == <span class="keyword">null</span>) ? <span class="number">0</span> : firstName.hashCode());</span><br><span class="line">result = prime * result + ((lastName == <span class="keyword">null</span>) ? <span class="number">0</span> : lastName.hashCode());</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure></p>
-<p>这有可能造成溢出，但这不是什么大问题，因为在 Java 中不会引发异常。</p>
-<p>注意，如果输入数据有着特定的模式，最好的哈希算法都可能出现异常频繁的碰撞。举个简单的例子，假设我们用一个点的 x 坐标和 y 坐标来计算哈希。一开始不太糟，直到我们发现这样一条直线上的点：<code>f(x) = -x</code>，这些点的 <code>x + y = 0</code>。就会发生大量的碰撞！</p>
-<p>不过话说回来：如果没有分析说明一个公共算法不正确，就大胆的使用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们已经了解，计算哈希码就像是把某个事物精简成等价的整数：相等的对象必须有相同的哈希码。同时为了保证较好的性能，拥有同一个哈希码的的对象越少越好。</p>
-<p>这意味着如果覆写了 <code>equals</code> 就必须覆写 <code>hashCode</code> 。</p>
-<p>实现 <code>hashCode</code> 时：</p>
-<p>与 <code>equals</code> 使用相同的字段（或者是这些字段的子集）。</p>
-<p>最好不要包含可变字段。</p>
-<p>考虑不去调用集合的 <code>hashCode</code> 。</p>
-<p>使用公共算法，除非输入数据的模式严重影响这个算法的效果。</p>
-<p>记住， <code>hashCode</code> 与效果相关，所以不要在上面浪费过多精力，除非分析结果指出优化的必要性。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2050,7 +2005,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2061,7 +2016,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

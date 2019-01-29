@@ -265,6 +265,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2017/09/21/如何正确实现-Java-中的-HashCode/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiangzhurui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiangzhurui's blog.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/21/如何正确实现-Java-中的-HashCode/" itemprop="url">如何正确实现 Java 中的 HashCode</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-21T10:03:19+08:00">
+                2017-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>本文为转载。<br>英文原文：<a href="https://www.sitepoint.com/how-to-implement-javas-hashcode-correctly/" target="_blank" rel="noopener">How to Implement Java’s hashCode Correctly</a><br>译文来源：<a href="https://www.oschina.net/translate/how-to-implement-javas-hashcode-correctly" target="_blank" rel="noopener">如何正确实现 Java 中的 HashCode</a></p>
+</blockquote>
+<h2 id="相等-和-Hash-Code"><a href="#相等-和-Hash-Code" class="headerlink" title="相等 和 Hash Code"></a>相等 和 Hash Code</h2><p>从一般角度来看，Equality 是不错的，但是 hash code 更则具技巧性。如果我们在 hash code上多下点功夫，我们就能了解到 hash code 就是用在细微处去提升性能的。</p>
+<p>大部分的数据结构使用 <code>equals</code> 去检查是否他们包含一个元素。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>);</span><br><span class="line"><span class="keyword">boolean</span> contains = list.contains(<span class="string">"b"</span>);</span><br></pre></td></tr></table></figure>
+<p>这个变量 <code>contains</code> 是 <code>true</code> 。因为他们是相等的，虽然 <code>b</code> 的实例化（instance）虽然不完全一样（再说一次，忽略<a href="http://javatechniques.com/blog/string-equality-and-interning/" target="_blank" rel="noopener">String interning</a>）。</p>
+<p>将传递给 <code>contains</code> 的实例与每个元素进行比较很浪费时间。还好，整个这类数据结构使用了一种更高效的方法。它不会将请求的实例与每个元素比较，而是使用捷径，找到可能与之相等的实例，然后只比较这几项。</p>
+<p>这个捷径就是哈希码——从对象计算出来的一个能代表该对象的整数值。与哈希码相同的实例不必相等，但相等的实例一定有相同的哈希码。（或者说应该有，我们稍后会对这个问题进行简单讨论）。这类的数据结构常常使用这种技术命名，在名称中加入 <code>Hash</code> 以便识别，其中最具代表性的就是 <code>HashMap</code>。</p>
+<p>一般情况下它们会这样进行：</p>
+<ul>
+<li><p>添加一个元素的时候，使用它的哈希码来计算存放在内部数组（称为桶）中的位置（序号）。</p>
+</li>
+<li><p>另一个不等同的元素如果具有相同的哈希码，它会被放在同一个桶中，与原来那个放在一起，比如把它们放在一个列表中。</p>
+</li>
+<li><p>如果传递一个实例给 <code>contains</code> 方法，会先计算它的哈希码来找到桶，只有同一个桶中的元素需要与这个实例进行比较。</p>
+</li>
+</ul>
+<p>使用这种方法实现 <code>contains</code> 的情况很少，在理想的状态下根本不需要 equals 比较。</p>
+<p>将 <code>equals</code>、<code>hashCode</code> 定义在 <code>Object</code> 中。</p>
+<h2 id="关于哈希的一些思考"><a href="#关于哈希的一些思考" class="headerlink" title="关于哈希的一些思考"></a>关于哈希的一些思考</h2><p>如果把 <code>hashCode</code> 作为一种快捷方式取决于其是否相等，那么只有一件事情我们需要关心：相等的对象应该有一致的哈希码。</p>
+<p>这也是为什么，如果我们覆写 equals 方法，就必须创建一个匹配的 <code>hashCode</code> 实现！此外，实现 equal 应该是依据我们的实现而实现的，这可能会导致没有相同的哈希码，因为他们使用的是 Object 的实现。</p>
+<h2 id="hashCode-约定"><a href="#hashCode-约定" class="headerlink" title="hashCode 约定"></a><code>hashCode</code> 约定</h2><p><a href="">从原文档</a>引用：</p>
+<blockquote>
+<p>对于 <code>hashCode</code> 的一般约定：</p>
+<ul>
+<li>在 Java 应用程序中，任何时候对同一对象多次调用 <code>hashCode</code> 方法，都必须一直返回同样的整数，对它提供的信息也用于对象的相等比较，且不会被修改。这个整数在两次对同一个应用程序的执行不中不需要保持一致。</li>
+<li>如果两个对象通过 <code>equals(Object)</code> 方法来比较相等，那么这两个对象的 <code>hashCode</code> 方法必须产生同样的整型结果。</li>
+<li>如果两个对象通过 <code>equals(Object)</code> 方法比较结果不等，这两个对象的 <code>hashCode</code> 不必产生同不整型结果。然而，开发者应该了解对不等的对象产生不同的整型结果有助于提高哈希表的性能。</li>
+</ul>
+</blockquote>
+<p>第一条反映了 <code>equals</code> 的一致性。第二条是我们在上面提到的要求。第三条陈述了我们下面要讨论的一个重要细节。</p>
+<h2 id="实现-hashCode"><a href="#实现-hashCode" class="headerlink" title="实现 hashCode"></a>实现 hashCode</h2><p><code>Person.hashCode</code> 有个很简单的实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Objects.hash(firstName, lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过计算相关字段的哈希码，再把这些哈希码组合起来得到 person 的哈希码。它们用 <code>Object</code> 的工具函数 <code>hash</code> 来参与计算。</p>
+<h3 id="选择字段"><a href="#选择字段" class="headerlink" title="选择字段"></a>选择字段</h3><p>然而什么字段才是相关的？这些要求有助于回答这个问题：如果相等的对象必须有相同的哈希码，那么在计算哈希码的时候就不应该使用那些不用于相等性检查的字段。（否则，如果两个对象只有那些字段不同的话，它们会相等但哈希码不同。）</p>
+<p>所以用于计算哈希码的那些字段应该是用于相等性比较的那些字段的子集。默认情况下，它们会使用相同的字段，但有几个细节需要考虑。</p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>第一是一致性要求。它应该经过非常严格的计算。如果有字段产生了变化，哈希码也应该允许变化（对于可变类来说，这往往是不可避免的），依赖哈希的数据结构并未准备应付这种情况。</p>
+<p>正如我们在上面看到的那样，哈希码用于确定一个元素的桶，但是如果哈希相关的字段发生变化，并不会立即重新计算哈希码，而且内部的数组也不会更新。</p>
+<p>这就意味着，再对一个相等的对象甚至同一个对象的查询会失败！这个数据结构会计算当前的哈希码，这个哈希码与实例存入时的哈希码并不相同，这直接导致找错了桶。</p>
+<p>小结：最好不要用可变的字段来计算哈希码！</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>哈希码可能最终会在每次调用 <code>equals</code> 的时候计算，这可能正好发生在代码中性能极为关键的部分，所以考虑性能是很有意义的。相比之下 <code>equals</code> 的优化空间就非常小。</p>
+<p>除非是使用了复杂的算法，或者使用的字段非常非常多，组合他们哈希码的计算成本可以忽略不计，因为这不可避免。但是应该考虑是否所有字段都需要包含在计算中！尤其应该以审视的眼光来看待集合，例如计算列表和集合中所有元素的哈希码。需要根据不同的情况来考虑是否需要它们参与计算。</p>
+<p>如果性能是关键，使用 <code>Object.hash</code> 就可能不是最好的选择，因为它会为<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/varargs.html" target="_blank" rel="noopener">可变参数</a>创建数组。</p>
+<p>一般的优化原则是：谨慎处理！使用一个公共哈希算法的，可能需要放弃集合，并在分析可能的改进之后进行优化。</p>
+<h3 id="碰撞"><a href="#碰撞" class="headerlink" title="碰撞"></a>碰撞</h3><p>如果只关注性能，下面这个实例怎么样？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>毫无疑问，它很快。而且相等的对象会有相同的哈希码，这也让我们觉得不错。还有个亮点，它不涉及可变的字段！</p>
+<p>但是，想想我们提到的桶是什么？这种情况下所有实例会被装进同一个桶中！通常这会导致使用一个链表来容纳所有元素，这样的性能太糟糕了——比如，每次执行 <code>contains</code> 都会对列表进行线性扫描。</p>
+<p>因此，我们得让每个桶里的内容尽可能的少！一个即使对非常相似的对象计算的哈希码也大不相同的算法，会是一个不错的开始。</p>
+<p>如何取得，一定程度上取决于选择的字段。我们用于计算的细节，更多时候是为了生成不同的哈希码。注意，这与我们对性能的想法完全相反。结果很有趣，用太多或者太少字段都会导致性能不佳。</p>
+<p>防止碰撞的算法是哈希算法的另一部分。</p>
+<h3 id="计算哈希"><a href="#计算哈希" class="headerlink" title="计算哈希"></a>计算哈希</h3><p>计算字段的哈希码最简单的办法就是直接调用这个字段的 <code>hashCode</code>。可以手工来进行合并。一个公共算法是从任意的某个数开始，让它与另一个数（通常是一个小素数）相乘，再加上一个字段的哈希码，然后重复：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> prime = <span class="number">31</span>;</span><br><span class="line"><span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">result = prime * result + ((firstName == <span class="keyword">null</span>) ? <span class="number">0</span> : firstName.hashCode());</span><br><span class="line">result = prime * result + ((lastName == <span class="keyword">null</span>) ? <span class="number">0</span> : lastName.hashCode());</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure></p>
+<p>这有可能造成溢出，但这不是什么大问题，因为在 Java 中不会引发异常。</p>
+<p>注意，如果输入数据有着特定的模式，最好的哈希算法都可能出现异常频繁的碰撞。举个简单的例子，假设我们用一个点的 x 坐标和 y 坐标来计算哈希。一开始不太糟，直到我们发现这样一条直线上的点：<code>f(x) = -x</code>，这些点的 <code>x + y = 0</code>。就会发生大量的碰撞！</p>
+<p>不过话说回来：如果没有分析说明一个公共算法不正确，就大胆的使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们已经了解，计算哈希码就像是把某个事物精简成等价的整数：相等的对象必须有相同的哈希码。同时为了保证较好的性能，拥有同一个哈希码的的对象越少越好。</p>
+<p>这意味着如果覆写了 <code>equals</code> 就必须覆写 <code>hashCode</code> 。</p>
+<p>实现 <code>hashCode</code> 时：</p>
+<p>与 <code>equals</code> 使用相同的字段（或者是这些字段的子集）。</p>
+<p>最好不要包含可变字段。</p>
+<p>考虑不去调用集合的 <code>hashCode</code> 。</p>
+<p>使用公共算法，除非输入数据的模式严重影响这个算法的效果。</p>
+<p>记住， <code>hashCode</code> 与效果相关，所以不要在上面浪费过多精力，除非分析结果指出优化的必要性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2017/09/13/elasticsearch-java-rest-client-5-6-中文文档[译]/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2160,265 +2363,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2016/09/20/eclipse-ee-使用说明/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xiangzhurui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xiangzhurui's blog.">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/09/20/eclipse-ee-使用说明/" itemprop="url">Eclipse EE Neon 使用说明</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-20T22:55:00+08:00">
-                2016-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发工具/" itemprop="url" rel="index">
-                    <span itemprop="name">开发工具</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发工具/Eclipse/" itemprop="url" rel="index">
-                    <span itemprop="name">Eclipse</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="下载-Eclipse"><a href="#下载-Eclipse" class="headerlink" title="下载 Eclipse"></a>下载 <code>Eclipse</code></h2><ul>
-<li>eclipse 是开源免费软件，可到<a href="https://eclipse.org/" target="_blank" rel="noopener">eclipse 官网</a> 处获取到下载链接地址。</li>
-<li>eclipse 有两种方式下载，直接下载独立安装的ZIP程序包，或者使用 <code>Eclipse Installer</code> 进行在线安装.</li>
-<li>eclipse 下载页面地址：<br><a href="https://eclipse.org/downloads/eclipse-packages/" target="_blank" rel="noopener">https://eclipse.org/downloads/eclipse-packages/</a><br><img src="/2016/09/20/eclipse-ee-使用说明/下载Eclipse.png" alt="Eclipse 下载页面"></li>
-</ul>
-<h2 id="Eclipse-安装配置"><a href="#Eclipse-安装配置" class="headerlink" title="Eclipse 安装配置"></a>Eclipse 安装配置</h2><p>eclipse 是免安装程序,直接将zip包解压即可，然后双击 <code>eclipse.exe</code> 即可使用</p>
-<blockquote>
-<p>需要注意的是 <code>eclipse 4.6</code> 版本需要 JDK 1.8。若系统环境变量 <code>JAVA_HOME</code>有配置指定到jdk1.8，那么eclipse直接可用。 <br></p>
-</blockquote>
-<p>另外，也可以在 <code>eclipse.ini</code> 文件中配置eclispe 所使用的jdk,可在 <code>--launcher.appendVmargs</code> 之后 <code>-vmargs</code>之前增加如下参数，参数值为安装的jdk bin目录路径</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-vm</span><br><span class="line">C:/Program Files/Java/jdk1.8.0_101/bin</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Eclispe 工作区<br><img src="/2016/09/20/eclipse-ee-使用说明/eclipse-workspace-java-ee.png" alt="Eclispe 工作区"></li>
-</ul>
-<h2 id="导入-Maven-项目"><a href="#导入-Maven-项目" class="headerlink" title="导入 Maven 项目"></a>导入 Maven 项目</h2><ol>
-<li><p>如下所示点击”File-Import”<br><br><img src="/2016/09/20/eclipse-ee-使用说明/import-projects.png" alt="导入"></p>
-</li>
-<li><p>选择导入Existing Maven Projects<br><br><img src="/2016/09/20/eclipse-ee-使用说明/import-existing-maven-projects.png" alt="选择导入Existing Maven Projects"></p>
-</li>
-<li><p>选择源码路径,然后点击<code>Finish</code><br><br><img src="/2016/09/20/eclipse-ee-使用说明/03-选择源码路径.png" alt="选择源码路径"></p>
-</li>
-</ol>
-<h2 id="Eclipse-设置Build-Path"><a href="#Eclipse-设置Build-Path" class="headerlink" title="Eclipse 设置Build Path"></a>Eclipse 设置Build Path</h2><p><img src="/2016/09/20/eclipse-ee-使用说明/java-build-path.png" alt=""></p>
-<h2 id="安装-Eclispe-插件"><a href="#安装-Eclispe-插件" class="headerlink" title="安装 Eclispe 插件"></a>安装 Eclispe 插件</h2><h3 id="通过-Eclipse-Marketplace-在线安装插件"><a href="#通过-Eclipse-Marketplace-在线安装插件" class="headerlink" title="通过 Eclipse Marketplace 在线安装插件"></a>通过 <code>Eclipse Marketplace</code> 在线安装插件</h3><ol>
-<li>在eclipse菜单栏点击 <code>Help &gt; Eclipse Marketplace...</code><br><img src="/2016/09/20/eclipse-ee-使用说明/install-eclispe-plugin-with-marketplace.png" alt="安装插件-01"></li>
-<li>在<code>Find</code>输入框输入插件名称搜索插件<br><img src="/2016/09/20/eclipse-ee-使用说明/eclipse-marketplace.png" alt="安装插件-02"><br>3 点击 <code>Install</code> 安装。</li>
-</ol>
-<h3 id="使用-update-sit-url-在线安装插件"><a href="#使用-update-sit-url-在线安装插件" class="headerlink" title="使用 update sit url 在线安装插件"></a>使用 <code>update sit url</code> 在线安装插件</h3><ol>
-<li>在 <code>eclipse</code> 菜单栏，点击 <code>Help &gt; Install New Software</code>。</li>
-<li>点击 <code>Add</code> ，弹出 <code>Add Repository</code> 对话框。</li>
-<li>在 <code>name</code> 输入框里输入名称, 在 <code>location</code> 输入框里输入插件安装<code>Update site URL</code> 。</li>
-<li>点击<code>OK</code>。</li>
-</ol>
-<p><img src="/2016/09/20/eclipse-ee-使用说明/install-new-software.png" alt=""></p>
-<h3 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h3><ol>
-<li>将插件下载解压，删除<code>features</code>与<code>plugins</code> 之外的所有文件，然后将此两文件夹放入一个新建的名为<code>eclispe</code> 的文件夹里，然后将这个eclipse文件夹放入以插件名为名的文件夹。然后进行下一步。</li>
-<li>将插件文件放置到 <code>eclipse\dropins\</code>目录下，<em><code>最终第一步解压的两个插件文件将会位于形如{eclipse根目录}\dropins\Subclipse-1.10.13-1.9.x\eclipse</code>的路径下</em> 重启eclipse即可</li>
-</ol>
-<p><img src="/2016/09/20/eclipse-ee-使用说明/离线安装插件-1.png" alt=""><br><img src="/2016/09/20/eclipse-ee-使用说明/离线安装插件-2.png" alt=""></p>
-<h3 id="常用的-Eclipse-插件列表"><a href="#常用的-Eclipse-插件列表" class="headerlink" title="常用的 Eclipse 插件列表"></a>常用的 Eclipse 插件列表</h3><ul>
-<li><a href="http://dist.springsource.com/release/TOOLS/update/e4.6/" target="_blank" rel="noopener">Spring Tool Suite (STS) 4.6</a><br><em>开发Spring 相关功能</em></li>
-<li>MyBatispse<br><em>MyBatis 开发插件</em></li>
-<li>Mybatis Generator<br><em>为eclipse提供自动生成MyBatis相关代码的功能</em></li>
-<li>Buildship Gradle Integration<br><em>集成 <code>Gradle</code></em></li>
-<li>Subclipse<br><em><code>Subversion</code>插件</em></li>
-<li><a href="http://download.jboss.org/jbosstools/neon/stable/updates/" target="_blank" rel="noopener">JBoss Tools 4.4.2.Final</a><br><em>提供集成JBoss Application Server，Hibernate, 查看与编辑 <code>properties</code>、<code>xml</code> 、<code>web.xml</code>文件，等功能</em><br><em><a href="http://download.jboss.org/jbosstools/static/neon/development/updates/core/" target="_blank" rel="noopener">离线安装包下载地址</a></em></li>
-<li><a href="http://activiti.org/designer/update/" target="_blank" rel="noopener">Activiti BPMN 2.0 designer</a><br><em><code>Activiti</code>工作流引擎插件</em></li>
-<li><a href="http://www.thymeleaf.org/eclipse-plugin-update-site/" target="_blank" rel="noopener">Thymeleaf Eclipse Plugin repository</a><br><em><code>Thymeleaf</code>模板引擎</em></li>
-</ul>
-<blockquote>
-<p>其中 <code>Spring Suite Tool</code>,<code>MyBatispse</code>,<code>Mybatis Generator</code>,<code>Buildship Gradle Integration</code>,<code>Subclipse</code>,<code>JBoss Tools</code>, 可直接从<code>Eclipse Marketplace</code>安装。</p>
-</blockquote>
-<h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><h3 id="Subclipse-使用"><a href="#Subclipse-使用" class="headerlink" title="Subclipse 使用"></a>Subclipse 使用</h3><ul>
-<li>svn ignore 设置排除版本控制的文件</li>
-</ul>
-<p><img src="/2016/09/20/eclipse-ee-使用说明/svn-ignore.png" alt="svn-ignore"></p>
-<h2 id="常见问题解决"><a href="#常见问题解决" class="headerlink" title="常见问题解决"></a>常见问题解决</h2><ul>
-<li><strong>JPA project Change Event Handler (Wating)</strong></li>
-</ul>
-<p>这是 Eclipse 中的一个 BUG :</p>
-<p><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=386171" target="_blank" rel="noopener">Bug 386171 - JPA Java Change Event Handler (Waiting)</a></p>
-<p>解决方法：</p>
-<ol>
-<li><p>退出Myeclipse（或eclipse）；</p>
-</li>
-<li><p>进入Myeclipse（或eclipse）的安装目录；</p>
-</li>
-</ol>
-<ul>
-<li>linux中：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir disabled</span><br><span class="line">mkdir disabled/features disabled/plugins</span><br><span class="line"></span><br><span class="line">mv plugins/org.eclipse.jpt.* disabled/plugins</span><br><span class="line">mv features/org.eclipse.jpt.* disabled/features</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Windows 中:</li>
-</ul>
-<ol>
-<li>创建名为disabled的文件夹；</li>
-<li>在disabled文件夹下创建两个文件夹，名字分别为features 、plugins；</li>
-<li>将plugins目录下，以org.eclipse.jpt开头的jar文件剪切到disabled\plugins目录下；</li>
-<li>将features目录下，以org.eclipse.jpt开头的j文件夹剪切到disabled\features目录下；</li>
-<li>重新Myeclipse（或eclipse）；</li>
-<li>重启后第一次会提醒你重新配置content-assist；</li>
-<li>可以执行以下命令替代以上操作：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir disabled</span><br><span class="line">mkdir disabled\features</span><br><span class="line">mkdir disabled\plugins</span><br><span class="line"></span><br><span class="line">move plugins\org.eclipse.jpt.* disabled\plugins</span><br><span class="line">move features\org.eclipse.jpt.* disabled\features</span><br></pre></td></tr></table></figure>
-<p>卸载完DALI/JPT的eclipse插件后，就再也不会出现UI卡顿与保存文件的时候需要等待几秒的问题了。</p>
-<h2 id="将普通-Java-项目转换为-Maven-项目"><a href="#将普通-Java-项目转换为-Maven-项目" class="headerlink" title="将普通 Java 项目转换为 Maven 项目"></a>将普通 Java 项目转换为 Maven 项目</h2><blockquote>
-<p>以下提供一个完整可行的将遗留项目转换为Maven项目的步骤。至于转换Maven构建项目的好处不在本文涉及范围之内，希望了解的读者可以使用<code>持续集成、自动化测试 与 Maven</code>等进行搜索</p>
-</blockquote>
-<h3 id="使用工具"><a href="#使用工具" class="headerlink" title="使用工具"></a>使用工具</h3><ul>
-<li>Eclipse Neon (4.6)</li>
-<li>JBoss Tools 4.4.2.Final</li>
-</ul>
-<h3 id="转换步骤"><a href="#转换步骤" class="headerlink" title="转换步骤"></a>转换步骤</h3><ol>
-<li>在Eclipse Marketplace 安装 <code>JBoss Tools 4.4.2.Final</code> 插件<br><img src="/2016/09/20/eclipse-ee-使用说明/01-安装JBoss-Tools.png" alt="安装 `JBoss Tools 4.4.2.Final` 插件"></li>
-<li>选中待转换的项目，“右键 &gt; Configure &gt; Convert to Plug-in Projects”<br><img src="/2016/09/20/eclipse-ee-使用说明/convert-to-plug-in-projects.png" alt=""></li>
-<li>在弹出框填写Maven项目的GAV信息和打包信息（Java Web项目使用war,Java项目使用jar)<br><img src="/2016/09/20/eclipse-ee-使用说明/03-填写Maven项目的GAV信息和项目打包类型.png" alt=""></li>
-<li>等待自动识别jar依赖，注意不要勾选“Delete original references from project”<br><img src="/2016/09/20/eclipse-ee-使用说明/04-自动匹配jar包依赖.jpg" alt=""></li>
-<li>记录上一步里的匹配结果，已匹配的（绿色）和未匹配成功的（红叉）,建议使用截图将识别记录保存下来。</li>
-<li>回到项目文件夹，将自动识别成功的jar删除。接下来开始处理无法匹配的依赖包</li>
-<li>将剩余未成功匹配的jar包移动到另一个位置，新建名为test的项目，将这些jar加入该项目的<code>build path</code>。</li>
-<li>在test项目的“Referenced Libraries &gt; ”之下依次点击jar左侧的箭头按钮查看jar的类信息<br><img src="/2016/09/20/eclipse-ee-使用说明/05-处理无法匹配的依赖包-1.png" alt=""></li>
-<li>打开jar的<code>META-INF</code>目录，这个时候有两种情况：由Maven打包的jar和不是的。Maven打包的jar处理起来很简单，<code>META-INF</code>下将可以看到名为<code>maven</code>文件夹打开它知道最里层会看到一个<code>pom.properites</code>的文件,这个文件里含有该jar的Maven依赖信息将该信息填入pom即可。示例如下：<br><img src="/2016/09/20/eclipse-ee-使用说明/07-Maven构建的jar-1.png" alt=""></li>
-<li>处理非Maven打包的同时也不在Maven中央仓库存在的依赖包，这样的依赖包一般是非开源的私有包。这是自己编织该jar的Maven GAV信息，将该信息填入pom，并将将jar发布到自己建立的代理仓库(<em>一般使用Nexus OSS搭建</em>)即可。</li>
-<li>回到被转换的项目，在Eclipse里按 “Alt+F5” 更新Maven即可看到构建成功。</li>
-<li>至于其他既不能在jar里找到<code>pom.properites</code>,看上去由不像是私有包，那么可以在<code>[search.maven.org](http://search.maven.org/#advancedsearch)</code>进行搜索.<br><img src="/2016/09/20/eclipse-ee-使用说明/8.其他.png" alt=""></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2470,7 +2414,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2481,7 +2425,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

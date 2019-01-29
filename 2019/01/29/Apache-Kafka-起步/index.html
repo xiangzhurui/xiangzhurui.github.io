@@ -369,8 +369,8 @@
 <p>若设备上没有zookeeper单独安装的话，可以使用与kafka一起打包的脚本来启动，<br>本人设备上已有zookeeper， 不在单独启动。</p>
 </blockquote>
 <p>首先，命令行切换到kafka根目录，然后依次运行一下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># Windows下</span><br><span class="line">.\bin\windows\zookeeper-server-start ./config/zookeeper.properties</span><br><span class="line"><span class="meta">#</span># mac &amp; linux</span><br><span class="line">.\bin\kafka-server-start.sh .\config\zookeeper.properties</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span># Windows 下</span><br><span class="line">.\bin\windows\kafka-server-start.bat .\config\server.properties</span><br><span class="line"><span class="meta">#</span># macOS &amp; Linux 下</span><br><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Windows下</span></span></span><br><span class="line">.\bin\windows\zookeeper-server-start ./config/zookeeper.properties</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># mac &amp; linux</span></span></span><br><span class="line">.\bin\kafka-server-start.sh .\config\zookeeper.properties</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Windows 下</span></span></span><br><span class="line">.\bin\windows\kafka-server-start.bat .\config\server.properties</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># macOS &amp; Linux 下</span></span></span><br><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
 <h2 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h2><ol>
 <li>防火墙放开zookeeper（默认2181） 和kafka端口号（默认9092）</li>
 <li>kafka 配置文件 <code>server.properties</code> 修改,在改配置文件中添加以下两项：</li>
@@ -419,6 +419,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/29/日常使用的-Git-命令-1/" rel="prev" title="日常使用的 Git 命令 1">
+                日常使用的 Git 命令 1 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -496,7 +500,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -507,7 +511,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
