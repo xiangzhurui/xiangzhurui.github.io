@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -74,21 +74,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Nexus,Maven," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="Maven,Nexus,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -96,7 +96,7 @@
 
 
 <meta name="description" content="Sonatype Nexus 服务启动失败问题解决 问题前述: 近日在开发机本机安装了 Oracle 数据库快捷版 11g2 之后，重启电脑后发现本机的maven代理服务无法访问。  现象 通过 Windows 服务窗口启动nexus 服务，失败（报1067错误）  通过命令窗口执行 nexus start 失败，重新安装服务后再次执行后依然错误    通过命令窗口执行 %NEXUES_HOME%">
-<meta name="keywords" content="Nexus,Maven">
+<meta name="keywords" content="Maven,Nexus">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Sonatype Nexus 搭建 Maven 私有仓库">
 <meta property="og:url" content="https://xiangzhurui.com/2016/11/09/使用-sonatype-nexus-搭建-maven-私有仓库/index.html">
@@ -104,7 +104,7 @@
 <meta property="og:description" content="Sonatype Nexus 服务启动失败问题解决 问题前述: 近日在开发机本机安装了 Oracle 数据库快捷版 11g2 之后，重启电脑后发现本机的maven代理服务无法访问。  现象 通过 Windows 服务窗口启动nexus 服务，失败（报1067错误）  通过命令窗口执行 nexus start 失败，重新安装服务后再次执行后依然错误    通过命令窗口执行 %NEXUES_HOME%">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://xiangzhurui.com/2016/11/09/使用-sonatype-nexus-搭建-maven-私有仓库/Sonatype-Nexus-启动失败.PNG">
-<meta property="og:updated_time" content="2018-06-29T13:25:24.241Z">
+<meta property="og:updated_time" content="2018-07-05T03:32:18.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Sonatype Nexus 搭建 Maven 私有仓库">
 <meta name="twitter:description" content="Sonatype Nexus 服务启动失败问题解决 问题前述: 近日在开发机本机安装了 Oracle 数据库快捷版 11g2 之后，重启电脑后发现本机的maven代理服务无法访问。  现象 通过 Windows 服务窗口启动nexus 服务，失败（报1067错误）  通过命令窗口执行 nexus start 失败，重新安装服务后再次执行后依然错误    通过命令窗口执行 %NEXUES_HOME%">
@@ -138,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="https://xiangzhurui.com/2016/11/09/使用-sonatype-nexus-搭建-maven-私有仓库/"/>
+  <link rel="canonical" href="https://xiangzhurui.com/2016/11/09/使用-sonatype-nexus-搭建-maven-私有仓库/">
 
 
 
@@ -156,7 +156,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -166,13 +166,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">xiangzhurui's blog.</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,7 +202,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -212,7 +212,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -222,7 +222,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -232,7 +232,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -266,20 +266,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2016/11/09/使用-sonatype-nexus-搭建-maven-私有仓库/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiangzhurui">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="xiangzhurui's blog.">
     </span>
 
@@ -311,7 +311,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -322,7 +322,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/开发工具/" itemprop="url" rel="index">
                     <span itemprop="name">开发工具</span>
                   </a>
@@ -379,37 +379,37 @@
 <li><code>%NEXUES_HOME%\logs\wrapper.log</code></li>
 </ul>
 <h2 id="服务启动日志"><a href="#服务启动日志" class="headerlink" title="服务启动日志"></a>服务启动日志</h2><p><code>wrapper.log</code> 文件中提示信息表明可能是找不到JDK…</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">wrapper  | Starting the nexus service...</div><div class="line">wrapper  | --&gt; Wrapper Started as Service</div><div class="line">wrapper  | Launching a JVM...</div><div class="line">wrapper  | Unable to execute Java command.  系统找不到指定的文件。 (0x2)</div><div class="line">wrapper  |     &quot;java&quot; -XX:MaxPermSize=192m -Djava.io.tmpdir=./tmp -Djava.net.preferIPv4Stack=true -Dcom.sun.jndi.ldap.connect.pool.protocol=&quot;plain ssl&quot; -Xms256m -Xmx768m -Djava.library.path=&quot;bin/jsw/lib&quot; -classpath &quot;bin/jsw/lib/wrapper-3.2.3.jar;./lib/javax.servlet-3.0.0.v201112011016.jar;./lib/jetty-client-8.1.16.v20140903.jar;./lib/jetty-continuation-8.1.16.v20140903.jar;./lib/jetty-deploy-8.1.16.v20140903.jar;./lib/jetty-http-8.1.16.v20140903.jar;./lib/jetty-io-8.1.16.v20140903.jar;./lib/jetty-jmx-8.1.16.v20140903.jar;./lib/jetty-rewrite-8.1.16.v20140903.jar;./lib/jetty-security-8.1.16.v20140903.jar;./lib/jetty-server-8.1.16.v20140903.jar;./lib/jetty-servlet-8.1.16.v20140903.jar;./lib/jetty-util-8.1.16.v20140903.jar;./lib/jetty-webapp-8.1.16.v20140903.jar;./lib/jetty-xml-8.1.16.v20140903.jar;./lib/jul-to-slf4j-1.7.6.jar;./lib/logback-access-1.1.2.jar;./lib/logback-classic-1.1.2.jar;./lib/logback-core-1.1.2.jar;./lib/metrics-core-2.2.0.jar;./lib/metrics-jetty-2.2.0.jar;./lib/metrics-logback-2.2.0.jar;./lib/nexus-bootstrap-2.14.1-01.jar;./lib/plexus-interpolation-1.16.jar;./lib/slf4j-api-1.7.6.jar;./conf/&quot; -Dwrapper.key=&quot;JlwJUuCCKkcPjWXm&quot; -Dwrapper.port=32000 -Dwrapper.jvm.port.min=31000 -Dwrapper.jvm.port.max=31999 -Dwrapper.pid=8860 -Dwrapper.version=&quot;3.2.3&quot; -Dwrapper.native_library=&quot;wrapper&quot; -Dwrapper.service=&quot;TRUE&quot; -Dwrapper.cpu.timeout=&quot;10&quot; -Dwrapper.jvmid=1 org.sonatype.nexus.bootstrap.jsw.JswLauncher ./conf/jetty.xml ./conf/jetty-requestlog.xml</div><div class="line">wrapper  | Critical error: wait for JVM process failed</div><div class="line">wrapper  | The nexus service was launched, but failed to start.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wrapper  | Starting the nexus service...</span><br><span class="line">wrapper  | --&gt; Wrapper Started as Service</span><br><span class="line">wrapper  | Launching a JVM...</span><br><span class="line">wrapper  | Unable to execute Java command.  系统找不到指定的文件。 (0x2)</span><br><span class="line">wrapper  |     &quot;java&quot; -XX:MaxPermSize=192m -Djava.io.tmpdir=./tmp -Djava.net.preferIPv4Stack=true -Dcom.sun.jndi.ldap.connect.pool.protocol=&quot;plain ssl&quot; -Xms256m -Xmx768m -Djava.library.path=&quot;bin/jsw/lib&quot; -classpath &quot;bin/jsw/lib/wrapper-3.2.3.jar;./lib/javax.servlet-3.0.0.v201112011016.jar;./lib/jetty-client-8.1.16.v20140903.jar;./lib/jetty-continuation-8.1.16.v20140903.jar;./lib/jetty-deploy-8.1.16.v20140903.jar;./lib/jetty-http-8.1.16.v20140903.jar;./lib/jetty-io-8.1.16.v20140903.jar;./lib/jetty-jmx-8.1.16.v20140903.jar;./lib/jetty-rewrite-8.1.16.v20140903.jar;./lib/jetty-security-8.1.16.v20140903.jar;./lib/jetty-server-8.1.16.v20140903.jar;./lib/jetty-servlet-8.1.16.v20140903.jar;./lib/jetty-util-8.1.16.v20140903.jar;./lib/jetty-webapp-8.1.16.v20140903.jar;./lib/jetty-xml-8.1.16.v20140903.jar;./lib/jul-to-slf4j-1.7.6.jar;./lib/logback-access-1.1.2.jar;./lib/logback-classic-1.1.2.jar;./lib/logback-core-1.1.2.jar;./lib/metrics-core-2.2.0.jar;./lib/metrics-jetty-2.2.0.jar;./lib/metrics-logback-2.2.0.jar;./lib/nexus-bootstrap-2.14.1-01.jar;./lib/plexus-interpolation-1.16.jar;./lib/slf4j-api-1.7.6.jar;./conf/&quot; -Dwrapper.key=&quot;JlwJUuCCKkcPjWXm&quot; -Dwrapper.port=32000 -Dwrapper.jvm.port.min=31000 -Dwrapper.jvm.port.max=31999 -Dwrapper.pid=8860 -Dwrapper.version=&quot;3.2.3&quot; -Dwrapper.native_library=&quot;wrapper&quot; -Dwrapper.service=&quot;TRUE&quot; -Dwrapper.cpu.timeout=&quot;10&quot; -Dwrapper.jvmid=1 org.sonatype.nexus.bootstrap.jsw.JswLauncher ./conf/jetty.xml ./conf/jetty-requestlog.xml</span><br><span class="line">wrapper  | Critical error: wait for JVM process failed</span><br><span class="line">wrapper  | The nexus service was launched, but failed to start.</span><br></pre></td></tr></table></figure>
 <h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><p>打开编辑文件<code>%NEXUES_HOME%\bin\jsw\conf\wrapper.conf</code>。在修改如下配置，将<code>wrapper.java.command</code>的值设置为正确的java路径。之后再进行启动nexus服务即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Set the JVM executable</div><div class="line"># (modify this to absolute path if you need a Java that is not on the OS path)</div><div class="line">wrapper.java.command=%JAVA_HOME%\bin\java.exe</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Set the JVM executable</span><br><span class="line"># (modify this to absolute path if you need a Java that is not on the OS path)</span><br><span class="line">wrapper.java.command=%JAVA_HOME%\bin\java.exe</span><br></pre></td></tr></table></figure>
 <h2 id="使用Sonatype-Nexus搭建Maven私有仓库"><a href="#使用Sonatype-Nexus搭建Maven私有仓库" class="headerlink" title="使用Sonatype Nexus搭建Maven私有仓库"></a>使用Sonatype Nexus搭建Maven私有仓库</h2><p>1.1    使用Sonatype Nexus搭建Maven私有仓库<br>1.1.1    私有仓库的优点</p>
 <ol>
 <li>服务器在内网，下载速度快</li>
 <li>一个人使用过，其它再次使用不需要重复下载，减少对外流量</li>
-<li>发布团队自有私有类库<br>1.1.2    安装Sonatype Nexus<br>本次安装系统环境 debian/ubuntu 首先去官方网站 <a href="http://www.sonatype.org/nexus/可以看到Nexus有两种发放形式，war包" target="_blank" rel="external">http://www.sonatype.org/nexus/可以看到Nexus有两种发放形式，war包</a><br>可以直接部署到tomcat下。tgz or zip可以直接执行的版本。我们首先看看tgz版本的安装方法。</li>
-<li>下载 wget <a href="http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz" target="_blank" rel="external">http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz</a></li>
+<li>发布团队自有私有类库<br>1.1.2    安装Sonatype Nexus<br>本次安装系统环境 debian/ubuntu 首先去官方网站 <a href="http://www.sonatype.org/nexus/可以看到Nexus有两种发放形式，war包" target="_blank" rel="noopener">http://www.sonatype.org/nexus/可以看到Nexus有两种发放形式，war包</a><br>可以直接部署到tomcat下。tgz or zip可以直接执行的版本。我们首先看看tgz版本的安装方法。</li>
+<li>下载 wget <a href="http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz" target="_blank" rel="noopener">http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz</a></li>
 <li>另外运行nexus需要有jre支持如果没有安装可以通过 apt-get install default-jre 来进行安装 请确认你安装的jre版本是否大于1.7</li>
 <li><p>将 nexus cp 到 /usr/local/ 目录下再进行解压缩</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo cp nexus-2.8.0-05-bundle.tar.gz /usr/local</div><div class="line">cd /usr/local</div><div class="line">sudo tar xvzf nexus-2.8.0-05-bundle.tar.gz</div><div class="line">ln -s nexus-2.8.0-05 nexus</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo cp nexus-2.8.0-05-bundle.tar.gz /usr/local</span><br><span class="line">cd /usr/local</span><br><span class="line">sudo tar xvzf nexus-2.8.0-05-bundle.tar.gz</span><br><span class="line">ln -s nexus-2.8.0-05 nexus</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>运行Nexus,/usr/local/nexus/bin/nexus console。当启动成功可以看到如下提示</p>
 </li>
 <li>Running Nexus OSS…</li>
 <li>wrapper  | –&gt; Wrapper Started as Console</li>
 <li>wrapper  | Launching a JVM…</li>
-<li>jvm 1    | Wrapper (Version 3.2.3) <a href="http://wrapper.tanukisoftware.org" target="_blank" rel="external">http://wrapper.tanukisoftware.org</a></li>
+<li>jvm 1    | Wrapper (Version 3.2.3) <a href="http://wrapper.tanukisoftware.org" target="_blank" rel="noopener">http://wrapper.tanukisoftware.org</a></li>
 <li>jvm 1    |   Copyright 1999-2006 Tanuki Software, Inc.  All Rights Reserved.</li>
-<li>如果以上步骤没有报错即可，至浏览器访问<a href="http://nexus.host:8081/nexus/。" target="_blank" rel="external">http://nexus.host:8081/nexus/。</a><br>no zuo no die。采用这种方式安装的有个天生缺陷，对CPU的支持有限。查看bin/jsw目录会发现 linux-ppc-64 linux-x86-32 linux-x86-64 macosx-universal-32 macosx-universal-64 solaris-sparc-32 solaris-sparc-64 solaris-x86-32 windows-x86-32 windows-x86-64 如果我们的CPU在以上类型以外比如树霉派的ARM类型。那么你将要学习如下安装方法。使用WAR包安装</li>
+<li>如果以上步骤没有报错即可，至浏览器访问<a href="http://nexus.host:8081/nexus/。" target="_blank" rel="noopener">http://nexus.host:8081/nexus/。</a><br>no zuo no die。采用这种方式安装的有个天生缺陷，对CPU的支持有限。查看bin/jsw目录会发现 linux-ppc-64 linux-x86-32 linux-x86-64 macosx-universal-32 macosx-universal-64 solaris-sparc-32 solaris-sparc-64 solaris-x86-32 windows-x86-32 windows-x86-64 如果我们的CPU在以上类型以外比如树霉派的ARM类型。那么你将要学习如下安装方法。使用WAR包安装</li>
 <li>安装tomcat7</li>
-<li>下载war包 wget <a href="http://download.sonatype.com/nexus/oss/nexus-2.10.0-02.war" target="_blank" rel="external">http://download.sonatype.com/nexus/oss/nexus-2.10.0-02.war</a></li>
+<li>下载war包 wget <a href="http://download.sonatype.com/nexus/oss/nexus-2.10.0-02.war" target="_blank" rel="noopener">http://download.sonatype.com/nexus/oss/nexus-2.10.0-02.war</a></li>
 <li>将war包拷贝到 {TOMCAT_HOME}/webapps,在目录 /usr/share/tomcat7下创建 sonatype-work目录，并将所有者修改为 tomcat7</li>
 <li>此时查看机器负载配置不高的单核机器很快就会跑到1.7，稍等片刻</li>
-<li>再次打开你的浏览器 <a href="http://nexus.host:8080/nexus/记得修改端口tomcat默认商品和刚刚的tgz目录可不一样。" target="_blank" rel="external">http://nexus.host:8080/nexus/记得修改端口tomcat默认商品和刚刚的tgz目录可不一样。</a></li>
+<li>再次打开你的浏览器 <a href="http://nexus.host:8080/nexus/记得修改端口tomcat默认商品和刚刚的tgz目录可不一样。" target="_blank" rel="noopener">http://nexus.host:8080/nexus/记得修改端口tomcat默认商品和刚刚的tgz目录可不一样。</a></li>
 </ol>
 <p>1.1.3    下载中央仓库包</p>
 <ol>
 <li>点击左侧 Repositories,在列表中选择 Central 。打开Configuration标签，将Download Remote Indexes改为True即可开始自动下载。</li>
-<li>如果你不幸在中国大陆，连中央仓库下载索引会慢的要死。解决方案有二。<br>a. 打开你仓库的配置节点，修改HTTP Request Settings-&gt;Request Timeout改的大点我基本都是3小时左右超时。<br>b. 手工下载索引文件，然后按官方路径放置。修改你机器的HOSTS文件把repo1.maven.org域名指向你的假机器即可<br>1.1.4    Maven私有库的使用<br>在你的~/.m2/目录下增加一个新文件settings.xml，之后再使用Maven时就会在本地Nexus仓库进行下载。。文件内容为<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--This sends everything else to /public --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8080/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">profile</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--Enable snapshots for the built in central repo to direct --&gt;</span></div><div class="line">            <span class="comment">&lt;!--all requests to nexus via the mirror --&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">repository</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--make the profile active all the time --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></div></pre></td></tr></table></figure>
+<li>如果你不幸在中国大陆，连中央仓库下载索引会慢的要死。解决方案有二。<br>a. 打开你仓库的配置节点，修改HTTP Request Settings-&gt;Request Timeout改的大点我基本都是3小时左右超时。<br>b. 手工下载索引文件，然后按官方路径放置。修改你机器的HOSTS文件把repo1.maven.org域名指向你的假机器即可<br>1.1.4    Maven私有库的使用<br>在你的~/.m2/目录下增加一个新文件settings.xml，之后再使用Maven时就会在本地Nexus仓库进行下载。。文件内容为<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--This sends everything else to /public --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:8080/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--Enable snapshots for the built in central repo to direct --&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--all requests to nexus via the mirror --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://central<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">releases</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--make the profile active all the time --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>1.1.5    后续<br>当然Nexus功能或要学习的东西还不止这些。比如怎么在Nexus上部署Nuget,让.Net程序可以来这下载包。怎么上传自己私有的JAR包，如果监控NEXUS状态。我会在今后的BLOG上继续更新。</p>
@@ -430,9 +430,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Nexus/" rel="tag"># Nexus</a>
-          
             <a href="/tags/Maven/" rel="tag"># Maven</a>
+          
+            <a href="/tags/Nexus/" rel="tag"># Nexus</a>
           
         </div>
       
@@ -510,7 +510,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -520,11 +520,9 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           
-            <img class="site-author-image" itemprop="image"
-              src="/images/avatar.jpg"
-              alt="xiangzhurui" />
+            <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="xiangzhurui">
           
             <p class="site-author-name" itemprop="name">xiangzhurui</p>
             <p class="site-description motion-element" itemprop="description"></p>
@@ -537,7 +535,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -548,7 +546,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -559,7 +557,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -627,10 +625,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

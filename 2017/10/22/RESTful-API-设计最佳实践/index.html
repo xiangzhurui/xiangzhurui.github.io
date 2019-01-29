@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -74,21 +74,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="RESTful," />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="RESTful,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
 
 
 
@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p0.qhimg.com/t015c68b6244b11b29e.png">
 <meta property="og:image" content="http://p0.qhimg.com/t01285dbf149a61a0fa.png">
-<meta property="og:updated_time" content="2018-06-29T13:25:24.211Z">
+<meta property="og:updated_time" content="2018-07-05T03:32:18.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RESTful API 设计最佳实践">
 <meta name="twitter:description" content="译文出处:SlaneYang原文出处：Philipp Hauer     项目资源的URL应该如何设计？用名词复数还是用名词单数？一个资源需要多少个URL？用哪种HTTP方法来创建一个新的资源？可选参数应该放在哪里？那些不涉及资源操作的URL呢？实现分页和版本控制的最好方法是什么？因为有太多的疑问，设计RESTful API变得很棘手。在这篇文章中，我们来看一下RESTful API设计，并给出">
@@ -139,7 +139,7 @@
 
 
 
-  <link rel="canonical" href="https://xiangzhurui.com/2017/10/22/RESTful-API-设计最佳实践/"/>
+  <link rel="canonical" href="https://xiangzhurui.com/2017/10/22/RESTful-API-设计最佳实践/">
 
 
 
@@ -157,7 +157,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -167,13 +167,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">xiangzhurui's blog.</span>
         <span class="logo-line-after"><i></i></span>
@@ -203,7 +203,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -213,7 +213,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -223,7 +223,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -233,7 +233,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -267,20 +267,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://xiangzhurui.com/2017/10/22/RESTful-API-设计最佳实践/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xiangzhurui">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="xiangzhurui's blog.">
     </span>
 
@@ -312,7 +312,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -323,7 +323,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/RESTful/" itemprop="url" rel="index">
                     <span itemprop="name">RESTful</span>
                   </a>
@@ -362,13 +362,13 @@
 
       
         <blockquote>
-<p>译文出处:<a href="https://blog.philipphauer.de/restful-api-design-best-practices" target="_blank" rel="external">SlaneYang</a><br>原文出处：<a href="https://blog.philipphauer.de/restful-api-design-best-practices/" target="_blank" rel="external">Philipp Hauer</a>  </p>
+<p>译文出处:<a href="https://blog.philipphauer.de/restful-api-design-best-practices" target="_blank" rel="noopener">SlaneYang</a><br>原文出处：<a href="https://blog.philipphauer.de/restful-api-design-best-practices/" target="_blank" rel="noopener">Philipp Hauer</a>  </p>
 </blockquote>
 <hr>
 <p>项目资源的URL应该如何设计？用名词复数还是用名词单数？一个资源需要多少个URL？用哪种HTTP方法来创建一个新的资源？可选参数应该放在哪里？那些不涉及资源操作的URL呢？实现分页和版本控制的最好方法是什么？因为有太多的疑问，设计RESTful API变得很棘手。在这篇文章中，我们来看一下RESTful API设计，并给出一个最佳实践方案。</p>
-<h2 id="每个资源使用两个URL"><a href="#每个资源使用两个URL" class="headerlink" title="每个资源使用两个URL"></a>每个资源使用两个URL</h2><p>资源集合用一个URL，具体某个资源用一个URL：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/employees         #资源集合的URL</div><div class="line">/employees/56      #具体某个资源的URL</div></pre></td></tr></table></figure></p>
-<h2 id="用名词代替动词表示资源"><a href="#用名词代替动词表示资源" class="headerlink" title="用名词代替动词表示资源"></a>用名词代替动词表示资源</h2><p>这让你的API更简洁，URL数目更少。不要这么设计：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/getAllEmployees</div><div class="line">/getAllExternalEmployees</div><div class="line">/createEmployee</div><div class="line">/updateEmployee</div></pre></td></tr></table></figure></p>
-<p>更好的设计：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GET /employees</div><div class="line">GET /employees?state=external</div><div class="line">POST /employees</div><div class="line">PUT /employees/56</div></pre></td></tr></table></figure></p>
+<h2 id="每个资源使用两个URL"><a href="#每个资源使用两个URL" class="headerlink" title="每个资源使用两个URL"></a>每个资源使用两个URL</h2><p>资源集合用一个URL，具体某个资源用一个URL：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/employees         #资源集合的URL</span><br><span class="line">/employees/56      #具体某个资源的URL</span><br></pre></td></tr></table></figure></p>
+<h2 id="用名词代替动词表示资源"><a href="#用名词代替动词表示资源" class="headerlink" title="用名词代替动词表示资源"></a>用名词代替动词表示资源</h2><p>这让你的API更简洁，URL数目更少。不要这么设计：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/getAllEmployees</span><br><span class="line">/getAllExternalEmployees</span><br><span class="line">/createEmployee</span><br><span class="line">/updateEmployee</span><br></pre></td></tr></table></figure></p>
+<p>更好的设计：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /employees</span><br><span class="line">GET /employees?state=external</span><br><span class="line">POST /employees</span><br><span class="line">PUT /employees/56</span><br></pre></td></tr></table></figure></p>
 <h2 id="用HTTP方法操作资源"><a href="#用HTTP方法操作资源" class="headerlink" title="用HTTP方法操作资源"></a>用HTTP方法操作资源</h2><p>使用URL指定你要用的资源。使用HTTP方法来指定怎么处理这个资源。使用四种HTTP方法POST，GET，PUT，DELETE可以提供CRUD功能（创建，获取，更新，删除）。    </p>
 <ul>
 <li><strong>获取</strong>：使用GET方法获取资源。GET请求从不改变资源的状态。无副作用。GET方法是幂等的。GET方法具有只读的含义。因此，你可以完美的使用缓存。</li>
@@ -392,40 +392,40 @@
 <li>客户端向具体资源的URL发送PUT请求<code>/employee/21</code>。请求的HTTP body中包含要更新的属性值（21号员工的新名称“Bruce Wayne”）。</li>
 <li>REST服务器更新ID为21的员工名称，并使用HTTP状态码200表示更改成功。</li>
 </ol>
-<h2 id="推荐用复数名词"><a href="#推荐用复数名词" class="headerlink" title="推荐用复数名词"></a>推荐用复数名词</h2><p>推荐：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/employees</div><div class="line">/employees/21</div></pre></td></tr></table></figure></p>
-<p>不推荐：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/employee</div><div class="line">/employee/21</div></pre></td></tr></table></figure></p>
+<h2 id="推荐用复数名词"><a href="#推荐用复数名词" class="headerlink" title="推荐用复数名词"></a>推荐用复数名词</h2><p>推荐：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/employees</span><br><span class="line">/employees/21</span><br></pre></td></tr></table></figure></p>
+<p>不推荐：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/employee</span><br><span class="line">/employee/21</span><br></pre></td></tr></table></figure></p>
 <p>事实上，这是个人爱好问题，但复数形式更为常见。此外，在资源集合URL上用GET方法，它更直观，特别是<code>GET /employees?state=external</code>、<code>POST /employees</code>、<code>PUT /employees/56</code>。但最重要的是：避免复数和单数名词混合使用，这显得非常混乱且容易出错。</p>
-<h2 id="对可选的、复杂的参数，使用查询字符串（？）。"><a href="#对可选的、复杂的参数，使用查询字符串（？）。" class="headerlink" title="对可选的、复杂的参数，使用查询字符串（？）。"></a>对可选的、复杂的参数，使用查询字符串（？）。</h2><p>不推荐做法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GET /employees</div><div class="line">GET /externalEmployees</div><div class="line">GET /internalEmployees</div><div class="line">GET /internalAndSeniorEmployees</div></pre></td></tr></table></figure></p>
-<p>为了让你的URL更小、更简洁。为资源设置一个基本URL，将可选的、复杂的参数用查询字符串表示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /employees?state=internal&amp;maturity=senior</div></pre></td></tr></table></figure></p>
+<h2 id="对可选的、复杂的参数，使用查询字符串（？）。"><a href="#对可选的、复杂的参数，使用查询字符串（？）。" class="headerlink" title="对可选的、复杂的参数，使用查询字符串（？）。"></a>对可选的、复杂的参数，使用查询字符串（？）。</h2><p>不推荐做法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /employees</span><br><span class="line">GET /externalEmployees</span><br><span class="line">GET /internalEmployees</span><br><span class="line">GET /internalAndSeniorEmployees</span><br></pre></td></tr></table></figure></p>
+<p>为了让你的URL更小、更简洁。为资源设置一个基本URL，将可选的、复杂的参数用查询字符串表示。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /employees?state=internal&amp;maturity=senior</span><br></pre></td></tr></table></figure></p>
 <h2 id="使用HTTP状态码"><a href="#使用HTTP状态码" class="headerlink" title="使用HTTP状态码"></a>使用HTTP状态码</h2><p>RESTful Web服务应使用合适的HTTP状态码来响应客户端请求</p>
 <ul>
 <li>2xx - 成功 - 一切都很好</li>
 <li>4xx - 客户端错误 - 如果客户端发生错误（例如客户端发送无效请求或未被授权）</li>
-<li>5xx – 服务器错误 - 如果服务器发生错误（例如，尝试处理请求时出错）<br>参考<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="external">维基百科上的HTTP状态代码</a>。但是，其中的大部分HTTP状态码都不会被用到，只会用其中的一小部分。通常会用到一下几个：<table><br><thead><br>  <th>2xx：成功</th><br>  <th>3xx：重定向</th><br>  <th>4xx：客户端错误</th><br>  <th>5xx：服务器错误</th><br></thead><br><tbody><br>  <tr><br>      <td>200 成功</td><br>      <td>301 永久重定向</td><br>      <td>400 错误请求</td><br>      <td>500 内部服务器错误</td><br>  </tr><br>  <tr><br>      <td>201 创建</td><br>      <td>304 资源未修改</td><br>      <td>401未授权</td><br>      <td></td><br>  </tr><br>  <tr><br>      <td></td><br>      <td></td><br>      <td>403 禁止</td><br>      <td></td><br>  </tr><br>  <tr><br>      <td></td><br>      <td></td><br>      <td>404 未找到</td><br>      <td></td><br>  </tr><br> </tbody><br></table>
+<li>5xx – 服务器错误 - 如果服务器发生错误（例如，尝试处理请求时出错）<br>参考<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="noopener">维基百科上的HTTP状态代码</a>。但是，其中的大部分HTTP状态码都不会被用到，只会用其中的一小部分。通常会用到一下几个：<table><br><thead><br>  <th>2xx：成功</th><br>  <th>3xx：重定向</th><br>  <th>4xx：客户端错误</th><br>  <th>5xx：服务器错误</th><br></thead><br><tbody><br>  <tr><br>      <td>200 成功</td><br>      <td>301 永久重定向</td><br>      <td>400 错误请求</td><br>      <td>500 内部服务器错误</td><br>  </tr><br>  <tr><br>      <td>201 创建</td><br>      <td>304 资源未修改</td><br>      <td>401未授权</td><br>      <td></td><br>  </tr><br>  <tr><br>      <td></td><br>      <td></td><br>      <td>403 禁止</td><br>      <td></td><br>  </tr><br>  <tr><br>      <td></td><br>      <td></td><br>      <td>404 未找到</td><br>      <td></td><br>  </tr><br> </tbody><br></table>
 
 </li>
 </ul>
-<h2 id="返回有用的错误提示"><a href="#返回有用的错误提示" class="headerlink" title="返回有用的错误提示"></a>返回有用的错误提示</h2><p>除了合适的状态码之外，还应该在HTTP响应正文中提供有用的错误提示和详细的描述。这是一个例子。<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /employees?state=super</div></pre></td></tr></table></figure></p>
-<p>响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 400 Bad Request</div><div class="line">&#123;</div><div class="line">    &quot;message&quot;: &quot;You submitted an invalid state. Valid state values are &apos;internal&apos; or &apos;external&apos;&quot;,</div><div class="line">    &quot;errorCode&quot;: 352,</div><div class="line">    &quot;additionalInformation&quot; :</div><div class="line">    &quot;http://www.domain.com/rest/errorcode/352&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="使用小驼峰命名法"><a href="#使用小驼峰命名法" class="headerlink" title="使用小驼峰命名法"></a>使用小驼峰命名法</h2><p>使用小驼峰命名法作为属性标识符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;yearOfBirth&quot;: 1982 &#125;</div></pre></td></tr></table></figure></p>
-<p>不要使用下划线（<code>year_of_birth</code>）或大驼峰命名法（<code>YearOfBirth</code>）。通常，RESTful Web服务将被JavaScript编写的客户端使用。客户端会将JSON响应转换为JavaScript对象（通过调用<code>var person = JSON.parse(response)</code>），然后调用其属性。因此，最好遵循JavaScript代码通用规范。<br>对比：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">person.year_of_birth // 不推荐，违反JavaScript代码通用规范</div><div class="line">person.YearOfBirth // 不推荐，JavaScript构造方法命名</div><div class="line">person.yearOfBirth // 推荐</div></pre></td></tr></table></figure></p>
-<h2 id="在URL中强制加入版本号"><a href="#在URL中强制加入版本号" class="headerlink" title="在URL中强制加入版本号"></a>在URL中强制加入版本号</h2><p>从始至终，都使用版本号发布您的RESTful API。将版本号放在URL中以是必需的。如果您有不兼容和破坏性的更改，版本号将让你能更容易的发布API。发布新API时，只需在增加版本号中的数字。这样的话，客户端可以自如的迁移到新API，不会因调用完全不同的新API而陷入困境。<br>使用直观的 “v” 前缀来表示后面的数字是版本号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/v1/employees</div></pre></td></tr></table></figure></p>
+<h2 id="返回有用的错误提示"><a href="#返回有用的错误提示" class="headerlink" title="返回有用的错误提示"></a>返回有用的错误提示</h2><p>除了合适的状态码之外，还应该在HTTP响应正文中提供有用的错误提示和详细的描述。这是一个例子。<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /employees?state=super</span><br></pre></td></tr></table></figure></p>
+<p>响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 400 Bad Request</span><br><span class="line">&#123;</span><br><span class="line">    &quot;message&quot;: &quot;You submitted an invalid state. Valid state values are &apos;internal&apos; or &apos;external&apos;&quot;,</span><br><span class="line">    &quot;errorCode&quot;: 352,</span><br><span class="line">    &quot;additionalInformation&quot; :</span><br><span class="line">    &quot;http://www.domain.com/rest/errorcode/352&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用小驼峰命名法"><a href="#使用小驼峰命名法" class="headerlink" title="使用小驼峰命名法"></a>使用小驼峰命名法</h2><p>使用小驼峰命名法作为属性标识符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;yearOfBirth&quot;: 1982 &#125;</span><br></pre></td></tr></table></figure></p>
+<p>不要使用下划线（<code>year_of_birth</code>）或大驼峰命名法（<code>YearOfBirth</code>）。通常，RESTful Web服务将被JavaScript编写的客户端使用。客户端会将JSON响应转换为JavaScript对象（通过调用<code>var person = JSON.parse(response)</code>），然后调用其属性。因此，最好遵循JavaScript代码通用规范。<br>对比：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">person.year_of_birth // 不推荐，违反JavaScript代码通用规范</span><br><span class="line">person.YearOfBirth // 不推荐，JavaScript构造方法命名</span><br><span class="line">person.yearOfBirth // 推荐</span><br></pre></td></tr></table></figure></p>
+<h2 id="在URL中强制加入版本号"><a href="#在URL中强制加入版本号" class="headerlink" title="在URL中强制加入版本号"></a>在URL中强制加入版本号</h2><p>从始至终，都使用版本号发布您的RESTful API。将版本号放在URL中以是必需的。如果您有不兼容和破坏性的更改，版本号将让你能更容易的发布API。发布新API时，只需在增加版本号中的数字。这样的话，客户端可以自如的迁移到新API，不会因调用完全不同的新API而陷入困境。<br>使用直观的 “v” 前缀来表示后面的数字是版本号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/v1/employees</span><br></pre></td></tr></table></figure></p>
 <p>你不需要使用次级版本号（“v1.2”），因为你不应该频繁的去发布API版本。</p>
-<h2 id="提供分页信息"><a href="#提供分页信息" class="headerlink" title="提供分页信息"></a>提供分页信息</h2><p>一次性返回数据库所有资源不是一个好主意。因此，需要提供分页机制。通常使用数据库中众所周知的参数offset和limit。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/employees?offset=30&amp;limit=15       #返回30 到 45的员工</div></pre></td></tr></table></figure></p>
-<p>如果客户端没有传这些参数，则应使用默认值。通常默认值是<code>offset = 0</code>和<code>limit = 10</code>。如果数据库检索很慢，应当减小<code>limit</code>值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/employees       #返回0 到 10的员工</div></pre></td></tr></table></figure></p>
-<p>此外，如果您使用分页，客户端需要知道资源总数。例：<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /employees</div></pre></td></tr></table></figure></p>
-<p>响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;offset&quot;: 0,</div><div class="line">  &quot;limit&quot;: 10,</div><div class="line">  &quot;total&quot;: 3465,</div><div class="line">  &quot;employees&quot;: [</div><div class="line">    //...</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="非资源请求用动词"><a href="#非资源请求用动词" class="headerlink" title="非资源请求用动词"></a>非资源请求用动词</h2><p>有时API调用并不涉及资源（如计算，翻译或转换）。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GET /translate?from=de_DE&amp;to=en_US&amp;text=Hallo</div><div class="line">GET /calculate?para2=23&amp;para2=432</div></pre></td></tr></table></figure></p>
+<h2 id="提供分页信息"><a href="#提供分页信息" class="headerlink" title="提供分页信息"></a>提供分页信息</h2><p>一次性返回数据库所有资源不是一个好主意。因此，需要提供分页机制。通常使用数据库中众所周知的参数offset和limit。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/employees?offset=30&amp;limit=15       #返回30 到 45的员工</span><br></pre></td></tr></table></figure></p>
+<p>如果客户端没有传这些参数，则应使用默认值。通常默认值是<code>offset = 0</code>和<code>limit = 10</code>。如果数据库检索很慢，应当减小<code>limit</code>值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/employees       #返回0 到 10的员工</span><br></pre></td></tr></table></figure></p>
+<p>此外，如果您使用分页，客户端需要知道资源总数。例：<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /employees</span><br></pre></td></tr></table></figure></p>
+<p>响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;offset&quot;: 0,</span><br><span class="line">  &quot;limit&quot;: 10,</span><br><span class="line">  &quot;total&quot;: 3465,</span><br><span class="line">  &quot;employees&quot;: [</span><br><span class="line">    //...</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="非资源请求用动词"><a href="#非资源请求用动词" class="headerlink" title="非资源请求用动词"></a>非资源请求用动词</h2><p>有时API调用并不涉及资源（如计算，翻译或转换）。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /translate?from=de_DE&amp;to=en_US&amp;text=Hallo</span><br><span class="line">GET /calculate?para2=23&amp;para2=432</span><br></pre></td></tr></table></figure></p>
 <p>在这种情况下，API响应不会返回任何资源。而是执行一个操作并将结果返回给客户端。因此，您应该在URL中使用动词而不是名词，来清楚的区分资源请求和非资源请求。</p>
-<h2 id="考虑特定资源搜索和跨资源搜索"><a href="#考虑特定资源搜索和跨资源搜索" class="headerlink" title="考虑特定资源搜索和跨资源搜索"></a>考虑特定资源搜索和跨资源搜索</h2><p>提供对特定资源的搜索很容易。只需使用相应的资源集合URL，并将搜索字符串附加到查询参数中即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /employees?query=Paul</div></pre></td></tr></table></figure></p>
-<p>如果要对所有资源提供全局搜索，则需要用其他方法。前文提到，对于非资源请求URL，使用动词而不是名词。因此，您的搜索网址可能如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /search?query=Paul   //返回 employees, customers, suppliers 等等.</div></pre></td></tr></table></figure></p>
-<h2 id="在响应参数中添加浏览其它API的链接"><a href="#在响应参数中添加浏览其它API的链接" class="headerlink" title="在响应参数中添加浏览其它API的链接"></a>在响应参数中添加浏览其它API的链接</h2><p>理想情况下，不会让客户端自己构造使用REST API的URL。让我们思考一个例子。<br>客户端想要访问员工的薪酬表。为此，他必须知道他可以通过在员工URL（例如<code>/employees/21/salaryStatements</code>）中附加字符串“salaryStatements”来访问薪酬表。这个字符串连接很容易出错，且难以维护。如果你更改了访问薪水表的REST API的方式（例如变成了<code>/employees/21/salary-statement</code>或<code>/employees/21/paySlips</code>），所有客户端都将中断。<br>更好的方案是在响应参数中添加一个<code>links</code>字段，让客户端可以自动变更。<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /employees/</div></pre></td></tr></table></figure></p>
-<p>响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//...</div><div class="line">   &#123;</div><div class="line">      &quot;id&quot;:1,</div><div class="line">      &quot;name&quot;:&quot;Paul&quot;,</div><div class="line">      &quot;links&quot;: [</div><div class="line">         &#123;</div><div class="line">            &quot;rel&quot;: &quot;salary&quot;,</div><div class="line">            &quot;href&quot;: &quot;/employees/1/salaryStatements&quot;</div><div class="line">         &#125;</div><div class="line">      ]</div><div class="line">   &#125;,</div><div class="line">//...</div></pre></td></tr></table></figure></p>
-<p>如果客户端完全依靠<code>links</code>中的字段获得薪资表，你更改了API，客户端将始终获得一个有效的URL（只要你更改了<code>link</code>字段，请求的URL会自动更改），不会中断。另一个好处是，你的API变得可以自我描述，需要写的文档更少。<br>在分页时，您还可以添加获取下一页或上一页的链接示例。只需提供适当的偏移和限制的链接示例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /employees?offset=20&amp;limit=10</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;offset&quot;: 20,</div><div class="line">  &quot;limit&quot;: 10,</div><div class="line">  &quot;total&quot;: 3465,</div><div class="line">  &quot;employees&quot;: [</div><div class="line">    //...</div><div class="line">  ],</div><div class="line">  &quot;links&quot;: [</div><div class="line">     &#123;</div><div class="line">        &quot;rel&quot;: &quot;nextPage&quot;,</div><div class="line">        &quot;href&quot;: &quot;/employees?offset=30&amp;limit=10&quot;</div><div class="line">     &#125;,</div><div class="line">     &#123;</div><div class="line">        &quot;rel&quot;: &quot;previousPage&quot;,</div><div class="line">        &quot;href&quot;: &quot;/employees?offset=10&amp;limit=10&quot;</div><div class="line">     &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="考虑特定资源搜索和跨资源搜索"><a href="#考虑特定资源搜索和跨资源搜索" class="headerlink" title="考虑特定资源搜索和跨资源搜索"></a>考虑特定资源搜索和跨资源搜索</h2><p>提供对特定资源的搜索很容易。只需使用相应的资源集合URL，并将搜索字符串附加到查询参数中即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /employees?query=Paul</span><br></pre></td></tr></table></figure></p>
+<p>如果要对所有资源提供全局搜索，则需要用其他方法。前文提到，对于非资源请求URL，使用动词而不是名词。因此，您的搜索网址可能如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /search?query=Paul   //返回 employees, customers, suppliers 等等.</span><br></pre></td></tr></table></figure></p>
+<h2 id="在响应参数中添加浏览其它API的链接"><a href="#在响应参数中添加浏览其它API的链接" class="headerlink" title="在响应参数中添加浏览其它API的链接"></a>在响应参数中添加浏览其它API的链接</h2><p>理想情况下，不会让客户端自己构造使用REST API的URL。让我们思考一个例子。<br>客户端想要访问员工的薪酬表。为此，他必须知道他可以通过在员工URL（例如<code>/employees/21/salaryStatements</code>）中附加字符串“salaryStatements”来访问薪酬表。这个字符串连接很容易出错，且难以维护。如果你更改了访问薪水表的REST API的方式（例如变成了<code>/employees/21/salary-statement</code>或<code>/employees/21/paySlips</code>），所有客户端都将中断。<br>更好的方案是在响应参数中添加一个<code>links</code>字段，让客户端可以自动变更。<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /employees/</span><br></pre></td></tr></table></figure></p>
+<p>响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//...</span><br><span class="line">   &#123;</span><br><span class="line">      &quot;id&quot;:1,</span><br><span class="line">      &quot;name&quot;:&quot;Paul&quot;,</span><br><span class="line">      &quot;links&quot;: [</span><br><span class="line">         &#123;</span><br><span class="line">            &quot;rel&quot;: &quot;salary&quot;,</span><br><span class="line">            &quot;href&quot;: &quot;/employees/1/salaryStatements&quot;</span><br><span class="line">         &#125;</span><br><span class="line">      ]</span><br><span class="line">   &#125;,</span><br><span class="line">//...</span><br></pre></td></tr></table></figure></p>
+<p>如果客户端完全依靠<code>links</code>中的字段获得薪资表，你更改了API，客户端将始终获得一个有效的URL（只要你更改了<code>link</code>字段，请求的URL会自动更改），不会中断。另一个好处是，你的API变得可以自我描述，需要写的文档更少。<br>在分页时，您还可以添加获取下一页或上一页的链接示例。只需提供适当的偏移和限制的链接示例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /employees?offset=20&amp;limit=10</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;offset&quot;: 20,</span><br><span class="line">  &quot;limit&quot;: 10,</span><br><span class="line">  &quot;total&quot;: 3465,</span><br><span class="line">  &quot;employees&quot;: [</span><br><span class="line">    //...</span><br><span class="line">  ],</span><br><span class="line">  &quot;links&quot;: [</span><br><span class="line">     &#123;</span><br><span class="line">        &quot;rel&quot;: &quot;nextPage&quot;,</span><br><span class="line">        &quot;href&quot;: &quot;/employees?offset=30&amp;limit=10&quot;</span><br><span class="line">     &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">        &quot;rel&quot;: &quot;previousPage&quot;,</span><br><span class="line">        &quot;href&quot;: &quot;/employees?offset=10&amp;limit=10&quot;</span><br><span class="line">     &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="相关阅读："><a href="#相关阅读：" class="headerlink" title="相关阅读："></a>相关阅读：</h2><ul>
-<li>作者写的一篇关于在<a href="https://blog.philipphauer.de/testing-restful-services-java-best-practices/" target="_blank" rel="external">Java中测试RESTful服务的最佳实践</a>的文章。  </li>
-<li>作者强烈推荐一本书<a href="https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf" target="_blank" rel="external">Brain Mulloy’s nice paper</a>，作为这篇文章的基础。</li>
+<li>作者写的一篇关于在<a href="https://blog.philipphauer.de/testing-restful-services-java-best-practices/" target="_blank" rel="noopener">Java中测试RESTful服务的最佳实践</a>的文章。  </li>
+<li>作者强烈推荐一本书<a href="https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf" target="_blank" rel="noopener">Brain Mulloy’s nice paper</a>，作为这篇文章的基础。</li>
 </ul>
 
       
@@ -522,7 +522,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -532,11 +532,9 @@
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           
-            <img class="site-author-image" itemprop="image"
-              src="/images/avatar.jpg"
-              alt="xiangzhurui" />
+            <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="xiangzhurui">
           
             <p class="site-author-name" itemprop="name">xiangzhurui</p>
             <p class="site-description motion-element" itemprop="description"></p>
@@ -549,7 +547,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -560,7 +558,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -571,7 +569,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -639,10 +637,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
