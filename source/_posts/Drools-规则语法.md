@@ -4,6 +4,8 @@ tags: [Drools,语法]
 categories:
 - 规则引擎
 - Drools
+date: 2018-03-07 16:15:57
+
 ---
 
 ## 规则语言结构
